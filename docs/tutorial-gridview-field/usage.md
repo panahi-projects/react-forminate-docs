@@ -1,0 +1,53 @@
+---
+sidebar_position: 1
+---
+
+# Usage
+
+## 📦 GridViewField (type: "gridview")
+
+The `GridViewField` is a powerful visual selector in `react-forminate` that displays items in a responsive grid layout. It supports dynamic API fetching, customizable pagination, image rendering, and user-friendly interaction.
+
+---
+
+### ✨ Features
+
+- Displays items in a clean, card-like grid
+- API-driven with advanced pagination
+- Supports image, label, price, and custom fields
+- Dynamic dependencies (dependsOn, placeholders in endpoints)
+- Full customization: styles, classes, and event handlers
+- Built-in loading state and pagination controls
+
+### 📥 Usage
+
+To use GridViewField, define a field in your form schema with type: `"gridview"`.
+
+**Example Field Schema:**
+
+```ts
+{
+  fieldId: "products",
+  label: "Products",
+  type: "gridview",
+  dynamicOptions: {
+    endpoint: "https://dummyjson.com/products",
+    resultPath: "products",
+    transformResponse: (res) =>
+      res.map((item: any) => ({
+        label: item.title,
+        value: item.id,
+        image: item.thumbnail,
+        price: item.price,
+      })),
+    fetchOnInit: true,
+    pagination: {
+      limit: 4,
+      pageMode: "skip",
+      skipKey: "skip",
+      limitKey: "limit",
+      startPage: 1,
+    },
+  }
+}
+```
