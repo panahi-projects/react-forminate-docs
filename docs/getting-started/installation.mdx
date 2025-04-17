@@ -2,52 +2,37 @@
 sidebar_position: 1
 ---
 
-# Installation
+# 🚀 Installation
 
-## 📦 GridViewField (type: "gridview")
-
-The `GridViewField` is a powerful visual selector in `react-forminate` that displays items in a responsive grid layout. It supports dynamic API fetching, customizable pagination, image rendering, and user-friendly interaction.
+React Forminate is available as an open-source package on npm. You can install it in any modern React or Next.js project using your preferred package manager.
 
 ---
 
-### ✨ Features
+### 📦 Install via NPM or Yarn
 
-- Displays items in a clean, card-like grid
-- API-driven with advanced pagination
-- Supports image, label, price, and custom fields
-- Dynamic dependencies (dependsOn, placeholders in endpoints)
-- Full customization: styles, classes, and event handlers
-- Built-in loading state and pagination controls
-
-### 📥 Usage
-
-To use GridViewField, define a field in your form schema with type: `"gridview"`.
-
-**Example Field Schema:**
-
-```ts
-{
-  fieldId: "products",
-  label: "Products",
-  type: "gridview",
-  dynamicOptions: {
-    endpoint: "https://dummyjson.com/products",
-    resultPath: "products",
-    transformResponse: (res) =>
-      res.map((item: any) => ({
-        label: item.title,
-        value: item.id,
-        image: item.thumbnail,
-        price: item.price,
-      })),
-    fetchOnInit: true,
-    pagination: {
-      limit: 4,
-      pageMode: "skip",
-      skipKey: "skip",
-      limitKey: "limit",
-      startPage: 1,
-    },
-  }
-}
+```bash
+npm install react-forminate
 ```
+or
+
+```bash
+yarn add react-forminate
+```
+
+### 🔧 Peer Dependencies
+React Forminate requires the following peer dependencies to work properly:
+
+- React `^18.0.0` or later
+- TypeScript (optional but strongly recommended)
+
+If you're using a framework like Next.js, you're already good to go!
+
+### 🛠️ Project Setup
+Once installed, you're ready to start building forms using the core components:
+
+- Wrap your form with the `FormProvider` if needed
+- Use `useForm()` to access and manage form state
+- Define your form schema (JSON or JavaScript object)
+- Render fields with `DynamicForm`
+
+You can continue to [Basic Usage →](./basic-usage) for a full working example.

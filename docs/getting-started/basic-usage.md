@@ -2,103 +2,64 @@
 sidebar_position: 2
 ---
 
-# Basic Usage
+# 🧩 Basic Usage
 
-The `GridViewField` in `react-forminate` supports dynamic API-driven data loading with flexible pagination strategies. This document covers how to configure various real-world scenarios using the `dynamicOptions.pagination` object.
+Getting started with **React Forminate** is straightforward. All you need is a simple form schema and the `DynamicForm` component.
 
 ---
 
-## 🔄 Pagination Strategies
+### ✨ Quick Start Example
 
-The library supports **two main pagination modes**:
+Here’s a minimal example to help you hit the ground running:
 
-### `skip`-based pagination (a.k.a. offset/limit)
+```tsx
+import { DynamicForm } from "react-forminate";
 
-Used when the API expects `skip` and `limit` query parameters.
-
-```ts
-pagination: {
-  pageMode: "skip",    // Pagination mode ("skip" or "page")
-  skipKey: "skip",     // The key used in the query string for skip
-  limitKey: "limit",   // The key used for limit
-  startPage: 1,        // Starting page number (used to calculate skip = (page - 1) * limit)
-  limit: 10             // Number of items per page
-}
-```
-
-#### ✅ Example API
-
-Endpoint: `https://dummyjson.com/products`<br />
-_Final Request: `https://dummyjson.com/products?skip=4&limit=4`_
-
-**Configuration Example**
-
-```ts
-{
-  fieldId: "products",
-  label: "Products",
-  type: "gridview",
-  dynamicOptions: {
-    endpoint: "https://dummyjson.com/products",
-    resultPath: "products", // where the list exists in response
-    pagination: {
-      pageMode: "skip",
-      skipKey: "skip",
-      limitKey: "limit",
-      startPage: 1,
-      limit: 4
+const formData = {
+  formId: "SimpleForm",
+  title: "Simple Form Example",
+  fields: [
+    {
+      fieldId: "name",
+      label: "Name",
+      type: "text",
+      required: true,
+      placeholder: "Enter your name",
     },
-    transformResponse: (res) => res.map((item) => ({
-      label: item.title,
-      value: item.id,
-      image: item.thumbnail,
-      price: item.price
-    }))
-  }
-}
-```
-
-### `page`-based pagination
-
-Used when the API expects `page` and `per_page` (or similar) query parameters.
-
-```ts
-pagination: {
-  pageMode: "page",        // Pagination mode ("skip" or "page")
-  pageKey: "page",         // Query param for page number
-  limitKey: "per_page",    // Query param for page size
-  startPage: 1,            // Page indexing (usually 1)
-  limit: 4                 // Number of items per page
-}
-```
-
-#### ✅ Example API
-
-Endpoint: `https://reqres.in/api/users`<br />
-_Final Request: `https://reqres.in/api/users?page=2&per_page=4`_
-
-**Configuration Example**
-
-```ts
-{
-  fieldId: "users",
-  label: "Users",
-  type: "gridview",
-  dynamicOptions: {
-    endpoint: "https://reqres.in/api/users",
-    resultPath: "data", // where the list exists in response
-    pagination: {
-      pageMode: "page",
-      pageKey: "page",
-      limitKey: "per_page",
-      startPage: 1,
-      limit: 4
+    {
+      fieldId: "email",
+      label: "Email",
+      type: "text",
+      required: true,
+      placeholder: "Enter your email",
     },
-    transformResponse: (res) => res.map((item) => ({
-      label: item.first_name + " " + item.last_name,
-      value: item.id,
-      image: item.avatar
-    }))
-  }
-}
+    {
+      fieldId: "dob",
+      label: "Date of Birth",
+      type: "date",
+    },
+  ],
+};
+
+const App = () => {
+  const handleSubmit = (values: any, isValid: boolean) => {
+    console.log("Form Data:", values, "Is Valid:", isValid);
+  };
+
+  return <DynamicForm formData={formData} onSubmit={handleSubmit} />;
+};
+
+export default App;
 ```
+
+### 💡 How It Works
+
+- `DynamicForm`: Renders the form based on the provided `formData` schema.
+- `formData`: A JSON object that defines the fields, labels, types, and validation rules.
+- `onSubmit`: A callback function that receives the form values and a validity flag when the user submits the form.
+
+### ✅ Notes
+
+- There's no need to manually manage state — `react-forminate` handles it internally.
+- This setup does not require wrapping in `FormProvider` unless you're using `useForm()` manually.
+- You can customize styles and field behavior as needed — see the Field Components and Customization sections for more advanced use cases.

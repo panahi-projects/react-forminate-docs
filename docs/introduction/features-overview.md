@@ -24,7 +24,7 @@ Define your entire form structure in a single JSON config:
 
 ```json
 {
-  "id": "userForm",
+  "formId": "userForm",
   "fields": [
     {
       "fieldId": "firstName",

@@ -2,103 +2,66 @@
 sidebar_position: 3
 ---
 
-# Playground / Live Demo
+# 🧪 Playground / Live Demo
 
-The `GridViewField` in `react-forminate` supports dynamic API-driven data loading with flexible pagination strategies. This document covers how to configure various real-world scenarios using the `dynamicOptions.pagination` object.
-
----
-
-### 🧩 Customization & Styling
-
-- Use className, itemsClassName, containerClassName to apply Tailwind or CSS classes.
-- Use styles, itemsStyles, containerStyles to pass inline styles.
-- Apply hover effects using itemsClassName:
-
-```ts
-itemsClassName: "hover:shadow-lg transition-all";
-```
-
-### 🧠 Dynamic Dependencies
-
-Use placeholders in endpoint or params that map to form values:
-
-```ts
-dynamicOptions: {
-  endpoint: "https://api.example.com/products?category={{categoryId}}",
-  dependsOn: "categoryId"
-}
-```
-
-You can even provide multiple dependencies:
-
-```ts
-dynamicOptions: {
-  endpoint: "https://api.example.com/products?category={{categoryId}}&brand={{brandId}}",
-  dependsOn: ["categoryId", "brandId"]
-}
-```
-
-### 🔁 Response Transformation
-
-Transform raw API responses into `label/value` format:
-
-```ts
-transformResponse: (res) =>
-  res.map((item) => ({
-    label: item.name,
-    value: item.code,
-    image: item.imageUrl,
-  }));
-```
-
-Use `resultPath` to drill into nested data:
-
-```ts
-resultPath: "data.items";
-```
-
-### 🧭 Event Handling
-
-GridView supports custom event handlers through `BaseField`, including:
-
-```ts
-onCustomClick
-onCustomMouseEnter
-onCustomBlur
-onCustomKeyDown
-...
-```
-
-Each receives the full fieldId, values, and schema.
-
-### ✅ Validation
-
-You can apply standard validation using the validation array:
-
-```ts
-validation: [
-  { required: true, message: "Selection required" },
-  { custom: (val) => typeof val === "number" && val > 0 },
-];
-```
-
-### 💬 Tips
-
-- Want to limit API calls? Set `fetchOnInit`: `false` and trigger with dependencies.
-- You can combine `dependsOn` with `params` to create smart filters.
-- Supports `image`, `label`, `price`, and any other custom fields.
-
-### 📎 Integration Checklist
-
-- ✅ Wrap your form with `FormProvider`
-- ✅ Use type: `"gridview"` in your schema
-- ✅ Provide `dynamicOptions` to fetch and transform data
-- ✅ Customize using styles or classes
-- ✅ Handle pagination with `pageMode`, `skipKey`, `limitKey`, etc.
+Want to see **React Forminate** in action? Jump into the interactive playground and experiment with form schemas, validation rules, and layouts — all in real-time.
 
 ---
 
-Need help or want to contribute?
+### 🚀 Try It Live
 
-→ Visit [GitHub](https://github.com/panahi-projects/react-forminate/tree/main) <br/>
-→ Submit an issue or open a PR!
+[🔗 Open Playground on CodeSandbox](https://codesandbox.io/s/react-forminate-demo) <!-- Replace this with your actual demo URL -->
+
+> The playground lets you edit the `formData` schema and see the form update instantly. It’s a great way to test fields, validation, layouts, and custom components.
+
+---
+
+### 🧑‍💻 Sample Schema
+
+Here’s an example of what you can play with:
+
+```ts
+const formData = {
+  title: "Demo Form",
+  formId: "demoForm",
+  fields: [
+    {
+      fieldId: "username",
+      label: "Username",
+      type: "text",
+      required: true,
+      placeholder: "Enter your username",
+    },
+    {
+      fieldId: "subscribe",
+      label: "Subscribe to newsletter",
+      type: "checkbox",
+    },
+    {
+      fieldId: "birthdate",
+      label: "Birthdate",
+      type: "date",
+    },
+  ],
+};
+```
+
+### 💻 Set Up a Local Playground
+
+If you'd rather explore locally, follow these steps:
+
+1. Create a new React project using Vite or Create React App.
+2. Install the library:
+
+   ```bash
+   npm install react-forminate
+   ```
+
+3. Replace the App.tsx content with a basic DynamicForm example.
+4. Run the app and experiment with different form schemas!
+
+### 📚 Want Ideas?
+
+Check out the Built-in Fields section to see which fields are available out-of-the-box and how to use them in your playground.
+
+**Happy form-building! 🎉**
