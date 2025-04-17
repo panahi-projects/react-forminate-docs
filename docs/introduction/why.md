@@ -4,101 +4,75 @@ sidebar_position: 2
 
 # Why Use react-forminate?
 
-The `GridViewField` in `react-forminate` supports dynamic API-driven data loading with flexible pagination strategies. This document covers how to configure various real-world scenarios using the `dynamicOptions.pagination` object.
+Creating forms in React is often repetitive, verbose, and hard to scale — especially when dealing with dynamic requirements, complex validation, API-driven fields, or deeply nested structures.
+
+**React Forminate** solves this by offering a **declarative, JSON-based form engine** that is flexible, extensible, and developer-friendly.
 
 ---
 
-## 🔄 Pagination Strategies
+## 🧱 Traditional Forms Are Painful
 
-The library supports **two main pagination modes**:
+With regular React forms, you might run into:
 
-### `skip`-based pagination (a.k.a. offset/limit)
+- Boilerplate code repeated across projects
+- Manual wiring of state, validation, and error handling
+- Fragile form logic that breaks as requirements change
+- Difficulty managing dynamic fields, dependencies, or API data
+- Poor scalability when forms become large and complex
 
-Used when the API expects `skip` and `limit` query parameters.
+---
 
-```ts
-pagination: {
-  pageMode: "skip",    // Pagination mode ("skip" or "page")
-  skipKey: "skip",     // The key used in the query string for skip
-  limitKey: "limit",   // The key used for limit
-  startPage: 1,        // Starting page number (used to calculate skip = (page - 1) * limit)
-  limit: 10             // Number of items per page
-}
-```
+## ✅ React Forminate Solves This
 
-#### ✅ Example API
+### 1. **Write Less, Do More**
 
-Endpoint: `https://dummyjson.com/products`<br />
-_Final Request: `https://dummyjson.com/products?skip=4&limit=4`_
+Define your entire form structure with a simple JSON schema. No more writing tons of `useState`, `useEffect`, or error handlers for every input.
 
-**Configuration Example**
+### 2. **Dynamic by Default**
 
-```ts
-{
-  fieldId: "products",
-  label: "Products",
-  type: "gridview",
-  dynamicOptions: {
-    endpoint: "https://dummyjson.com/products",
-    resultPath: "products", // where the list exists in response
-    pagination: {
-      pageMode: "skip",
-      skipKey: "skip",
-      limitKey: "limit",
-      startPage: 1,
-      limit: 4
-    },
-    transformResponse: (res) => res.map((item) => ({
-      label: item.title,
-      value: item.id,
-      image: item.thumbnail,
-      price: item.price
-    }))
-  }
-}
-```
+Support dynamic fields, conditionally visible sections, and values fetched from APIs — out of the box.
 
-### `page`-based pagination
+### 3. **Built-In Validation**
 
-Used when the API expects `page` and `per_page` (or similar) query parameters.
+Use built-in validators or plug in your own logic. Field-level and form-level validation are both supported.
 
-```ts
-pagination: {
-  pageMode: "page",        // Pagination mode ("skip" or "page")
-  pageKey: "page",         // Query param for page number
-  limitKey: "per_page",    // Query param for page size
-  startPage: 1,            // Page indexing (usually 1)
-  limit: 4                 // Number of items per page
-}
-```
+### 4. **Composable Field System**
 
-#### ✅ Example API
+Choose from built-in field types like `SelectField`, `GridViewField`, or extend with your own components.
 
-Endpoint: `https://reqres.in/api/users`<br />
-_Final Request: `https://reqres.in/api/users?page=2&per_page=4`_
+### 5. **First-Class TypeScript Support**
 
-**Configuration Example**
+Intelligent autocompletion, schema type safety, and strong tooling support across your editor and build tools.
 
-```ts
-{
-  fieldId: "users",
-  label: "Users",
-  type: "gridview",
-  dynamicOptions: {
-    endpoint: "https://reqres.in/api/users",
-    resultPath: "data", // where the list exists in response
-    pagination: {
-      pageMode: "page",
-      pageKey: "page",
-      limitKey: "per_page",
-      startPage: 1,
-      limit: 4
-    },
-    transformResponse: (res) => res.map((item) => ({
-      label: item.first_name + " " + item.last_name,
-      value: item.id,
-      image: item.avatar
-    }))
-  }
-}
-```
+### 6. **CLI That Works For You**
+
+Scaffold boilerplate with `npx forminate init` or add fields via `npx forminate add`. Even extend functionality using the plugin system.
+
+---
+
+## 🧠 Use Cases
+
+React Forminate is ideal for:
+
+- **Admin Dashboards:** Complex forms with many fields, API data, or conditional logic
+- **CMS & Internal Tools:** Easily customizable forms with dynamic options
+- **SaaS Products:** Empower non-devs to define or modify form behavior via schema
+- **Design Systems:** Centralize consistent form logic and styling across apps
+
+---
+
+## 📊 Compared to Other Libraries
+
+| Feature                       | React Forminate | Formik    | React Hook Form |
+| ----------------------------- | --------------- | --------- | --------------- |
+| JSON Schema Support           | ✅              | ❌        | ❌              |
+| Dynamic API Options           | ✅              | ⚠️ Manual | ⚠️ Manual       |
+| Field-Level Pagination        | ✅              | ❌        | ❌              |
+| Built-in GridView/Advanced UI | ✅              | ❌        | ❌              |
+| Skeleton Loader Support       | ✅              | ❌        | ❌              |
+
+---
+
+## 🧪 Developer Experience First
+
+If you're tired of form boilerplate, and want a more structured, scalable, and **modern** way of handling complex forms — **React Forminate** is your go-to toolkit.

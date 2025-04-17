@@ -1,57 +1,48 @@
 ---
 sidebar_position: 1
 ---
-
 import { MyButton } from "@site/src/components/MyButton"
 
 # What is react-forminate?
 
-<MyButton label="Click me !" onClick={() => alert('Hello from MyButton')} />
+A short and sweet overview of the library. Highlight that it’s a dynamic JSON-driven form builder built for React.
 
-## 📦 GridViewField (type: "gridview")
+**React Forminate** is a powerful, flexible, and fully extensible **form builder library** built for React and Next.js projects. It allows developers to define form structure, behavior, and layout using a simple and intuitive **JSON schema**, while leveraging TypeScript for robust typing and developer experience.
 
-The `GridViewField` is a powerful visual selector in `react-forminate` that displays items in a responsive grid layout. It supports dynamic API fetching, customizable pagination, image rendering, and user-friendly interaction.
+Whether you're building dynamic dashboards, admin panels, or data-driven interfaces, React Forminate lets you create **complex forms without boilerplate code** — all while staying maintainable and composable.
 
 ---
 
-### ✨ Features
+## 🧩 Built For Modularity
 
-- Displays items in a clean, card-like grid
-- API-driven with advanced pagination
-- Supports image, label, price, and custom fields
-- Dynamic dependencies (dependsOn, placeholders in endpoints)
-- Full customization: styles, classes, and event handlers
-- Built-in loading state and pagination controls
+React Forminate is structured in a modular way:
 
-### 📥 Usage
+- **Core:** Form state, validation logic, schema parsing
+- **Fields:** Built-in and custom components like `SelectField`, `GridViewField`, etc.
+- **Plugins:** Optional enhancements such as `SwitchField`, new field types, or layout utilities
 
-To use GridViewField, define a field in your form schema with type: `"gridview"`.
+---
 
-**Example Field Schema:**
+## 🔧 When Should You Use It?
 
-```ts
-{
-  fieldId: "products",
-  label: "Products",
-  type: "gridview",
-  dynamicOptions: {
-    endpoint: "https://dummyjson.com/products",
-    resultPath: "products",
-    transformResponse: (res) =>
-      res.map((item: any) => ({
-        label: item.title,
-        value: item.id,
-        image: item.thumbnail,
-        price: item.price,
-      })),
-    fetchOnInit: true,
-    pagination: {
-      limit: 4,
-      pageMode: "skip",
-      skipKey: "skip",
-      limitKey: "limit",
-      startPage: 1,
-    },
-  }
-}
-```
+Use React Forminate if:
+
+- You're building forms that frequently change over time.
+- You want non-devs or product teams to define forms using JSON.
+- You need to support forms with API-driven fields or field dependencies.
+- You want consistent form behavior across projects without copy-pasting UI logic.
+
+---
+
+## 🧠 Think: Headless UI for Forms
+
+Much like how **headless CMS** separates content from presentation, **React Forminate separates form logic from rendering**, allowing full control over UI while abstracting away the heavy lifting of state, validation, and interaction.
+
+---
+
+## 🚀 Ready to Dive In?
+
+Continue to the next section:  
+👉 [Why Use React Forminate?](./why)
+
+<MyButton label="Click me !" onClick={() => alert('Hello from MyButton')} />
