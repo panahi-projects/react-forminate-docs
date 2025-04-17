@@ -63,8 +63,15 @@ const config: Config = {
       } satisfies Preset.Options,
     ],
   ],
-
+  plugins: ["@docusaurus/theme-live-codeblock"],
   themeConfig: {
+    liveCodeBlock: {
+      /**
+       * The position of the live playground, above or under the editor
+       * Possible values: "top" | "bottom"
+       */
+      playgroundPosition: "bottom",
+    },
     // Replace with your project's social card
     image: "img/docusaurus-social-card.jpg",
     navbar: {
@@ -78,7 +85,7 @@ const config: Config = {
           type: "docSidebar",
           sidebarId: "tutorialSidebar",
           position: "left",
-          label: "Tutorial",
+          label: "Document",
         },
         { to: "/blog", label: "Blog", position: "left" },
         {
