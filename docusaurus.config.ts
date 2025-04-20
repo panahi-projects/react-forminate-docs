@@ -63,7 +63,10 @@ const config: Config = {
       } satisfies Preset.Options,
     ],
   ],
-  plugins: ["@docusaurus/theme-live-codeblock"],
+  plugins: [
+    "@docusaurus/theme-live-codeblock",
+    require.resolve("./plugins/rawLoaderPlugin"),
+  ],
   themeConfig: {
     liveCodeBlock: {
       /**
