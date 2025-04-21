@@ -1,54 +1,7 @@
 ---
 sidebar_position: 1
 ---
-import LiveCodeBlock from '@site/src/components/LiveCodeBlock';
-import noInlineExample from '@site/src/components/Examples/Ex1/basicStructure.code';
-import { DynamicForm } from "react-forminate";
-
-<LiveCodeBlock showLogs code={`
-() => {
-  const formData: FormDataCollection = {
-    formId: "userProfile",
-    title: "User Profile",
-    fields: [
-      {
-        fieldId: "name",
-        label: "Name",
-        type: "text",
-        required: true,
-        placeholder: "Enter your name",
-      },
-      {
-        fieldId: "email",
-        label: "Email",
-        type: "text",
-        required: true,
-        validation: [
-          {
-            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-            message: "Invalid email format",
-          },
-        ],
-      },
-      {
-        fieldId: "age",
-        label: "Age",
-        type: "number",
-      },
-    ],
-  };
-
-  const handleSubmit = (values: {}, isValid: boolean) => {
-    console.log("Is form valid: ", isValid);
-    console.log("Form values: ", values);
-  };
-  return (
-    <div>
-      <DynamicForm formData={formData} onSubmit={handleSubmit} />
-    </div>
-  );
-}
-`.trim()} scope={{ DynamicForm }} noInline={false}/>
+import { BasicStructure } from '@site/src/components/Examples';
 
 # JSON Schema Format
 
@@ -62,43 +15,7 @@ Instead of writing form components manually, you simply describe your form as a 
 
 Here's a quick example of a basic form schema:
 
-
-```ts
-const formData = {
-  formId: "userProfile",
-  title: "User Profile",
-  fields: [
-    {
-      fieldId: "name",
-      label: "Name",
-      type: "text",
-      required: true,
-      placeholder: "Enter your name",
-    },
-    {
-      fieldId: "email",
-      label: "Email",
-      type: "text",
-      required: true,
-      validation: [
-        {
-          regex: "^\\S+@\\S+\\.\\S+$",
-          message: "Invalid email format",
-        },
-      ],
-    },
-    {
-      fieldId: "age",
-      label: "Age",
-      type: "number",
-      attributes: {
-        min: 0,
-        max: 120,
-      },
-    },
-  ],
-};
-```
+<BasicStructure />
 
 ### Field Properties Explained
 
@@ -167,3 +84,5 @@ You can customize each field visually using:
   labelClassName: "text-lg font-medium",
 }
 ```
+
+By designing your forms using this schema structure, you get a fully declarative form engine — one that supports dynamic logic, validation, and custom rendering — with minimal manual coding. 

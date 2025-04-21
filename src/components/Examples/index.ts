@@ -1,3 +1,3 @@
-import { BasicStructure } from "./Ex1/Example1";
+import BasicStructure from "./BasicStructure";
 
 export { BasicStructure };
