@@ -9,21 +9,20 @@ const config: Config = {
   tagline: "Dinosaurs are cool",
   favicon: "img/favicon.ico",
 
-  // Set the production url of your site here
+  // Where your site will be served from
   url: "https://panahi-projects.github.io",
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: "/react-forminate-docs/",
 
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: "panahi-projects", // Usually your GitHub org/user name.
-  projectName: "react-forminate-docs", // Usually your repo name.
+  // GitHub repo info
+  projectName: "react-forminate-docs", // repo name
+  organizationName: "panahi-projects", // GitHub username
+
+  // Required for gh-pages deployment
+  trailingSlash: false,
+  deploymentBranch: "gh-pages",
 
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  deploymentBranch: "gh-pages",
-  trailingSlash: false,
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
