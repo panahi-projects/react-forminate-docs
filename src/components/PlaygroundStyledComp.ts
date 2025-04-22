@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { LiveEditor } from "react-live";
 
 export const Container = styled.div<{ isDark: boolean }>`
   font-family: "Fira Code", monospace;
@@ -106,10 +105,12 @@ export const Toolbar = styled.div`
   padding: 0.5rem 1rem;
 `;
 
-export const Button = styled.button`
-  background: #f3f4f6;
+export const Button = styled.button<{ isDark: boolean }>`
+  background: ${({ isDark }) => (isDark ? "#d1d5db" : "#636b77")};
+  border: 1px solid #636b77;
   border: 1px solid #d1d5db;
   padding: 0.25rem 0.75rem;
+  color: ${({ isDark }) => (isDark ? "#636b77" : "#d1d5db")};
   font-size: 0.75rem;
   border-radius: 0.375rem;
   cursor: pointer;
@@ -125,22 +126,17 @@ export const CodeBox = styled.div`
   overflow: auto;
 `;
 
-export const LiveEditorStyled = styled(LiveEditor)`
-  font-size: 0.875rem;
-  padding: 1rem;
-  outline: none;
-`;
-
 export const CopiedBubble = styled.div`
   position: absolute;
   top: 0.25rem;
-  right: 0.75rem;
+  right: 50%;
   background: #10b981;
   color: white;
   font-size: 0.75rem;
   padding: 0.25rem 0.5rem;
   border-radius: 999px;
   z-index: 1;
+  transition: 0.3;
 `;
 
 export const ErrorMessage = styled.div`
