@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # React Forminate
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Let's discover **Docusaurus in less than 60 minutes**.
 
 ## Getting Started
 
