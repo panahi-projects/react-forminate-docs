@@ -1,0 +1,74 @@
+/* src/components/UseCaseCards.module.css */
+
+/* Main container */
+.container {
+  margin: 2rem 0;
+}
+
+/* Card styling */
+.card {
+  height: 100%;
+  border-radius: var(--ifm-card-border-radius);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--ifm-card-background-color);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  border-color: var(--ifm-color-primary);
+}
+
+/* Card header */
+.cardHeader {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1rem 0;
+}
+
+.cardIcon {
+  font-size: 1.5rem;
+  margin-right: 0.75rem;
+  color: var(--ifm-color-primary);
+}
+
+.cardTitle {
+  margin-bottom: 0;
+  font-size: 1.1rem;
+  color: var(--ifm-heading-color);
+}
+
+/* Card body */
+.cardBody {
+  padding: 1rem;
+  flex-grow: 1;
+  font-size: 0.9rem;
+  color: var(--ifm-font-color-secondary);
+  line-height: 1.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 996px) {
+  .card {
+    margin-bottom: 1rem;
+  }
+
+  .cardTitle {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .cardHeader {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .cardIcon {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+}

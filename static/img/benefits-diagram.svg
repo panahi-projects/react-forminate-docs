@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <style>
+    .text { font: 16px sans-serif; }
+    .arrow { marker-end: url(#arrowhead); }
+    .node { rx: 5px; fill: #2563EB; }
+    .node-text { fill: white; }
+  </style>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#64748B" />
+    </marker>
+  </defs>
+
+  <!-- Nodes -->
+  <rect x="50" y="150" width="160" height="60" class="node" />
+  <text x="130" y="190" text-anchor="middle" class="node-text">JSON Schema</text>
+  
+  <rect x="300" y="150" width="160" height="60" class="node" />
+  <text x="380" y="190" text-anchor="middle" class="node-text">Forminate Engine</text>
+  
+  <rect x="550" y="150" width="160" height="60" class="node" />
+  <text x="630" y="190" text-anchor="middle" class="node-text">Renderless Logic</text>
+  
+  <!-- Arrows -->
+  <line x1="210" y1="180" x2="300" y2="180" class="arrow" stroke="#64748B" stroke-width="2" />
+  <line x1="460" y1="180" x2="550" y2="180" class="arrow" stroke="#64748B" stroke-width="2" />
+  
+  <!-- Output paths -->
+  <line x1="630" y1="210" x2="460" y2="280" class="arrow" stroke="#64748B" stroke-width="2" />
+  <line x1="630" y1="210" x2="580" y2="280" class="arrow" stroke="#64748B" stroke-width="2" />
+  <line x1="630" y1="210" x2="700" y2="280" class="arrow" stroke="#64748B" stroke-width="2" />
+  
+  <!-- Output labels -->
+  <text x="380" y="310" class="text">Your UI Components</text>
+  <text x="550" y="310" class="text">Validation</text>
+  <text x="650" y="310" class="text">State Management</text>
+</svg>

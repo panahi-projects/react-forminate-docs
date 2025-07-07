@@ -1,0 +1,103 @@
+---
+title: When to Use React Forminate
+sidebar_position: 3
+description: Identify the ideal scenarios for adopting React Forminate in your projects with clear comparisons and real-world use cases.
+---
+
+import ComparisonTable from '@site/src/components/ComparisonTable/ComparisonTable';
+import UseCaseCards from '@site/src/components/UseCaseCards/UseCaseCards';
+
+# When Should You Choose React Forminate?
+
+### The Right Tool for Dynamic, Complex Forms
+
+React Forminate shines in specific scenarios where traditional form libraries become cumbersome. Here's how to determine if it fits your needs:
+
+---
+
+## 🎯 Ideal Use Cases
+
+<UseCaseCards items={[
+  {
+    title: "Admin Dashboards",
+    description: "Build CRUD interfaces with API-backed fields and complex validation in minutes",
+    icon: "💼"
+  },
+  {
+    title: "Multi-Step Wizards",
+    description: "Conditional flows where steps change based on user input",
+    icon: "🧙"
+  },
+  {
+    title: "CMS/Business Configurable Forms",
+    description: "Non-developers can modify forms via JSON schemas",
+    icon: "🛠️"
+  },
+  {
+    title: "Data-Intensive Applications",
+    description: "Forms with 50+ fields, tabular data, or paginated inputs",
+    icon: "📊"
+  }
+]} />
+
+---
+
+## ✅ Choose React Forminate When...
+
+<div className="checklist">
+  <div className="checklist-item">
+    <span className="checkmark">✓</span>
+    You need <strong>JSON-driven forms</strong> (CMS integration, low-code tools)
+  </div>
+  <div className="checklist-item">
+    <span className="checkmark">✓</span>
+    Your forms require <strong>API-powered fields</strong> (dynamic dropdowns, search-as-you-type)
+  </div>
+  <div className="checklist-item">
+    <span className="checkmark">✓</span>
+    You're building <strong>complex conditional logic</strong> (show/hide fields based on multiple dependencies)
+  </div>
+  <div className="checklist-item">
+    <span className="checkmark">✓</span>
+    Your team values <strong>TypeScript-first development</strong> with end-to-end type safety
+  </div>
+</div>
+
+---
+
+## ⚠️ Consider Alternatives When...
+
+| Scenario                                         | Better Choice                      |
+|--------------------------------------------------|------------------------------------|
+| Simple contact forms with 3–5 fields             | React Hook Form                    |
+| Forms requiring drag-and-drop reordering         | Custom solution + DnD library      |
+| Ultra-high-performance forms (1000+ fields)      | Specialized virtualized solutions  |
+
+---
+
+## 🆚 Framework Comparison
+
+<ComparisonTable data={{
+  headers: ["Feature", "React Forminate", "Traditional Forms"],
+  rows: [
+    ["JSON Schema Definition", "✅ Built-in", "❌ Manual state"],
+    ["API-Driven Fields", "✅ Auto-sync", "⚠️ Custom hooks"],
+    ["Conditional Logic", "✅ Declarative", "⚠️ Imperative"],
+    ["Validation Scaling", "✅ Hierarchical", "⚠️ Fragile"],
+    ["Dev Experience", "✅ TypeScript-native", "⚠️ Mixed"]
+  ]
+}} />
+
+---
+
+## 🏭 Real-World Adoption Patterns
+
+### Enterprise Teams Love It For:
+- **Consistency**: Enforce validation rules and UI patterns across 100+ forms
+- **Maintainability**: Update form logic without touching React components
+- **Collaboration**: Designers/product can prototype with JSON schemas
+
+### Startups Choose It For:
+- **Velocity**: Launch complex forms 3x faster
+- **Flexibility**: Pivot form behavior without code changes
+- **Future-proofing**: Scale from MVP to production seamlessly

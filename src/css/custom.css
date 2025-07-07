@@ -6,6 +6,8 @@
 
 /* You can override the default Infima variables here. */
 :root {
+  --ifm-background-color: #ffffff; /* Base background */
+  --ifm-background-surface-color: #f8f9fa; /* Card/component surfaces */
   --ifm-color-primary: #2e8555;
   --ifm-color-primary-dark: #29784c;
   --ifm-color-primary-darker: #277148;
@@ -15,10 +17,26 @@
   --ifm-color-primary-lightest: #3cad6e;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-card-border-radius: 8px;
+  --ifm-card-background-color: var(--ifm-background-surface-color);
+
+  --ifm-color-emphasis-0: #f8f9fa; /* Lightest gray */
+  --ifm-color-emphasis-100: #e9ecef;
+  --ifm-color-emphasis-200: #dee2e6; /* Common border color */
+  --ifm-color-emphasis-300: #ced4da;
+  --ifm-color-emphasis-400: #adb5bd;
+  --ifm-color-emphasis-500: #6c757d;
+  --ifm-color-emphasis-600: #495057;
+  --ifm-color-emphasis-700: #343a40;
+  --ifm-color-emphasis-800: #212529;
+  --ifm-color-emphasis-900: #1a1a1a; /* Darkest gray */
+  --ifm-color-emphasis-1000: #000000;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
-[data-theme='dark'] {
+[data-theme="dark"] {
+  --ifm-background-color: #ffffff; /* Base background */
+  --ifm-background-surface-color: #f8f9fa; /* Card/component surfaces */
   --ifm-color-primary: #25c2a0;
   --ifm-color-primary-dark: #21af90;
   --ifm-color-primary-darker: #1fa588;
@@ -27,4 +45,18 @@
   --ifm-color-primary-lighter: #32d8b4;
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-card-border-radius: 8px;
+  --ifm-card-background-color: var(--ifm-background-surface-color);
+
+  --ifm-color-emphasis-0: #f8f9fa; /* Lightest gray */
+  --ifm-color-emphasis-100: #e9ecef;
+  --ifm-color-emphasis-200: #dee2e6; /* Common border color */
+  --ifm-color-emphasis-300: #ced4da;
+  --ifm-color-emphasis-400: #adb5bd;
+  --ifm-color-emphasis-500: #6c757d;
+  --ifm-color-emphasis-600: #495057;
+  --ifm-color-emphasis-700: #343a40;
+  --ifm-color-emphasis-800: #212529;
+  --ifm-color-emphasis-900: #1a1a1a; /* Darkest gray */
+  --ifm-color-emphasis-1000: #000000;
 }

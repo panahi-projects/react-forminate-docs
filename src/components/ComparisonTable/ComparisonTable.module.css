@@ -1,0 +1,105 @@
+.container {
+  overflow-x: auto;
+  margin: 2rem 0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.header,
+.featureHeader {
+  padding: 1rem;
+  text-align: left;
+  background-color: var(--ifm-color-emphasis-100);
+  font-weight: 600;
+}
+
+.featureHeader {
+  width: 35%;
+  border-top-left-radius: var(--ifm-card-border-radius);
+}
+
+.header:last-child {
+  border-top-right-radius: var(--ifm-card-border-radius);
+}
+
+.cell,
+.featureCell {
+  padding: 1rem;
+  border-bottom: 1px solid var(--ifm-color-emphasis-400);
+}
+
+.featureCell {
+  font-weight: 500;
+  color: var(--ifm-font-color-base);
+}
+
+.cell {
+  color: var(--ifm-font-color-secondary);
+}
+
+/* Zebra striping */
+tr:nth-child(even) {
+  background-color: var(--ifm-color-emphasis-50);
+}
+
+/* Responsive table */
+@media (max-width: 768px) {
+  .header,
+  .featureHeader {
+    display: none;
+  }
+
+  .cell,
+  .featureCell {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    border-bottom: none;
+  }
+
+  .cell:not(:last-child),
+  .featureCell:not(:last-child) {
+    border-bottom: 1px dashed var(--ifm-color-emphasis-200);
+  }
+
+  .cell::before,
+  .featureCell::before {
+    content: attr(data-label);
+    display: inline-block;
+    width: 40%;
+    font-weight: bold;
+    color: var(--ifm-color-primary);
+    vertical-align: top;
+  }
+
+  .cell > *,
+  .featureCell > * {
+    display: inline-block;
+    width: 58%;
+  }
+}
+
+/* Badge overrides */
+.badge {
+  font-size: 0.8em;
+  padding: 0.35em 0.65em;
+}
+
+.badge--success {
+  background-color: var(--ifm-color-success-lightest);
+  color: var(--ifm-color-success-dark);
+}
+
+.badge--danger {
+  background-color: var(--ifm-color-danger-lightest);
+  color: var(--ifm-color-danger-dark);
+}
+
+.badge--warning {
+  background-color: var(--ifm-color-warning-lightest);
+  color: var(--ifm-color-warning-dark);
+}
