@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# 🧩 Basic Usage
+# Basic Usage
 
 Getting started with **React Forminate** is straightforward. All you need is a simple form schema and the `DynamicForm` component.
 

@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# 🧪 Playground / Live Demo
+# Playground / Live Demo
 
 Want to see **React Forminate** in action? Jump into the interactive playground and experiment with form schemas, validation rules, and layouts — all in real-time.
 

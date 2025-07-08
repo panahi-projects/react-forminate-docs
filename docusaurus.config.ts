@@ -11,7 +11,7 @@ const config: Config = {
 
   // Where your site will be served from
   url: "https://panahi-projects.github.io",
-  baseUrl: "/react-forminate-docs/",
+  baseUrl: "/",
 
   // GitHub repo info
   projectName: "react-forminate-docs", // repo name
