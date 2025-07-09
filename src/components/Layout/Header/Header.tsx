@@ -31,7 +31,9 @@ const Header = () => {
           </Button>
         </div>
         <div>
-          <span className={styles.availabilityBadge}>v1.1.0 Just Released</span>
+          <span className={styles.availabilityBadge}>
+            <span className={styles.badgeCircle}></span> v1.1.0 Just Released
+          </span>
         </div>
 
         <div className={styles.clientsSection}>

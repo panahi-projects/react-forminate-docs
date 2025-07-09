@@ -274,6 +274,15 @@
   font-size: 0.9rem;
 }
 
+.badgeCircle {
+  width: 8px;
+  height: 8px;
+  background-color: var(--ifm-color-primary);
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 0.2rem;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .useCases {
