@@ -38,7 +38,7 @@ export default function NavbarLayout({ children }: Props): ReactNode {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10); // adjust threshold as needed
+      setScrolled(window.scrollY > 200); // adjust threshold as needed
     };
 
     handleScroll(); // initial check

@@ -5,3 +5,8 @@
 .navbarHidden {
   transform: translate3d(0, calc(-100% - 2px), 0);
 }
+
+.navbarScrolled {
+  backdrop-filter: blur(40px);
+  background-color: rgba(0, 6, 35, 0.7) !important;
+}

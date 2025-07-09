@@ -113,11 +113,6 @@ body {
   z-index: 1000;
   transition: all 0.3s ease;
 }
-.navbarScrolled {
-  backdrop-filter: blur(10px);
-  background-color: rgba(240, 3, 3, 1) !important;
-  /* background-color: rgba(0, 0, 0, 0.7) !important; */
-}
 
 /* Navbar inner container */
 .navbar__inner {
