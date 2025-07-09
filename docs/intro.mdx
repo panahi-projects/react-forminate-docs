@@ -1,0 +1,54 @@
+---
+sidebar_position: 1
+---
+
+
+# React Forminate
+
+The missing link between **configuration** and **complex forms** in React
+
+```tsx
+import { DynamicForm } from "react-forminate";
+
+function FirstFormPreview() {
+  return (
+    <DynamicForm
+      formData={{
+        formId: "firstForm",
+        fields: [
+          {
+            fieldId: "demo",
+            type: "text",
+            label: "Try typing here",
+            description: "This live demo reacts like a real form",
+          },
+        ],
+      }}
+    />
+  );
+}
+
+export default FirstFormPreview;
+```
+
+### Why This Exists
+Most form libraries force you to choose:
+- Simple setup (but limited features)
+- Full control (with complex boilerplate)
+
+React Forminate gives you both through:
+1. A declarative JSON schema
+2. Escape hatches for custom logic
+
+### How It Feels to Use
+1. Define your form structure in JSON/TypeScript
+2. Render with `<DynamicForm>`
+3. Extend with plugins when needed
+
+<pre>
+  <code>
+    <span style={{ color: '#6ee7b7' }}># The moment you’ll fall in love:</span>
+    npm install <span style={{ color: '#f472b6' }}>react-forminate</span>
+    <span style={{ color: '#6ee7b7' }}># Then watch 100 lines of form code shrink to 10</span>
+  </code>
+</pre>
