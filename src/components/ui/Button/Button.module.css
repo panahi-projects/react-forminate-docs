@@ -1,0 +1,107 @@
+/* Base Button Styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 2rem;
+  font-weight: 400;
+  font-size: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  white-space: nowrap;
+}
+
+/* Default Variant */
+.btn_default {
+  color: white;
+}
+
+.btn_default_primary {
+  background-color: var(--ifm-color-primary);
+  color: var(--ifm-color-tertiary);
+}
+
+.btn_default_secondary {
+  background-color: #57ee40;
+}
+
+.btn_default_success {
+  background-color: #28a745;
+}
+
+.btn_default_danger {
+  background-color: #dc3545;
+}
+
+/* Outline Variant */
+.btn_outline {
+  background-color: transparent;
+}
+
+.btn_outline_primary {
+  color: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
+}
+
+.btn_outline_secondary {
+  color: #57ee40;
+  border-color: #57ee40;
+}
+
+.btn_outline_success {
+  color: #28a745;
+  border-color: #28a745;
+}
+
+.btn_outline_danger {
+  color: #dc3545;
+  border-color: #dc3545;
+}
+
+/* Link Variant */
+.btn_link {
+  background-color: transparent;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  text-decoration: underline;
+}
+
+.btn_link_primary {
+  color: #089ea9;
+}
+
+.btn_link_secondary {
+  color: #57ee40;
+}
+
+.btn_link_success {
+  color: #28a745;
+}
+
+.btn_link_danger {
+  color: #dc3545;
+}
+
+/* Hover States */
+.btn_default:hover {
+  opacity: 0.9;
+  box-shadow: 0 4px 12px rgba(16, 16, 16, 0.3);
+}
+
+.btn_outline:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.btn_link:hover {
+  opacity: 0.8;
+  text-decoration: none;
+}
+
+/* Disabled State */
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}

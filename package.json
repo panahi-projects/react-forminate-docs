@@ -23,6 +23,7 @@
     "clsx": "^2.0.0",
     "copy-to-clipboard": "^3.3.3",
     "framer-motion": "^12.7.4",
+    "lucide-react": "^0.525.0",
     "prism-react-renderer": "^2.3.0",
     "prismjs": "^1.30.0",
     "react": "^19.0.0",

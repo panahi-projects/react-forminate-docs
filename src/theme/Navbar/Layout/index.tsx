@@ -1,4 +1,10 @@
-import React, { type ComponentProps, type ReactNode } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  type ComponentProps,
+  type ReactNode,
+} from "react";
 import clsx from "clsx";
 import { useThemeConfig } from "@docusaurus/theme-common";
 import {
@@ -27,6 +33,20 @@ export default function NavbarLayout({ children }: Props): ReactNode {
   } = useThemeConfig();
   const mobileSidebar = useNavbarMobileSidebar();
   const { navbarRef, isNavbarVisible } = useHideableNavbar(hideOnScroll);
+
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10); // adjust threshold as needed
+    };
+
+    handleScroll(); // initial check
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <nav
       ref={navbarRef}
@@ -46,6 +66,7 @@ export default function NavbarLayout({ children }: Props): ReactNode {
           "navbar--dark": style === "dark",
           "navbar--primary": style === "primary",
           "navbar-sidebar--show": mobileSidebar.shown,
+          [styles.navbarScrolled]: scrolled,
         }
       )}
     >
