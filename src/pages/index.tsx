@@ -8,6 +8,7 @@ import Heading from "@theme/Heading";
 
 import styles from "./index.module.css";
 import Header from "../components/Layout/Header/Header";
+import FeatureSection from "../components/FeatureSection/FeatureSection";
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
@@ -35,15 +36,17 @@ function HomepageHeader() {
 export default function Home(): ReactNode {
   const { siteConfig } = useDocusaurusContext();
   return (
-    <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="The headless form builder that transforms JSON schemas into production-ready React forms with zero boilerplate."
-    >
-      <HomepageHeader />
-      <main>
+    <div className="page-home">
+      <Layout
+        title={`Hello from ${siteConfig.title}`}
+        description="The headless form builder that transforms JSON schemas into production-ready React forms with zero boilerplate."
+      >
+        <HomepageHeader />
+        {/* <main>
         <HomepageFeatures />
-        <HomepageFeatures />
-      </main>
-    </Layout>
+        <FeatureSection />
+      </main> */}
+      </Layout>
+    </div>
   );
 }

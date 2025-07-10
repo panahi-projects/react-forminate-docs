@@ -75,7 +75,7 @@ body {
   font-variation-settings: "wdth" 100;
 }
 
-.container {
+.page-home .container {
   width: 100%;
   max-width: 1280px;
   margin-left: auto;
@@ -86,7 +86,7 @@ body {
 
 /* Medium screens (tablets) */
 @media (min-width: 768px) {
-  .container {
+  .page-home .container {
     padding-left: 2rem;
     padding-right: 2rem;
   }
@@ -94,14 +94,14 @@ body {
 
 /* Large screens (desktops) */
 @media (min-width: 1024px) {
-  .container {
+  .page-home .container {
     padding-left: 3rem;
     padding-right: 3rem;
   }
 }
 
 /* Navbar container */
-.navbar {
+.page-home .navbar {
   position: fixed;
   top: 0;
   left: 0;
@@ -115,7 +115,7 @@ body {
 }
 
 /* Navbar inner container */
-.navbar__inner {
+.page-home .navbar__inner {
   max-width: 1200px;
   margin: 0 auto;
   height: 100%;
@@ -125,17 +125,17 @@ body {
 }
 
 /* Brand/logo styles */
-.navbar__brand {
+.page-home .navbar__brand {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.navbar__logo {
+.page-home .navbar__logo {
   height: 32px;
 }
 
-.navbar__title {
+.page-home .navbar__title {
   color: white;
   font-size: 1.5rem;
   font-weight: 600;
@@ -143,7 +143,7 @@ body {
 }
 
 /* Navigation links */
-.navbar__items {
+.page-home .navbar__items {
   display: flex;
   gap: 2rem;
   margin: 0;
@@ -151,7 +151,7 @@ body {
   list-style: none;
 }
 
-.navbar__link {
+.page-home .navbar__link {
   color: rgba(255, 255, 255, 0.9) !important;
   font-weight: 500;
   font-size: 1rem;
@@ -163,15 +163,15 @@ body {
   border: none !important;
 }
 
-.navbar__link:hover {
+.page-home .navbar__link:hover {
   color: white !important;
 }
 
-.navbar__link--active {
+.page-home .navbar__link--active {
   color: white !important;
 }
 
-.navbar__link--active::after {
+.page-home .navbar__link--active::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -182,12 +182,12 @@ body {
 }
 
 /* Mobile menu toggle */
-.navbar__toggle {
+.page-home .navbar__toggle {
   color: white;
 }
 
 /* Mobile sidebar */
-.navbar-sidebar {
+.page-home .navbar-sidebar {
   background: rgba(0, 0, 0, 0.9);
   backdrop-filter: blur(10px);
   z-index: 9999;
@@ -196,22 +196,22 @@ body {
 
 /* Responsive adjustments */
 @media (max-width: 996px) {
-  .navbar {
+  .page-home .navbar {
     padding: 0 1rem;
     overflow-y: visible;
   }
 
-  .navbar__items--right {
+  .page-home .navbar__items--right {
     display: none;
   }
 }
 
-.navbar-sidebar__backdrop {
+.page-home .navbar-sidebar__backdrop {
   background: rgba(0, 0, 0, 0.9);
   backdrop-filter: blur(10px);
   height: 100vh;
 }
 
-.text-primary {
+.page-home .text-primary {
   color: var(--ifm-color-primary);
 }
