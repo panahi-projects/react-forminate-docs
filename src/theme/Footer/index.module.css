@@ -1,0 +1,25 @@
+/* Footer */
+.footer {
+  /* padding: 2rem 0; */
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footerLinks {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footerLinks a {
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.2s ease;
+}
+
+.footerLinks a:hover {
+  color: var(--ifm-color-primary);
+}

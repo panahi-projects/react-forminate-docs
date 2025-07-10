@@ -78,7 +78,7 @@ export default function NavbarContent(): ReactNode {
         // Ask the user to add the respective navbar items => more flexible
         <>
           <NavbarItems items={rightItems} />
-          <NavbarColorModeToggle className={styles.colorModeToggle} />
+          {/* <NavbarColorModeToggle className={styles.colorModeToggle} /> */}
           {!searchBarItem && (
             <NavbarSearch>
               <SearchBar />
