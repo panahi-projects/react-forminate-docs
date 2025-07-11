@@ -6,10 +6,10 @@ import { useHistory } from "@docusaurus/router";
 const Header = () => {
   const history = useHistory();
   const onGetStarted = () => {
-    history.push("/docs/intro");
+    history.push("/docs/getting-started/installation");
   };
-  const onRedirectExample = () => {
-    history.push("/examples");
+  const onRedirectIntro = () => {
+    history.push("/docs/intro");
   };
   return (
     <section className={styles.hero}>
@@ -35,8 +35,8 @@ const Header = () => {
           <Button variant="default" color="primary" onClick={onGetStarted}>
             Get Started
           </Button>
-          <Button variant="outline" color="primary" onClick={onRedirectExample}>
-            Examples
+          <Button variant="outline" color="primary" onClick={onRedirectIntro}>
+            Intro
           </Button>
         </div>
         <div>

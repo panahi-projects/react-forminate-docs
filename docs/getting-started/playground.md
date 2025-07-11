@@ -10,7 +10,7 @@ Want to see **React Forminate** in action? Jump into the interactive playground 
 
 ### 🚀 Try It Live
 
-[🔗 Open Playground on CodeSandbox](https://codesandbox.io/s/react-forminate-demo) <!-- Replace this with your actual demo URL -->
+[🔗 Open Playground on CodeSandbox](https://codesandbox.io/s/github/panahi-projects/react-forminate--nextjs-demo/main?file=/app/page.tsx&runonclick=1) <!-- Replace this with your actual demo URL -->
 
 > The playground lets you edit the `formData` schema and see the form update instantly. It’s a great way to test fields, validation, layouts, and custom components.
 
