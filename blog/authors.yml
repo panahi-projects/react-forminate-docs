@@ -7,17 +7,15 @@ yangshun:
   socials:
     x: yangshunz
     github: yangshun
-
-slorber:
-  name: Sébastien Lorber
-  title: Docusaurus maintainer
-  url: https://sebastienlorber.com
-  image_url: https://github.com/slorber.png
+panahsa:
+  name: Saeed Panahi
+  title: React-Forminate maintainer
+  url: https://github.com/panahi-projects
+  image_url: https://github.com/panahi-projects.png
   page:
     # customize the url of the author page at /blog/authors/<permalink>
-    permalink: '/all-sebastien-lorber-articles'
+    permalink: "/all-saeed-panahi-articles"
   socials:
-    x: sebastienlorber
-    linkedin: sebastienlorber
-    github: slorber
-    newsletter: https://thisweekinreact.com
+    linkedin: saeed-panahi-developer92
+    github: panahi-projects
+    newsletter: https://saeed-panahi.com

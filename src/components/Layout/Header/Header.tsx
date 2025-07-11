@@ -1,7 +1,16 @@
 import { BadgeCheck, CircleCheckBig, Lightbulb } from "lucide-react";
 import styles from "./Header.module.css";
 import Button from "../../ui/Button/Button";
+import { useHistory } from "@docusaurus/router";
+
 const Header = () => {
+  const history = useHistory();
+  const onGetStarted = () => {
+    history.push("/docs/intro");
+  };
+  const onRedirectExample = () => {
+    history.push("/examples");
+  };
   return (
     <section className={styles.hero}>
       <div className={styles.backdrop}></div>
@@ -23,10 +32,10 @@ const Header = () => {
         </p>
 
         <div className={styles.ctaContainer}>
-          <Button variant="default" color="primary">
+          <Button variant="default" color="primary" onClick={onGetStarted}>
             Get Started
           </Button>
-          <Button variant="outline" color="primary">
+          <Button variant="outline" color="primary" onClick={onRedirectExample}>
             Examples
           </Button>
         </div>
