@@ -59,6 +59,16 @@ const Header = () => {
             </div>
           </div>
         </div>
+        <div className={styles.footer}>
+          Developed by{" "}
+          <a
+            href="https://github.com/panahi-projects"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            @Saeed Panahi
+          </a>
+        </div>
       </div>
     </section>
   );

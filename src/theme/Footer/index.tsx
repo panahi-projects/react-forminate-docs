@@ -16,7 +16,8 @@ function Footer(): ReactNode {
   const { copyright, links, logo, style } = footer;
 
   return (
-    <FooterSection />
+    <div></div>
+    // <FooterSection />
     // <FooterLayout
     //   style={style}
     //   links={links && links.length > 0 && <FooterLinks links={links} />}

@@ -19,7 +19,7 @@
   position: relative;
   overflow: hidden;
   width: 100%;
-  padding: 4rem 0;
+  padding: 0;
   padding-top: 180px;
   min-height: 100vh;
 }
@@ -301,4 +301,7 @@
     grid-template-columns: 1fr;
     gap: 1rem;
   }
+}
+.footer {
+  color: var(--ifm-color-emphasis-400);
 }

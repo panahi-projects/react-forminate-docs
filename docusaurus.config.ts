@@ -67,6 +67,11 @@ const config: Config = {
     require.resolve("./plugins/rawLoaderPlugin"),
   ],
   themeConfig: {
+    colorMode: {
+      defaultMode: "dark",
+      disableSwitch: true, // This hides the theme toggle button
+      respectPrefersColorScheme: false, // Force dark mode regardless of user's system preference
+    },
     liveCodeBlock: {
       /**
        * The position of the live playground, above or under the editor
