@@ -1,0 +1,161 @@
+---
+sidebar_position: 11
+---
+
+# Group
+
+## Group Field
+
+The `group` field type allows you to logically organize related fields together with a common label and styling. It's particularly useful for creating semantic sections in your forms.
+
+## Basic Usage
+
+```ts
+{
+  fieldId: "user_info",
+  type: "group",
+  label: "User Information",
+  fields: [
+    // your nested fields here
+  ]
+}
+```
+
+## Props
+| Prop             | Type                     | Description                                                   | Default       |
+|------------------|--------------------------|---------------------------------------------------------------|---------------|
+| `type`           | `"group"`                | Must be `"group"` to identify field type                      | **required**  |
+| `fieldId`        | `string`                 | Unique identifier for the group                               | **required**  |
+| `as`             | `string`                 | HTML element to use as container (`"fieldset"` or valid tag)  | `"fieldset"`  |
+| `label`          | `string` \| `ReactNode`  | Label or legend for the group                                 | **required**  |
+| `fields`         | `array`                  | Array of fields to render inside the group                    | **required**  |
+| `className`      | `string`                 | CSS classes for the group container                           | `""`          |
+| `styles`         | `object`                 | Inline styles for the group container                         | `{}`          |
+| `legendClassName`| `string`                 | CSS classes for the legend element (when using `fieldset`)    | `""`          |
+| `legendStyles`   | `object`                 | Inline styles for the legend element (when using `fieldset`)  | `{}`          |
+| `disabled`       | `boolean`                | Whether to disable all fields in the group                    | `false`       |
+
+
+## Features
+
+### Basic Grouping
+```tsx
+{
+  fieldId: "contact_details",
+  type: "group",
+  label: "Contact Details",
+  fields: [
+    {
+      fieldId: "email",
+      type: "text",
+      label: "Email"
+    },
+    {
+      fieldId: "phone",
+      type: "text",
+      label: "Phone"
+    }
+  ]
+}
+```
+
+### Custom Container Element
+Change the `container` element from `fieldset` to another HTML tag:
+```tsx
+{
+  fieldId: "custom_container_group",
+  type: "group",
+  as: "div",
+  label: "Preferences",
+  fields: [
+    // preference fields
+  ]
+}
+```
+
+### Styling
+Apply custom styles to the group and its legend:
+```tsx
+{
+  fieldId: "styled_group",
+  type: "group",
+  label: "Billing Information",
+  className: "p-6 bg-blue-50 rounded-xl border border-blue-200",
+  legendClassName: "text-blue-800 font-bold text-lg px-2",
+  fields: [
+    // billing fields
+  ]
+}
+```
+
+### Disabled State
+Disable all fields within a group:
+```tsx
+{
+  fieldId: "readonly_info",
+  type: "group",
+  label: "Account Information (Read Only)",
+  disabled: true,
+  fields: [
+    // account fields
+  ]
+}
+```
+
+## Complete Examples
+### Standard Fieldset Group
+```tsx
+{
+  fieldId: "shipping_address",
+  type: "group",
+  label: "Shipping Address",
+  className: "mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200",
+  legendClassName: "text-gray-700 font-semibold px-2",
+  fields: [
+    {
+      fieldId: "street",
+      type: "text",
+      label: "Street Address",
+      required: true
+    },
+    {
+      fieldId: "city",
+      type: "text",
+      label: "City",
+      required: true
+    },
+    {
+      fieldId: "zip",
+      type: "text",
+      label: "ZIP Code",
+      validation: [
+        {
+          pattern: "^\\d{5}(-\\d{4})?$",
+          message: "Invalid ZIP code format"
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Custom Div Container with Complex Label
+```tsx
+const ComplexLabel = () => (
+  <div className="flex items-center gap-2">
+    <InfoIcon className="w-5 h-5" />
+    <span>Advanced Settings</span>
+  </div>
+);
+
+{
+  fieldId: "advanced_settings",
+  type: "group",
+  as: "div",
+  label: <ComplexLabel />,
+  className: "mt-8 p-6 bg-yellow-50 border-l-4 border-yellow-400",
+  fields: [
+    // advanced settings fields
+  ]
+}
+```
