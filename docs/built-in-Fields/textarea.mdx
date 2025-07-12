@@ -1,0 +1,128 @@
+---
+sidebar_position: 10
+---
+
+# Textarea
+
+## Textarea Field
+
+The `textarea` field type provides a multi-line text input control, ideal for longer text entries like descriptions, comments, or addresses.
+
+## Basic Usage
+
+```tsx
+{
+  fieldId: "basic_textarea",
+  type: "textarea",
+  label: "Comments",
+  placeholder: "Enter your comments here"
+}
+```
+
+## Props
+| Prop             | Type            | Description                                  | Default           |
+|------------------|------------------|----------------------------------------------|-------------------|
+| `type`           | `"textarea"`     | Must be `"textarea"` to identify field type  | **required**      |
+| `fieldId`        | `string`         | Unique identifier for the field              | **required**      |
+| `label`          | `string`         | Label text for the textarea                  | `optional`        |
+| `placeholder`    | `string`         | Placeholder text                             | `optional`        |
+| `rows`           | `number`         | Visible number of text lines                 | *browser default* |
+| `cols`           | `number`         | Visible width in character columns           | *browser default* |
+| `required`       | `boolean`        | Whether field is required                    | `false`           |
+| `className`      | `string`         | CSS classes for the textarea element         | `optional`        |
+| `labelClassName` | `string`         | CSS classes for the label element            | `optional`        |
+| `autoCorrect`    | `string`         | Specifies autocorrect behavior               | `optional`        |
+| `autoCapitalize` | `string`         | Specifies autocapitalization behavior        | `optional`        |
+| `spellCheck`     | `boolean`        | Specifies spellcheck behavior                | `optional`        |
+| `autoFocus`      | `boolean`        | Whether field should autofocus               | `false`           |
+| `value`          | `string`         | Controlled field value                       | `optional`        |
+| `defaultValue`   | `string`         | Uncontrolled default value                   | `optional`        |
+
+
+## Features
+### Basic Configuration
+```tsx
+{
+  fieldId: "address",
+  type: "textarea",
+  label: "Street Address",
+  placeholder: "123 Main St",
+  rows: 3,
+  required: true
+}
+```
+
+### Styling
+Apply custom styles using classes:
+```tsx
+{
+  fieldId: "styled_textarea",
+  type: "textarea",
+  label: "Feedback",
+  className: "border-2 border-blue-300 rounded-lg p-4 focus:ring-2 focus:ring-blue-500",
+  labelClassName: "text-lg font-medium text-gray-700 mb-2"
+}
+```
+
+### Textarea Dimensions
+Control visible size with rows and cols:
+```tsx
+{
+  fieldId: "large_textarea",
+  type: "textarea",
+  label: "Detailed Description",
+  rows: 8,
+  cols: 60
+}
+```
+
+### Text Input Features
+Configure text input behavior:
+```tsx
+{
+  fieldId: "optimized_textarea",
+  type: "textarea",
+  label: "Notes",
+  autoCorrect: "on",
+  autoCapitalize: "sentences",
+  spellCheck: true
+}
+```
+
+### Accessibility
+Make your textarea accessible:
+```tsx
+{
+  fieldId: "accessible_textarea",
+  type: "textarea",
+  label: "Special Instructions",
+  "aria-label": "Enter special instructions here",
+  "aria-describedby": "instructions-help"
+}
+```
+
+## Complete Examples
+#### Standard Textarea with Validation
+
+```tsx
+{
+  fieldId: "user_bio",
+  type: "textarea",
+  label: "Biography",
+  placeholder: "Tell us about yourself",
+  rows: 5,
+  required: true,
+  className: "border border-gray-300 rounded p-3 w-full",
+  labelClassName: "block mb-2 font-medium",
+  validation: [
+    {
+      minLength: 20,
+      message: "Biography should be at least 20 characters"
+    },
+    {
+      maxLength: 500,
+      message: "Biography cannot exceed 500 characters"
+    }
+  ]
+}
+```
