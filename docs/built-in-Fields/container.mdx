@@ -1,0 +1,195 @@
+---
+sidebar_position: 9
+---
+
+# Container
+
+## Container Field Properties
+
+The `container` field type allows you to group and arrange other fields in a grid layout with customizable columns, gaps, and styling options.
+
+### Basic Usage
+
+```tsx
+{
+  fieldId: "basic_container",
+  type: "container",
+  columns: 2,
+  fields: [
+    // your fields here
+  ]
+}
+```
+
+### Props
+
+| Prop                   | Type           | Description                                     | Default     |
+|------------------------|----------------|-------------------------------------------------|-------------|
+| `as`                   | `string`       | HTML element to use as container                | `"div"`     |
+| `columns`              | `number`       | Number of columns in the grid                   | `1`         |
+| `gap`                  | `number`       | Gap between grid items in pixels                | `16`        |
+| `fields`               | `array`        | Array of fields to render inside container      | `[]`        |
+| `containerStyles`      | `CSSProperties`| Styles for the outer container                  | `undefined` |
+| `containerClassName`   | `string`       | Class name for the outer container              | `undefined` |
+| `styles`               | `CSSProperties`| Styles for the grid container                   | `undefined` |
+| `className`            | `string`       | Class name for the grid container               | `undefined` |
+| `itemsStyles`          | `CSSProperties`| Base styles for all grid items                  | `undefined` |
+| `itemsClassName`       | `string`       | Base class name for all grid items              | `undefined` |
+| `header`               | `ReactNode`    | Header content to render above grid             | `undefined` |
+| `footer`               | `ReactNode`    | Footer content to render below grid             | `undefined` |
+| `itemsParentAttributes`| `object`       | Custom attributes for specific grid items       | `undefined` |
+| `children`             | `ReactNode`    | Additional children to render in grid           | `undefined` |
+
+### Features
+#### Grid Layout
+Control the number of columns and gaps:
+
+```tsx
+{
+  fieldId: "grid_container",
+  type: "container",
+  columns: 3,
+  gap: 24,
+  fields: [
+    // fields will be arranged in 3 columns with 24px gap
+  ]
+}
+```
+
+### Header and Footer
+Add custom header and footer components:
+
+```tsx
+const MyHeader = () => <h2>Section Title</h2>;
+const MyFooter = () => <p>Section notes</p>;
+
+{
+  fieldId: "container_with_header_footer",
+  type: "container",
+  header: <MyHeader />,
+  footer: <MyFooter />,
+  fields: [
+    // your fields
+  ]
+}
+```
+
+### Custom Styling
+Apply styles at different levels:
+```tsx
+{
+  fieldId: "styled_container",
+  type: "container",
+  containerClassName: "bg-gray-100 p-4 rounded-lg",
+  styles: { border: "1px solid #e2e8f0" },
+  itemsClassName: "p-2 bg-white",
+  itemsStyles: { borderRadius: "4px" },
+  fields: [
+    // your fields
+  ]
+}
+```
+
+### Column Spanning
+Control how fields span columns using itemsParentAttributes:
+
+```tsx
+{
+  fieldId: "spanning_container",
+  type: "container",
+  columns: 3,
+  itemsParentAttributes: {
+    "full_width_field": {
+      colSpan: 3 // spans all 3 columns
+    },
+    "half_width_field": {
+      colSpan: 2 // spans 2 of 3 columns
+    }
+  },
+  fields: [
+    {
+      fieldId: "full_width_field",
+      // field definition
+    },
+    {
+      fieldId: "half_width_field",
+      // field definition
+    }
+  ]
+}
+```
+
+### Custom HTML Attributes
+Add custom attributes to grid items:
+```tsx
+{
+  fieldId: "container_with_attrs",
+  type: "container",
+  itemsParentAttributes: {
+    "special_field": {
+      "data-testid": "special-field",
+      "aria-label": "Important field"
+    }
+  },
+  fields: [
+    {
+      fieldId: "special_field",
+      // field definition
+    }
+  ]
+}
+```
+
+### Complete Example
+```tsx
+import React from "react";
+
+const SectionHeader = () => (
+  <h2 className="text-xl font-bold mb-4">Personal Information</h2>
+);
+
+const SectionFooter = () => (
+  <p className="text-sm text-gray-500 mt-4">All fields are required</p>
+);
+
+{
+  fieldId: "personal_info_section",
+  type: "container",
+  as: "section",
+  columns: 2,
+  gap: 20,
+  containerClassName: "p-6 bg-gray-50 rounded-lg",
+  header: <SectionHeader />,
+  footer: <SectionFooter />,
+  itemsParentAttributes: {
+    full_name: { colSpan: 2 },
+    bio: { colSpan: 2 }
+  },
+  fields: [
+    {
+      fieldId: "full_name",
+      type: "text",
+      label: "Full Name",
+      // field config
+    },
+    {
+      fieldId: "email",
+      type: "text",
+      label: "Email",
+      // field config
+    },
+    {
+      fieldId: "phone",
+      type: "text",
+      label: "Phone",
+      // field config
+    },
+    {
+      fieldId: "bio",
+      type: "textarea",
+      label: "Biography",
+      // field config
+    }
+  ]
+}
+```
