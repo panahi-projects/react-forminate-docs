@@ -1,0 +1,8 @@
+{
+  "label": "Form Schema",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "Master React Forminate's JSON-driven architecture through core concepts, practical schema examples, and pro tips. Learn how to define forms as data—not components—with type-safe structures for dynamic fields, conditional logic, and real-time validation."
+  }
+}

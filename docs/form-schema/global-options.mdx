@@ -1,0 +1,29 @@
+---
+sidebar_position: 1
+---
+
+# Form Schema Structure
+
+The foundation of React-Forminate is its declarative JSON schema. This document explains the core structure and properties available.
+
+### Base Schema Structure
+
+```ts
+interface FormDataCollectionType {
+  formId: string;          // Unique form identifier
+  title?: string;          // Form display title
+  description?: string;    // Help text
+  fields: FormFieldType[]; // Array of field definitions
+  baseUrl?: string;        // API endpoint prefix
+  options?: FormOptions;   // Global form behaviors
+}
+```
+
+### Global options
+
+```ts
+interface FormOptions {
+  validateFieldsOnBlur?: boolean; // Default: true
+  // Additional global options...
+}
+```

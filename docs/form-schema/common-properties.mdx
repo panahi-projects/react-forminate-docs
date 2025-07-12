@@ -1,0 +1,96 @@
+---
+sidebar_position: 2
+---
+
+# Common Field Properties
+
+![Form Base Fields](/img/form-base-fields.svg)
+
+All fields extend these base properties:
+
+```ts
+export interface BaseField {
+  fieldId: string; // Unique identifier for the field (e.g., "email")
+  type: string; // Field type (e.g., "text", "select", "file", etc.)
+
+  // Presentation
+  label?: string | Function; // Display text or dynamic label function. (e.g., "Email" OR ({ values }) => `${values.lang} Email`)
+  description?: string; // Help text shown below field. (e.g., "Email must contain `@` and `.`")
+  
+  // Validation
+  required?: boolean | Function; // Whether field is mandatory. (e.g., `true` OR ({ values }) => values.region === 'US')
+  requiredMessage?: string | Function; // Custom required error message. (e.g., "Email is required" OR ({ values }) => values.age > 18 ? "Email is required for upper 18")
+  validation?: ValidationRule[]; // Array of validation rules
+  
+  // Layout & Styling
+  className?: string; // CSS classes for input element (e.g., Tailwind: "mb-4 border rounded")
+  containerClassName?: string; // CSS classes for wrapper div (e.g., Tailwind: "mb-4 border rounded")
+  labelClassName?: string; // CSS classes for label (e.g., Tailwind: "mb-4 border rounded")
+  styles?: React.CSSProperties; // Inline styles for input element (e.g., { backgroundColor: '#f8f9fa' })
+  containerStyles?: React.CSSProperties; // Inline styles for wrapper (e.g., { backgroundColor: '#f8f9fa' })
+  labelStyles?: React.CSSProperties; // Inline styles for label (e.g., { backgroundColor: '#f8f9fa' })
+
+  // Behavior
+  visibility?: FieldVisibilityType; // Conditional display rules
+  /*
+    e.g. 
+
+    | boolean
+    | {
+      dependsOn: FieldIdType[] | FieldIdType;
+      condition: VisibilityConditionType;
+      value: string | number;
+    };
+  */
+  disabled?: boolean | Function; // Disabled state (static or dynamic). (e.g., `true` OR ({ values }) => values.region === 'US')
+  
+  // Advanced
+  fields?: FormFieldType[]; // Child fields (for group/container types)
+  _defaultValue?: SupportedTypes; // Initial value (internal use)
+}
+```
+
+### Field Example
+
+Complete Email Field Example
+
+```jsx
+function EmailExample() {
+  const emailSchema = {
+    formId: "email-demo",
+    fields: [
+      {
+        fieldId: "email",
+        type: "email", // Specialized email input type
+        label: "Work Email",
+        placeholder: "your.email@company.com",
+        required: true,
+        requiredMessage: "We need your email to contact you",
+        className: "input-field", // Custom CSS class
+        validation: [
+          {
+            pattern: "^\\S+@\\S+\\.\\S+$", // Standard email regex
+            message: "Please enter a valid company email"
+          },
+          {
+            custom: (value) => value.endsWith("@company.com"),
+            message: "Only company emails allowed"
+          }
+        ],
+        description: "Use your @company.com email address"
+      }
+    ]
+  };
+
+  return <DynamicForm formData={emailSchema} onSubmit={console.log} />;
+}
+```
+
+**Key Email Field Properties**
+
+| Property              | Type         | Description                   | Example                                   |
+|-----------------------|--------------|-------------------------------|-------------------------------------------|
+| `type`                | `"email"`    | Optimized for email input (mobile keyboard) | `type: "email"`                      |
+| `validation.pattern`  | `string`     | Regex pattern for basic format | `^\\S+@\\S+\\.\\S+$`                     |
+| `validation.custom`   | `function`   | Custom domain validation       | `(val) => val.endsWith("@company.com")`  |
+| `description`         | `string`     | Help text below field          | `"Must use company domain"`              |
