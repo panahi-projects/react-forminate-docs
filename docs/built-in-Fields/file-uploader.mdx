@@ -1,0 +1,216 @@
+---
+sidebar_position: 7
+---
+
+# File
+
+## File Upload Component
+
+The File Upload field provides comprehensive file handling with support for client-side processing, server uploads, and various storage formats.
+
+## Complete Configuration Options
+
+### File Selection Options
+| Property | Type | Description | Example |
+|----------|------|-------------|---------|
+| `accept` | `string\|string[]` | Allowed file types/extensions | `"image/*"` or `[".pdf", ".docx"]` |
+| `multiple` | `boolean` | Allow multiple file selection | `true` |
+| `maxSizeMB` | `number` | Maximum file size in megabytes | `5` (for 5MB limit) |
+| `minFiles` | `number` | Minimum required files | `2` (require at least 2 files) |
+
+### Upload Behavior Options
+| Property | Type | Description | Example |
+|----------|------|-------------|---------|
+| `uploadUrl` | `string` | Endpoint for automatic uploads | `"/api/upload"` |
+| `uploadMethod` | `"POST"\|"PUT"\|"PATCH"` | HTTP method for uploads | `"POST"` |
+| `uploadHeaders` | `Record<string, string>` | Custom headers for upload | `{ "Authorization": "Bearer {{token}}" }` |
+| `presignedUrlFn` | `string` | Function to generate pre-signed URLs | `"generatePresignedUrl"` |
+
+### File Handling Options
+| Property | Type | Description | Example |
+|----------|------|-------------|---------|
+| `storageFormat` | `string` | How to store the file data | `"blobUrl"` (for previews) |
+| `preview` | `boolean` | Enable file previews | `true` (default) |
+| `renameFile` | `boolean` | Sanitize filenames automatically | `true` |
+| `fileTypes` | `string[]` | Alternative to `accept` with stricter validation | `["image/jpeg", "image/png"]` |
+| `storeLocally` | `boolean` | Keep file in memory before upload | `false` |
+
+## Complete Example
+
+```jsx
+function CompleteFileUploadExample() {
+  const schema = {
+    formId: "document-upload",
+    fields: [{
+      fieldId: "projectFiles",
+      type: "file",
+      label: "Project Documents",
+      description: "Upload all related project files",
+      
+      // Selection options
+      multiple: true,
+      accept: [".pdf", ".docx", ".xlsx"],
+      maxSizeMB: 10,
+      minFiles: 1,
+      
+      // Upload configuration
+      uploadUrl: "/api/project/{{projectId}}/upload",
+      uploadMethod: "POST",
+      uploadHeaders: {
+        "X-Project-ID": "{{projectId}}"
+      },
+      
+      // File handling
+      storageFormat: "remoteUrl",
+      preview: true,
+      renameFile: true,
+      
+      // Validation
+      validation: [{
+        custom: (files) => files.length <= 5,
+        message: "Maximum 5 files allowed"
+      }],
+      
+      // Events
+      events: {
+        onCustomUpload: (files) => {
+          console.log('Upload started:', files.map(f => f.name));
+          trackUpload('projectFiles', files.length);
+        },
+        onCustomRemove: (file) => {
+          console.log('File removed:', file.name);
+          cancelUpload(file);
+        }
+      },
+      
+      // Styling
+      className: "file-uploader",
+      labelClassName: "upload-label"
+    }]
+  };
+
+  return <DynamicForm formData={schema} />;
+}
+```
+
+## Option Details
+### `accept` Property
+
+Specifies allowed file types using:
+
+- MIME types ("image/*", "application/pdf")
+- File extensions (.pdf, .docx)
+- Combinations ("image/jpeg, .pdf")
+
+Best Practice: Always specify to prevent invalid uploads
+```tsx
+accept: "image/png, image/jpeg"  // Only PNG/JPEG images
+```
+
+### `storageFormat` Options
+
+| Format      | Return Type      | Best For                          |
+|-------------|------------------|-----------------------------------|
+| `file`      | `File` object     | Direct file manipulation          |
+| `blobUrl`   | `string` (URL)    | Client-side image previews        |
+| `base64`    | `string`          | Small images for immediate display |
+| `arrayBuffer` | `ArrayBuffer`  | Custom binary processing          |
+| `remoteUrl` | `string`          | After successful server upload    |
+
+
+### Server Upload Configuration
+
+For automatic uploads, configure:
+
+```tsx
+{
+  uploadUrl: "/api/upload",
+  uploadMethod: "POST",
+  uploadHeaders: {
+    "Authorization": "Bearer {{token}}",
+    "X-Client-ID": "{{userId}}"
+  }
+}
+```
+
+#### File Processing Pipeline
+1. Client-side validation (size, type)
+2. Pre-processing (renaming, preview generation)
+3. Upload (if uploadUrl specified)
+4. Storage (converted to selected storageFormat)
+5. Form integration (available in form values)
+
+### Validation Examples
+#### Custom Validation
+
+```tsx
+validation: [{
+  custom: (files) => {
+    return files.every(file => 
+      file.name.includes('_v') // Require version in filename
+    );
+  },
+  message: "Filename must contain version (e.g., doc_v1.pdf)"
+}]
+```
+
+#### Complex Size Validation
+```tsx
+validation: [{
+  custom: (files) => {
+    const totalSize = files.reduce((sum, file) => sum + file.size, 0);
+    return totalSize < 50 * 1024 * 1024; // 50MB total
+  },
+  message: "Total size must be under 50MB"
+}]
+```
+
+### Advanced Patterns
+
+#### Chunked Uploads
+```tsx
+{
+  fieldId: "largeFiles",
+  type: "file",
+  chunkSize: 5 * 1024 * 1024, // 5MB chunks
+  events: {
+    onChunkUpload: (chunk, file) => {
+      return uploadChunk(chunk, file);
+    }
+  }
+}
+```
+
+#### Signed URL Upload
+```tsx
+{
+  presignedUrlFn: "getSignedUrl", // Your function name
+  uploadMethod: "PUT",
+  storageFormat: "remoteUrl"
+}
+```
+
+## Example (Profile Photo)
+```tsx
+{
+  fieldId: "profilePhoto",
+  label: "Profile Photo",
+  type: "file",
+  multiple: false,
+  accept: "image/*",
+  description: "Upload a JPEG or PNG image (max 5MB)",
+  className:
+    "border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5",
+  labelClassName: "block mb-2 text-sm font-medium text-gray-900",
+  events: {
+    onCustomUpload: (files, fieldId) => {
+      console.log("Files uploaded:", files, "for field:", fieldId);
+      // files will be File[] array
+    },
+    onCustomRemove: (file, fieldId) => {
+      console.log("File removed:", file, "from field:", fieldId);
+    },
+  },
+  storageFormat: "base64",
+}
+```
