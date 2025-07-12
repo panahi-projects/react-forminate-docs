@@ -1,0 +1,49 @@
+---
+sidebar_position: 1
+---
+
+# Built-in Field Types
+
+React-Forminate comes with a rich set of pre-built field components that cover most form scenarios. These fields can be used directly in your form schemas without any additional configuration.
+
+## Field Type Summary
+
+| Field Type       | Description | Example Use Case | Key Properties |
+|------------------|-------------|------------------|----------------|
+| **Text**         | Single-line text input | Names, emails, search | `type: "text"`, `placeholder`, `maxLength` |
+| **Email**        | Optimized email input with validation | Login forms, contact forms | `type: "email"`, `autoComplete: "email"` |
+| **Date**         | Date picker with range support | Birthdays, appointments | `type: "date"`, `minDate`, `maxDate` |
+| **Select**       | Dropdown single/multi-select | Country select, categories | `type: "select"`, `options`, `isMulti` |
+| **Radio**        | Radio button group | Single-choice options | `type: "radio"`, `options`, `layout: "horizontal"` |
+| **Checkbox**     | Checkbox group | Multi-select options | `type: "checkbox"`, `options`, `minItems` |
+| **Textarea**     | Multi-line text input | Comments, descriptions | `type: "textarea"`, `rows`, `cols` |
+| **File**         | File upload with preview | Documents, images | `type: "file"`, `accept`, `multiple` |
+| **Group**        | Logical field grouping | Address blocks | `type: "group"`, `fields[]`, `legend` |
+| **Container**    | Visual layout container | Section dividers | `type: "container"`, `className` |
+| **GridView**     | Tabular data display | Product listings | `type: "gridview"`, `columns`, `data` |
+| **Spacer**       | Vertical/horizontal space | Form layout | `type: "spacer"`, `size` |
+
+## Key Features Across All Fields
+
+1. **Consistent Props**  
+   All fields support:
+   - Validation (`required`, `pattern`, `custom`)
+   - Conditional logic (`visibility`, `disabled`)
+   - Styling (`className`, `styles`)
+
+2. **Type-Specific Enhancements**  
+   ```ts
+   // Select field example
+   {
+     type: "select",
+     options: [
+       { label: "Option 1", value: "opt1" },
+       { label: "Option 2", value: "opt2" }
+     ],
+     isMulti: true
+   }
+   ```
+3. **Accessibility Built-in**
+    - Automatic ARIA labels
+    - Keyboard navigation
+    - Focus management
