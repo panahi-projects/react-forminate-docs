@@ -4,50 +4,159 @@ sidebar_position: 4
 
 # Radio
 
-## 📦 GridViewField (type: "gridview")
+## Radio Button Component
 
-The `GridViewField` is a powerful visual selector in `react-forminate` that displays items in a responsive grid layout. It supports dynamic API fetching, customizable pagination, image rendering, and user-friendly interaction.
+Radio buttons allow users to select exactly one option from a set. They're ideal for mutually exclusive choices where all options should be visible at once.
 
----
+### Core Properties
 
-### ✨ Features
+```tsx
+interface RadioFieldType extends BaseField {
+  type: "radio";
+  options: Array<string | { value: string | number, label: string | number }>;
+  layout?: "inline" | "column"; // Display direction
+  itemsClassName?: string;      // CSS classes for each radio item
+  itemsStyles?: CSSProperties;  // Inline styles for radio items
+}
+```
 
-- Displays items in a clean, card-like grid
-- API-driven with advanced pagination
-- Supports image, label, price, and custom fields
-- Dynamic dependencies (dependsOn, placeholders in endpoints)
-- Full customization: styles, classes, and event handlers
-- Built-in loading state and pagination controls
+### Basic Usage
 
-### 📥 Usage
+#### Simple Text Options
+```tsx
+function BasicRadioExample() {
+  const schema = {
+    formId: "basic-radio",
+    fields: [{
+      fieldId: "notification",
+      type: "radio",
+      label: "Notification Preference",
+      options: ["Email", "SMS", "Push"],
+      required: true
+    }]
+  };
+  return <DynamicForm formData={schema} />;
+}
+```
 
-To use GridViewField, define a field in your form schema with type: `"gridview"`.
-
-**Example Field Schema:**
-
-```ts
+#### Label/Value Pairs
+```tsx
+...
 {
-  fieldId: "products",
-  label: "Products",
-  type: "gridview",
-  dynamicOptions: {
-    endpoint: "https://dummyjson.com/products",
-    resultPath: "products",
-    transformResponse: (res) =>
-      res.map((item: any) => ({
-        label: item.title,
-        value: item.id,
-        image: item.thumbnail,
-        price: item.price,
-      })),
-    fetchOnInit: true,
-    pagination: {
-      limit: 4,
-      pageMode: "skip",
-      skipKey: "skip",
-      limitKey: "limit",
-      startPage: 1,
-    },
+  fieldId: "plan",
+  type: "radio",
+  options: [
+    { value: "basic", label: "Basic ($9.99/month)" },
+    { value: "pro", label: "Pro ($19.99/month)" }
+  ],
+  _defaultValue: "basic"
+}
+```
+
+### Layout Options
+
+#### Inline Layout
+```tsx
+{
+  fieldId: "shipping",
+  type: "radio",
+  layout: "inline", //shows the items in a line, next to each other
+  options: ["Standard", "Express", "Overnight"]
+}
+```
+
+#### Column Layout (Default)
+```tsx
+{
+  fieldId: "color",
+  type: "radio",
+  layout: "column", //default is 'column'
+  options: ["Red", "Blue", "Green"]
+}
+```
+
+### Styling Examples
+
+#### Tailwind CSS Styling
+```tsx
+{
+  fieldId: "theme",
+  type: "radio",
+  options: ["Light", "Dark", "System"],
+  className: "p-4 border rounded-lg",
+  itemsClassName: "p-2 hover:bg-gray-100 rounded",
+  labelClassName: "font-medium text-lg"
+}
+```
+
+#### Custom Inline Styles
+```tsx
+{
+  fieldId: "priority",
+  type: "radio",
+  options: ["Low", "Medium", "High"],
+  styles: { 
+    backgroundColor: "#f8f9fa",
+    padding: "1rem"
+  },
+  itemsStyles: {
+    marginRight: "2rem",
+    color: "#333"
   }
 }
 ```
+
+### Advanced Features
+
+#### Dynamic Options
+```tsx
+{
+  fieldId: "language",
+  type: "radio",
+  options: {
+    fn: ({ values }) => 
+      values.region === "EU" 
+        ? ["English", "French", "German"] 
+        : ["English", "Spanish"],
+    dependsOn: ["region"]
+  }
+}
+```
+
+#### Validation Examples
+```tsx
+{
+  fieldId: "consent",
+  type: "radio",
+  options: ["Agree", "Disagree"],
+  required: true,
+  validation: [{
+    pattern: "^Agree$",
+    message: "You must agree to continue"
+  }]
+}
+```
+
+### Event Handling
+
+#### Change Tracking
+```tsx
+{
+  fieldId: "feedback",
+  type: "radio",
+  options: ["Poor", "Average", "Good"],
+  events: {
+    onCustomChange: (e) => {
+      // write the code you want to run on the field change event
+    },
+    onCustomBlur: () => {
+      // write the code you want to run on the field blur event
+    } 
+  }
+}
+```
+
+### Performance Tips
+1. Limit Options - Radio buttons work best with 2-7 options
+2. Consider Selects - For more than 7 options, use a select dropdown
+3. Memoize Options - For dynamic options, memoize the array to prevent re-renders
