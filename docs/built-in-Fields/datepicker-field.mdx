@@ -2,52 +2,155 @@
 sidebar_position: 6
 ---
 
-# Datepicker
+# Date
 
-## 📦 GridViewField (type: "gridview")
+## Datepicker Component
 
-The `GridViewField` is a powerful visual selector in `react-forminate` that displays items in a responsive grid layout. It supports dynamic API fetching, customizable pagination, image rendering, and user-friendly interaction.
+The Datepicker field provides a native date selection input, optimized for both desktop and mobile browsers. It renders as `<input type="date">` with built-in calendar widgets.
 
----
+### Core Properties
 
-### ✨ Features
+```tsx
+interface DateFieldType extends BaseField {
+  type: "date";
+  // Inherits all BaseField properties plus:
+  min?: string; // Minimum selectable date (YYYY-MM-DD)
+  max?: string; // Maximum selectable date (YYYY-MM-DD)
+  step?: number; // Day increment (e.g., 7 for weekly)
+}
+```
 
-- Displays items in a clean, card-like grid
-- API-driven with advanced pagination
-- Supports image, label, price, and custom fields
-- Dynamic dependencies (dependsOn, placeholders in endpoints)
-- Full customization: styles, classes, and event handlers
-- Built-in loading state and pagination controls
+### Basic Usage
 
-### 📥 Usage
+#### Simple Date Selection
+```tsx
+function BasicDateExample() {
+  const schema = {
+    formId: "basic-date",
+    fields: [{
+      fieldId: "birthday",
+      type: "date",
+      label: "Date of Birth",
+      required: true
+    }]
+  };
+  return <DynamicForm formData={schema} />;
+}
+```
 
-To use GridViewField, define a field in your form schema with type: `"gridview"`.
-
-**Example Field Schema:**
-
-```ts
+#### With Date Constraints
+```tsx
 {
-  fieldId: "products",
-  label: "Products",
-  type: "gridview",
-  dynamicOptions: {
-    endpoint: "https://dummyjson.com/products",
-    resultPath: "products",
-    transformResponse: (res) =>
-      res.map((item: any) => ({
-        label: item.title,
-        value: item.id,
-        image: item.thumbnail,
-        price: item.price,
-      })),
-    fetchOnInit: true,
-    pagination: {
-      limit: 4,
-      pageMode: "skip",
-      skipKey: "skip",
-      limitKey: "limit",
-      startPage: 1,
+  fieldId: "appointment",
+  type: "date",
+  label: "Appointment Date",
+  min: new Date().toISOString().split('T')[0], // Today
+  max: "2025-12-31", // End of next year
+  description: "Select a weekday between today and Dec 2025"
+}
+```
+
+### Advanced Features
+
+#### Dynamic Date Ranges
+```tsx
+{
+  fieldId: "delivery",
+  type: "date",
+  min: {
+    fn: ({ values }) => 
+      new Date(values.orderDate).toISOString().split('T')[0]
+  },
+  max: {
+    fn: ({ values }) => 
+      new Date(values.orderDate + 14*24*60*60*1000).toISOString().split('T')[0]
+  },
+  dependsOn: ["orderDate"]
+}
+```
+
+#### Week Selection
+```tsx
+{
+  fieldId: "weekStart",
+  type: "date",
+  step: 7, // Select whole weeks
+  label: "Select starting Monday"
+}
+```
+
+### Styling Examples
+
+#### CSS Class
+```tsx
+{
+  fieldId: "eventDate",
+  type: "date",
+  className: "border rounded px-3 py-2 focus:ring-2 focus:ring-blue-500",
+  labelClassName: "block mb-1 font-medium text-gray-700"
+}
+```
+
+#### Dark Mode Support
+```tsx
+{
+  fieldId: "sessionDate",
+  type: "date",
+  className: `
+    bg-gray-50 border border-gray-300 text-gray-900 
+    dark:bg-gray-700 dark:border-gray-600 dark:text-white
+    rounded-lg p-2.5
+  `
+}
+```
+
+### Validation Examples
+
+#### Age Verification
+```tsx
+{
+  fieldId: "birthDate",
+  type: "date",
+  validation: [{
+    maxDate: new Date(new Date().setFullYear(new Date().getFullYear() - 18)),
+    message: "Must be 18+ years old"
+  }]
+}
+```
+
+#### Business Days Only
+```tsx
+{
+  fieldId: "deliveryDate",
+  type: "date",
+  validation: [{
+    custom: (dateStr) => {
+      const date = new Date(dateStr);
+      return date.getDay() !== 0 && date.getDay() !== 6; // Not weekend
     },
-  }
+    message: "Select a weekday (Mon-Fri)"
+  }]
+}
+```
+
+### Mobile Optimization
+```tsx
+{
+  fieldId: "meetingTime",
+  type: "date",
+  // Mobile-specific enhancements:
+  inputMode: "none", // Force date picker on mobile
+  autoComplete: "bday", // Helps password managers
+  placeholder: "YYYY-MM-DD" // Format hint
+}
+```
+
+### Accessibility
+```tsx
+{
+  fieldId: "accessibleDate",
+  type: "date",
+  ariaLabel: "Select appointment date",
+  description: "Use calendar widget or type in YYYY-MM-DD format"
 }
 ```
