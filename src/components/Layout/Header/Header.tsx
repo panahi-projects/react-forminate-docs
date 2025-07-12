@@ -39,11 +39,11 @@ const Header = () => {
             Intro
           </Button>
         </div>
-        <div>
+        {/* <div>
           <span className={styles.availabilityBadge}>
             <span className={styles.badgeCircle}></span> v1.1.0 Just Released
           </span>
-        </div>
+        </div> */}
 
         <div className={styles.clientsSection}>
           <p className={styles.clientsTitle}>

@@ -1,53 +1,177 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # Select
 
-## 📦 GridViewField (type: "gridview")
+## Select Field Component
 
-The `GridViewField` is a powerful visual selector in `react-forminate` that displays items in a responsive grid layout. It supports dynamic API fetching, customizable pagination, image rendering, and user-friendly interaction.
+The Select field provides dropdown selection functionality, supporting both static options and dynamic data loaded from APIs. It's ideal for single or multi-select scenarios with large option sets.
 
----
+### Core Properties
 
-### ✨ Features
+```tsx
+interface SelectFieldType extends BaseField {
+  type: "select";
+  options?: Array<string | { value: string | number, label: string | number }>;
+  dynamicOptions?: {
+    endpoint: string;                // API URL (supports {{fieldId}} placeholders)
+    method?: "GET" | "POST";         // HTTP method (default: GET)
+    dependsOn?: string | string[];   // Dependent fields for dynamic queries
+    params?: Record<string, string>; // Query parameters
+    transformResponse?: (data: any) => Option[]; // Convert API response
+    fetchOnInit?: boolean;           // Load options on mount
+  };
+  placeholder?: string;             // Default prompt text
+  isMulti?: boolean;                // Enable multi-select
+}
+```
 
-- Displays items in a clean, card-like grid
-- API-driven with advanced pagination
-- Supports image, label, price, and custom fields
-- Dynamic dependencies (dependsOn, placeholders in endpoints)
-- Full customization: styles, classes, and event handlers
-- Built-in loading state and pagination controls
+### Basic Usage
 
-### 📥 Usage
+```tsx
+function StaticSelectExample() {
+  const schema = {
+    formId: "static-select",
+    fields: [{
+      fieldId: "education",
+      type: "select",
+      label: "Highest Education",
+      options: ["High School", "Bachelor's", "Master's", "PhD"],
+      required: true,
+      placeholder: "Select your degree"
+    }]
+  };
+  return <DynamicForm formData={schema} />;
+}
+```
 
-To use GridViewField, define a field in your form schema with type: `"gridview"`.
+### Label/Value Pairs
+```tsx
+{
+  fieldId: "subscription",
+  type: "select",
+  options: [
+    { value: "basic", label: "Basic Plan ($9.99)" },
+    { value: "pro", label: "Pro Plan ($19.99)" }
+  ],
+  _defaultValue: "basic"
+}
+```
 
-**Example Field Schema:**
+### Dynamic Options from API
 
-```ts
+#### Basic API Fetch
+```tsx
 {
   fieldId: "products",
-  label: "Products",
-  type: "gridview",
+  type: "select",
   dynamicOptions: {
-    endpoint: "https://dummyjson.com/products",
-    resultPath: "products",
-    transformResponse: (res) =>
-      res.map((item: any) => ({
-        label: item.title,
-        value: item.id,
-        image: item.thumbnail,
-        price: item.price,
-      })),
-    fetchOnInit: true,
-    pagination: {
-      limit: 4,
-      pageMode: "skip",
-      skipKey: "skip",
-      limitKey: "limit",
-      startPage: 1,
-    },
+    endpoint: "/api/products",
+    transformResponse: (data) => 
+      data.map(product => ({ 
+        label: product.name, 
+        value: product.id 
+      }))
   }
+}
+```
+
+#### Dependent Dropdowns
+```tsx
+{
+  fieldId: "city",
+  type: "select",
+  dynamicOptions: {
+    endpoint: "/api/cities",
+    dependsOn: ["country"],  // Reload when country changes
+    params: { 
+      countryId: "{{country}}"  // Template placeholder
+    }
+  }
+}
+```
+
+### Advanced Features
+
+#### Multi-Select
+```tsx
+{
+  fieldId: "skills",
+  type: "select",
+  isMulti: true, //add this to enable the multi-select
+  options: ["JavaScript", "TypeScript", "React", "Node.js"]
+}
+```
+
+#### Paginated API Results
+```tsx
+{
+  fieldId: "users",
+  type: "select",
+  dynamicOptions: {
+    endpoint: "/api/users",
+    pagination: {
+      pageSize: 20,
+      loadMoreText: "Load more users..."
+    }
+  }
+}
+```
+
+### Validation Examples
+
+#### Required Selection
+```tsx
+{
+  fieldId: "country",
+  type: "select",
+  required: true,
+  requiredMessage: "Please select your country"
+}
+```
+
+#### Minimum Selections
+```tsx
+{
+  fieldId: "languages",
+  type: "select",
+  isMulti: true,
+  validation: [{
+    minItems: 2,
+    message: "Select at least 2 languages"
+  }]
+}
+```
+
+### Performance Tips
+
+1. **Debounce API Calls**<br />
+For searchable selects, add debouncing to dynamic options:
+```tsx
+dynamicOptions: {
+  endpoint: "/api/search?term={{search}}",
+  debounce: 300 // ms delay
+}
+```
+
+2. **Initial Data Loading**<br />
+Combine static and dynamic options for better UX:
+```tsx
+options: [{ label: "Loading...", value: "" }], // Initial placeholder
+dynamicOptions: {
+  endpoint: "/api/options",
+  fetchOnInit: true
+}
+```
+
+3. **Accessibility**<br />
+```tsx
+{
+  fieldId: "accessible-select",
+  type: "select",
+  ariaLabel: "Select your preferred contact method",
+  // Screen reader instructions:
+  description: "Use arrow keys to navigate options"
 }
 ```
