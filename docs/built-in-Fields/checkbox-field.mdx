@@ -4,50 +4,211 @@ sidebar_position: 5
 
 # Checkbox
 
-## 📦 GridViewField (type: "gridview")
+## Checkbox Component
 
-The `GridViewField` is a powerful visual selector in `react-forminate` that displays items in a responsive grid layout. It supports dynamic API fetching, customizable pagination, image rendering, and user-friendly interaction.
+Checkbox fields allow users to select multiple options from a set (checkbox group) or toggle a single binary choice (standalone checkbox). They're ideal for non-exclusive selections and agreement toggles.
 
----
+### Core Properties
 
-### ✨ Features
+```tsx
+interface CheckboxFieldType extends BaseField {
+  type: "checkbox";
+  options?: Array<string | { value: string | number, label: string | number }>;
+  layout?: "inline" | "column"; // Display direction
+  itemsClassName?: string;      // CSS classes per checkbox
+  itemsStyles?: CSSProperties;  // Inline styles per checkbox
+  
+  // For single checkbox mode:
+  singlePositiveAnswerValue?: string; // Value when checked (default: "true")
+  singleNegativeAnswerValue?: string; // Value when unchecked (default: "false")
+}
+```
 
-- Displays items in a clean, card-like grid
-- API-driven with advanced pagination
-- Supports image, label, price, and custom fields
-- Dynamic dependencies (dependsOn, placeholders in endpoints)
-- Full customization: styles, classes, and event handlers
-- Built-in loading state and pagination controls
+### Basic Usage
 
-### 📥 Usage
+#### Checkbox Group
+```tsx
+function CheckboxGroupExample() {
+  const schema = {
+    formId: "checkbox-group",
+    fields: [{
+      fieldId: "interests",
+      type: "checkbox",
+      label: "Your Interests",
+      options: ["Sports", "Music", "Technology", "Travel"],
+      required: true,
+      layout: "inline"
+    }]
+  };
+  return <DynamicForm formData={schema} />;
+}
+```
 
-To use GridViewField, define a field in your form schema with type: `"gridview"`.
-
-**Example Field Schema:**
-
-```ts
+#### Label/Value Pairs
+```tsx
 {
-  fieldId: "products",
-  label: "Products",
-  type: "gridview",
-  dynamicOptions: {
-    endpoint: "https://dummyjson.com/products",
-    resultPath: "products",
-    transformResponse: (res) =>
-      res.map((item: any) => ({
-        label: item.title,
-        value: item.id,
-        image: item.thumbnail,
-        price: item.price,
-      })),
-    fetchOnInit: true,
-    pagination: {
-      limit: 4,
-      pageMode: "skip",
-      skipKey: "skip",
-      limitKey: "limit",
-      startPage: 1,
+  fieldId: "languages",
+  type: "checkbox",
+  label: "Languages",
+  required: true,
+  requiredMessage: "An item must be selected",
+  options: [
+    {
+      value: "persian",
+      label: "Persian",
+    },
+    {
+      value: "english",
+      label: "English",
+    },
+    {
+      value: "germany",
+      label: "Germany",
+    },
+    {
+      value: "spanish",
+      label: "Spanish",
+    },
+    {
+      value: "arabic",
+      label: "Arabic",
+    },
+    {
+      value: "chinese",
+      label: "Chinese",
+    },
+  ],
+  _defaultValue: ["persian"]
+}
+```
+
+#### Single Checkbox (Agreement)
+```tsx
+{
+  fieldId: "acceptTerms",
+  type: "checkbox",
+  label: "Terms Agreement",
+  description: "I accept the terms and conditions",
+  required: true,
+  singlePositiveAnswerValue: "accepted", // Custom checked value
+  singleNegativeAnswerValue: "declined"  // Custom unchecked value
+}
+```
+
+### Layout Options
+
+#### Inline Checkbox Group
+```tsx
+{
+  fieldId: "notifications",
+  type: "checkbox",
+  layout: "inline",
+  options: ["Email", "SMS", "Push"]
+}
+```
+
+#### Column Layout (Default)
+```tsx
+{
+  fieldId: "skills",
+  type: "checkbox",
+  layout: "column",
+  options: ["JavaScript", "React", "Node.js", "TypeScript"]
+}
+```
+
+### Styling Examples
+
+#### CSS class styling
+```tsx
+{
+  fieldId: "preferences",
+  type: "checkbox",
+  options: ["Dark Mode", "Notifications", "Newsletter"],
+  className: "p-4 border rounded-lg bg-gray-50",
+  itemsClassName: "p-2 hover:bg-gray-100 rounded",
+  labelClassName: "font-medium text-lg mb-2"
+}
+```
+
+#### Custom Inline Styles
+```tsx
+{
+  fieldId: "features",
+  type: "checkbox",
+  options: ["Advanced", "Beta", "Experimental"],
+  containerStyles: { 
+    backgroundColor: "#f8f9fa",
+    padding: "1rem"
+  },
+  itemsStyles: {
+    marginRight: "2rem",
+    color: "#333",
+    fontSize: "0.9rem"
+  }
+}
+```
+
+### Advanced Features
+
+#### Dynamic Options
+```tsx
+{
+  fieldId: "permissions",
+  type: "checkbox",
+  options: {
+    fn: ({ values }) => 
+      values.userType === "admin" 
+        ? ["Manage Users", "Edit Content", "View Reports"]
+        : ["View Content"],
+    dependsOn: ["userType"]
+  }
+}
+```
+
+#### Validation Examples
+```tsx
+{
+  fieldId: "selections",
+  type: "checkbox",
+  options: ["A", "B", "C"],
+  validation: [{
+    minItems: 2,
+    message: "Select at least 2 options"
+  }]
+}
+```
+
+#### Conditional Checkbox
+```tsx
+{
+  fieldId: "parentalConsent",
+  type: "checkbox",
+  visibility: {
+    dependsOn: ["age"],
+    fn: ({ values }) => values.age < 21
+  },
+  description: "Parental consent required for users under 21"
+}
+```
+
+### Event Handling
+
+#### Change Tracking
+```tsx
+{
+  fieldId: "preferences",
+  type: "checkbox",
+  options: ["Dark Mode", "Notifications"],
+  events: {
+    onCustomChange: (e) => {
+      // write the code you want to run on the field change event
     },
   }
 }
 ```
+
+### Performance Tips
+1. Limit Options - Checkbox groups work best with 2-10 options
+2. Virtualize Long Lists - For 10+ options, consider a virtualized list
+3. Memoize Options - For dynamic options, memoize the array to prevent re-renders
