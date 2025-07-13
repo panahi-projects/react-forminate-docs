@@ -1,0 +1,245 @@
+---
+sidebar_position: 2
+---
+
+# Form Custom Submit
+
+React-Forminate provides flexibility to create custom submit buttons while maintaining full access to form state and validation. This is particularly useful when you need complete control over the submission UI/UX.
+
+## Implementation Overview
+
+To create a custom submit button, you'll need to:
+
+1. Wrap your form in a `CustomProvider` (or `FormProvider`)
+2. Use the `useForm` hook to access form methods
+3. Create your custom button component
+4. Handle submission with form validation
+
+## Basic Implementation
+
+```tsx
+import {
+  DynamicForm,
+  FormProvider as CustomProvider,
+  useForm,
+} from "react-forminate";
+
+const CustomSubmitForm = () => {
+  return (
+    <CustomProvider formId="myForm" formSchema={formData}>
+      <FormWithCustomSubmit />
+    </CustomProvider>
+  );
+};
+
+const FormWithCustomSubmit = () => {
+  const { values, validateForm } = useForm();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const isValid = validateForm();
+    console.log("Form is", isValid ? "valid" : "invalid");
+    console.log("Form values:", values);
+  };
+
+  return (
+    <div className="form-container">
+      <DynamicForm
+        formId="myForm"
+        formData={formData}
+        submitDetails={{ visibility: false }} // Hide default submit
+      />
+
+      <button className="custom-submit-btn" onClick={handleSubmit}>
+        Submit My Form
+      </button>
+    </div>
+  );
+};
+```
+
+## Key Components
+
+**`CustomProvider` / `FormProvider`**<br />
+The provider component makes form state and methods available to child components through React context.
+
+**Props**:
+
+- `formId`: Unique identifier for the form
+- `formSchema`: Your form configuration object
+
+**`useForm()` Hook**<br />
+Provides access to form state and methods:
+
+| Property        | Type       | Description                     |
+|-----------------|------------|---------------------------------|
+| `values`        | `object`   | Current form values             |
+| `errors`        | `object`   | Form validation errors          |
+| `validateForm`  | `function` | Validates entire form           |
+| `validateField` | `function` | Validates specific field        |
+| `setValue`      | `function` | Updates field value             |
+| `touched`       | `object`   | Tracked field touched states    |
+
+
+## Complete Example
+```tsx
+import React, { useState } from "react";
+import {
+  DynamicForm,
+  FormProvider as CustomProvider,
+  useForm,
+} from "react-forminate";
+
+const formData = {
+  formId: "userRegistration",
+  title: "User Registration",
+  fields: [
+    {
+      fieldId: "email",
+      type: "email",
+      label: "Email Address",
+      required: true
+    },
+    // ... other fields
+  ]
+};
+
+import "./CustomFormSubmit.css";
+
+/**
+ * CustomSubmit Component
+ *
+ * Demonstrates how to implement a custom form submit button with React-Forminate.
+ * Wraps the form in a CustomProvider to enable form state management.
+ */
+export const CustomSubmitExample = () => {
+  return (
+    <div className="form-example-container">
+      <CustomProvider
+        formId={formData.formId}
+        formSchema={formData}
+      >
+        <FormContent />
+      </CustomProvider>
+    </div>
+  );
+};
+
+/**
+ * SmartSubmitButton Component
+ *
+ * A reusable custom submit button with:
+ * - Loading state
+ * - Error detection
+ * - Form completion check
+ * - Auto-scroll to first error
+ */
+const SmartSubmitButton = () => {
+  const { values, errors, validateForm, touched } = useForm();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const isValid = validateForm(formData);
+
+      if (!isValid) {
+        // Scroll to first error field for better UX
+        const firstError = Object.keys(errors)[0];
+        document.getElementById(firstError)?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+        return;
+      }
+
+      // Form is valid - proceed with submission
+      console.log("Submitting form values:", values);
+      // await api.submitForm(values);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Determine button state
+  const hasErrors = Object.keys(errors).some((key) => touched[key]);
+  const isComplete =
+    Object.keys(values).length === formData.fields.length;
+  const isDisabled = isSubmitting || (hasErrors && isComplete);
+
+  return (
+    <button
+      className={`submit-button 
+        ${isSubmitting ? "loading" : ""}
+        ${hasErrors ? "has-errors" : ""}
+        ${!isComplete ? "incomplete" : ""}
+      `}
+      onClick={handleSubmit}
+      disabled={isDisabled}
+      aria-busy={isSubmitting}
+    >
+      {isSubmitting ? (
+        <span className="loading-indicator">Processing...</span>
+      ) : hasErrors ? (
+        "Please Fix Errors"
+      ) : !isComplete ? (
+        "Complete All Fields"
+      ) : (
+        "Submit Application"
+      )}
+    </button>
+  );
+};
+
+/**
+ * FormContent Component
+ *
+ * Contains the actual form implementation with:
+ * - DynamicForm component
+ * - Custom submit button
+ * - Form submission handler
+ */
+const FormContent = () => {
+  return (
+    <div className="form-container">
+      {/* 
+        DynamicForm renders all form fields from formData 
+        We hide the default submit button since we're using our custom one
+      */}
+      <DynamicForm
+        formId={formData.formId}
+        formData={formData}
+        submitDetails={{ visibility: false }}
+      />
+
+      {/* Our enhanced submit button component */}
+      <div className="form-actions">
+        <SmartSubmitButton />
+      </div>
+    </div>
+  );
+};
+```
+
+## Best Practices
+
+1. **Accessibility**  
+   Ensure your custom submit button:
+   - Has proper ARIA attributes  
+   - Can be focused via keyboard  
+   - Shows loading state clearly  
+
+2. **Validation Feedback**  
+   - Display validation errors near the button when appropriate  
+   - Consider scrolling users to the first error  
+   - Disable the button when the form is invalid  
+
+3. **Performance**  
+   - Debounce rapid clicks on the submit button  
+   - Optimize re-renders with `React.memo` when needed  
+
+4. **State Management**  
+   - Track submission state (`loading`, `success`, `error`)  
+   - Reset form after successful submission when appropriate  

@@ -1,0 +1,160 @@
+---
+sidebar_position: 1
+---
+
+# Custom Field Registration
+
+`React-Forminate` provides powerful extensibility through its custom field registration system. This allows developers to create and integrate their own custom form fields when the built-in fields don't meet specific requirements.
+
+## Registration Methods
+
+### `registerField`
+**`registerField(type: string, component: ComponentType)`**
+
+Registers a new custom field type with the form system.
+
+#### Parameters:
+- `type`: Unique string identifier for your custom field
+- `component`: React component that will render the field
+
+### `unregisterField`
+**`unregisterField(type: string)`**
+
+Removes a previously registered custom field type.
+
+## Creating Custom Fields
+
+To create a custom field, you'll need to:
+
+1. Define your field component
+2. Use the `useField` hook to handle form integration
+3. Register your component before using it in your form
+
+### Basic Example
+
+```tsx
+import { registerField, useField } from "react-forminate";
+
+const CustomSearchField = (props) => {
+  const { fieldId, fieldValue, eventHandlers, fieldParams } = useField(props);
+  
+  return (
+    <div className="custom-search-container">
+      <input
+        type="search"
+        {...fieldParams}
+        {...eventHandlers.htmlHandlers}
+        value={fieldValue ?? ""}
+        className="custom-search-input"
+      />
+      <span className="search-hint">Search with our custom component</span>
+    </div>
+  );
+};
+
+// Register the component before using it in your form
+registerField("customSearch", CustomSearchField);
+```
+
+### Using `useField` Hook
+The useField hook provides essential functionality for your custom fields:
+
+**Return Values**
+
+| Property       | Type     | Description                            |
+|----------------|----------|----------------------------------------|
+| `fieldId`      | `string` | The unique identifier for the field    |
+| `fieldValue`   | `any`    | Current value of the field             |
+| `eventHandlers`| `object` | Pre-built handlers for form integration|
+| `fieldParams`  | `object` | Processed field properties             |
+| `values`       | `object` | All form values                        |
+| `errors`       | `object` | Form validation errors                 |
+| `isVisible`    | `boolean`| Whether field should be visible        |
+| `isTouched`    | `boolean`| Whether field has been touched         |
+
+
+### Event Handlers
+The `eventHandlers` object contains:
+
+`htmlHandlers`: Standard HTML event handlers with additional keyword `custom` (e.g., onCustomChange, onCustomBlur, etc.)
+
+Custom event handlers defined in your field configuration
+
+## Complete Example
+Here's a complete example of a custom color picker field:
+
+```tsx
+import { registerField, useField } from "react-forminate";
+import { ChromePicker } from 'react-color';
+
+const CustomColorPicker = (props: any) => {
+  const {
+    fieldId,
+    fieldValue,
+    eventHandlers,
+    fieldParams,
+    setValue
+  } = useField(props);
+
+  const handleColorChange = (color: any) => {
+    setValue(fieldId, color.hex);
+    if (props.events?.onCustomChange) {
+      props.events.onCustomChange(
+        { target: { value: color.hex } }, 
+        fieldId, 
+        { ...fieldParams.values, [fieldId]: color.hex }
+      );
+    }
+  };
+
+  return (
+    <div className="color-picker-container">
+      <label>{props.label}</label>
+      <ChromePicker
+        color={fieldValue || '#ffffff'}
+        onChangeComplete={handleColorChange}
+        disableAlpha={props.params.disableAlpha || true}
+      />
+      <input
+        type="hidden"
+        {...fieldParams}
+        {...eventHandlers.htmlHandlers}
+        value={fieldValue || ''}
+      />
+    </div>
+  );
+};
+
+// Register the component
+registerField("colorPicker", CustomColorPicker);
+
+// Usage in form data
+const formData = {
+  formId: "designForm",
+  fields: [
+    {
+      fieldId: "primaryColor",
+      type: "colorPicker",
+      label: "Primary Brand Color",
+      params: {
+        disableAlpha: true,
+      },
+      events: {
+        onCustomChange: (e, fieldId, values) => {
+          console.log("Color changed:", values[fieldId]);
+        }
+      }
+    }
+  ]
+};
+```
+
+## Best Practices
+1. Unique Type Names: Choose unique, descriptive type names for your custom fields
+2. Proper Cleanup: Unregister fields when they're no longer needed
+3. Validation Integration: Ensure your custom fields properly report validation status
+4. Accessibility: Follow accessibility best practices in your custom components
+5. Performance: Optimize rendering for frequently updated fields
+6. Documentation: Document your custom fields' props and behavior
+
+
