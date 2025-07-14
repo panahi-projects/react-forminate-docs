@@ -1,0 +1,181 @@
+---
+sidebar_position: 6
+---
+
+# Event Handlers
+
+**`React-Forminate`** provides enhanced event handlers that give you access to the complete form context when handling user interactions. These custom events offer more functionality than standard React events while maintaining familiar patterns.
+
+## Available Events
+
+| Event | Description | Equivalent DOM Event |
+|-------|-------------|----------------------|
+| `onCustomChange` | Triggered when field value changes | `onChange` |
+| `onCustomBlur` | Triggered when field loses focus | `onBlur` |
+| `onCustomFocus` | Triggered when field receives focus | `onFocus` |
+| `onCustomClick` | Triggered on mouse click | `onClick` |
+| `onCustomKeyDown` | Triggered on key press down | `onKeyDown` |
+| `onCustomKeyUp` | Triggered on key release | `onKeyUp` |
+| `onCustomMouseEnter` | Triggered when mouse enters field | `onMouseEnter` |
+| `onCustomMouseLeave` | Triggered when mouse leaves field | `onMouseLeave` |
+| `onCustomMouseDown` | Triggered on mouse button down | `onMouseDown` |
+| `onCustomContextMenu` | Triggered on right-click | `onContextMenu` |
+| `onCustomUpload` | Special handler for file uploads | - |
+| `onCustomRemove` | Special handler for file removal | - |
+
+## Event Handler Signature
+
+All custom event handlers receive the following parameters:
+
+```ts
+(
+  event: React.SyntheticEvent, 
+  fieldId: string,
+  values: Record<string, any>,
+  fieldSchema: FormFieldType,
+  formSchema: FormDataCollectionType
+) => void
+```
+
+## Usage Examples
+### Basic Change Handler
+```tsx
+{
+  fieldId: "username",
+  type: "text",
+  events: {
+    onCustomChange: (e, fieldId, values) => {
+      console.log(`${fieldId} changed to:`, values[fieldId]);
+    }
+  }
+}
+```
+
+### File Upload Handling
+```tsx
+{
+  fieldId: "documents",
+  type: "file",
+  multiple: true,
+  events: {
+    onCustomUpload: (files, fieldId) => {
+      // Process uploaded files
+      uploadToServer(files).then(() => {
+        console.log(`${files.length} files uploaded`);
+      });
+    },
+    onCustomRemove: (file) => {
+      // Handle file removal
+      removeFromServer(file);
+    }
+  }
+}
+```
+
+### Keyboard Interactions
+```tsx
+{
+  fieldId: "search",
+  type: "text",
+  events: {
+    onCustomKeyDown: (e, fieldId, values) => {
+      if (e.key === "Enter") {
+        searchProducts(values[fieldId]);
+      }
+    }
+  }
+}
+```
+
+### Context Menu Handling
+```tsx
+{
+  fieldId: "notes",
+  type: "textarea",
+  events: {
+    onCustomContextMenu: (e, fieldId) => {
+      e.preventDefault();
+      showCustomMenu(fieldId, e.clientX, e.clientY);
+    }
+  }
+}
+```
+
+## Complete Example
+```tsx
+const ProductForm = {
+  formId: "productForm",
+  fields: [
+    {
+      fieldId: "productName",
+      type: "text",
+      label: "Product Name",
+      events: {
+        onCustomChange: (e, fieldId, values) => {
+          analytics.trackFieldChange(fieldId, values[fieldId]);
+        },
+        onCustomBlur: () => {
+          console.log("Product name field lost focus");
+        }
+      }
+    },
+    {
+      fieldId: "price",
+      type: "number",
+      label: "Price",
+      events: {
+        onCustomKeyDown: (e) => {
+          // Prevent non-numeric input
+          if (!/[0-9.]/.test(e.key) && e.key !== "Backspace") {
+            e.preventDefault();
+          }
+        }
+      }
+    },
+    {
+      fieldId: "images",
+      type: "file",
+      multiple: true,
+      accept: "image/*",
+      events: {
+        onCustomUpload: (files) => {
+          // Optimize images before upload
+          optimizeImages(files).then(optimized => {
+            uploadImages(optimized);
+          });
+        },
+        onCustomRemove: (file) => {
+          removeImage(file.name);
+        }
+      }
+    },
+    {
+      fieldId: "description",
+      type: "textarea",
+      events: {
+        onCustomFocus: () => {
+          help.showTooltip("descriptionHelp");
+        },
+        onCustomMouseEnter: () => {
+          preview.showDescriptionPreview();
+        },
+        onCustomMouseLeave: () => {
+          preview.hideDescriptionPreview();
+        }
+      }
+    },
+    {
+      fieldId: "submit",
+      type: "button",
+      events: {
+        onCustomClick: (e, _, values) => {
+          e.preventDefault();
+          if (validateForm(values)) {
+            submitForm(values);
+          }
+        }
+      }
+    }
+  ]
+};
+```
