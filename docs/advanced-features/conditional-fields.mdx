@@ -1,0 +1,197 @@
+---
+sidebar_position: 4
+---
+
+# Conditional Fields
+
+**`React-Forminate`** provides powerful conditional field functionality, allowing you to show/hide fields or disable them based on form values or custom logic. This enables dynamic, context-aware forms that adapt to user input.
+
+## Visibility Control
+
+### Basic Visibility
+
+```tsx
+{
+  fieldId: "lastName",
+  type: "text",
+  visibility: false // Always hidden
+}
+```
+
+### Condition-Based Visibility
+```tsx
+{
+  fieldId: "lastName",
+  type: "text",
+  visibility: {
+    dependsOn: "firstName", // Watches firstName field
+    condition: "equals",    // Comparison type
+    value: "John"          // Value to compare against
+  }
+}
+```
+
+**Supported conditions**:
+
+- `equals` / `not_equals`
+- `contains` / `not_contains`
+- `greater_than` / `less_than` (for numbers)
+- `empty` / `not_empty`
+
+### Function-Based Visibility
+```tsx
+{
+  fieldId: "parentalConsent",
+  type: "checkbox",
+  visibility: {
+    fn: ({ values }) => values.age < 21,
+    dependsOn: ["age"]
+  }
+}
+```
+
+## Disabling Fields
+### Basic Disabling
+```tsx
+{
+  fieldId: "email",
+  type: "email",
+  disabled: true // Always disabled
+}
+```
+
+### Condition-Based Disabling
+```tsx
+{
+  fieldId: "email",
+  type: "email",
+  disabled: {
+    dependsOn: "userType",
+    condition: "equals",
+    value: "admin"
+  }
+}
+```
+
+### Function-Based Disabling
+```tsx
+{
+  fieldId: "email",
+  type: "email",
+  disabled: {
+    fn: ({ values }) => values.firstName === "Saeed",
+    dependsOn: ["firstName"]
+  }
+}
+```
+
+## Dynamic Labels & Messages
+### Conditional Labels
+```tsx
+{
+  fieldId: "firstName",
+  label: {
+    fn: ({ values }) => 
+      values.userType === "admin" ? "Admin Name" : "Your Name",
+    dependsOn: ["userType"]
+  }
+}
+```
+
+### Conditional Required Messages
+```tsx
+{
+  fieldId: "email",
+  requiredMessage: {
+    fn: ({ values }) => 
+      values.country === "US" ? "Email required for US users" : "Email required",
+    dependsOn: ["country"]
+  }
+}
+```
+
+## Complete Example
+```tsx
+const ConditionalForm = {
+  formId: "userRegistration",
+  fields: [
+    {
+      fieldId: "userType",
+      type: "select",
+      label: "Account Type",
+      options: ["personal", "business", "admin"],
+      required: true
+    },
+    {
+      fieldId: "businessName",
+      type: "text",
+      label: "Business Name",
+      visibility: {
+        dependsOn: "userType",
+        condition: "equals",
+        value: "business"
+      },
+      required: {
+        fn: ({ values }) => values.userType === "business",
+        dependsOn: ["userType"]
+      }
+    },
+    {
+      fieldId: "personalDetails",
+      type: "group",
+      label: "Personal Information",
+      visibility: {
+        dependsOn: "userType",
+        condition: "equals",
+        value: "personal"
+      },
+      fields: [
+        {
+          fieldId: "firstName",
+          type: "text",
+          label: "First Name",
+          required: true
+        },
+        {
+          fieldId: "lastName",
+          type: "text",
+          label: "Last Name",
+          required: true
+        }
+      ]
+    },
+    {
+      fieldId: "age",
+      type: "number",
+      label: "Your Age",
+      validation: [
+        { min: 18, message: "Must be 18 or older" }
+      ]
+    },
+    {
+      fieldId: "parentalConsent",
+      type: "checkbox",
+      label: "Parental Consent",
+      description: "Required for users under 21",
+      visibility: {
+        fn: ({ values }) => values.age < 21,
+        dependsOn: ["age"]
+      }
+    },
+    {
+      fieldId: "adminCode",
+      type: "text",
+      label: "Admin Security Code",
+      visibility: {
+        dependsOn: "userType",
+        condition: "equals",
+        value: "admin"
+      },
+      disabled: {
+        fn: ({ values }) => !values.verified,
+        dependsOn: ["verified"]
+      }
+    }
+  ]
+};
+```
