@@ -1,0 +1,349 @@
+---
+sidebar_position: 3
+---
+
+# Form Validation
+
+**`React-Forminate`** provides a robust validation system with multiple validation strategies, customizable error messages, and flexible validation triggers. This guide covers all aspects of form validation in the library.
+
+## Validation Basics
+
+### Required Fields
+
+Mark a field as required and customize its error message:
+
+```ts
+{
+  fieldId: "username",
+  type: "text",
+  required: true,
+  requiredMessage: "Username is mandatory" // Custom message
+}
+```
+
+### Validation Triggers
+Control when validation occurs:
+
+```ts
+const formData = {
+  formId: "myForm",
+  options: {
+    validateFieldsOnBlur: true // Default (true = validate on blur, false = validate on change)
+  },
+  fields: [
+    // your fields
+  ]
+}
+```
+
+## Validation Types
+### Pattern Matching
+
+Validate against regular expressions:
+
+```tsx
+{
+  fieldId: "username",
+  type: "text",
+  validation: [
+    {
+      pattern: "^[a-zA-Z0-9_]{4,20}$",
+      message: "4-20 chars: letters, numbers, or underscores only."
+    }
+  ]
+}
+```
+
+### Length Validation
+For text fields:
+
+```ts
+validation: [
+  {
+    minLength: 3,
+    message: "Must be at least 3 characters"
+  },
+  {
+    maxLength: 50,
+    message: "Cannot exceed 50 characters"
+  }
+]
+```
+
+### Numeric Validation
+For number fields:
+
+```tsx
+validation: [
+  {
+    min: 18,
+    max: 100,
+    message: "Must be between 18 to 100"
+  },
+  {
+    pattern: "^[0-9]+$",
+    message: "Only numbers allowed"
+  }
+]
+```
+
+**OR**
+
+```tsx
+validation: [
+  {
+    min: 18,
+    message: "Must be at least 18"
+  },
+  {
+    max: 100,
+    message: "Cannot exceed 100"
+  },
+  {
+    pattern: "^[0-9]+$",
+    message: "Only numbers allowed"
+  }
+]
+```
+
+### Date Validation
+For date fields:
+
+```tsx
+validation: [
+  {
+    minDate: "2000-01-01",
+    maxDate: "2023-12-31",
+    message: "Must be after January 1, 2000 and before 2024"
+  }
+]
+```
+**OR**
+
+```tsx
+validation: [
+  {
+    minDate: "2000-01-01",
+    message: "Must be after January 1, 2000"
+  },
+  {
+    maxDate: "2023-12-31",
+    message: "Must be before 2024"
+  }
+]
+```
+
+### Array Validation
+For checkbox groups and multi-selects:
+
+```tsx
+validation: [
+  {
+    minItems: 1,
+    message: "Select at least one option"
+  },
+  {
+    maxItems: 3,
+    message: "Select no more than three options"
+  }
+]
+```
+
+### Custom Validation
+Implement complex validation logic:
+
+```tsx
+validation: [
+  {
+    custom: (value) => {
+      // Your validation logic
+      return value !== "forbidden";
+    },
+    message: "This value is not allowed"
+  }
+]
+```
+
+## Validation Strategies
+**`React-Forminate`** uses a strategy pattern for validation. Here are all built-in strategies:
+
+| Strategy    | Applies To     | Description                   |
+|-------------|----------------|-------------------------------|
+| `pattern`   | Text fields    | Regex pattern matching        |
+| `minLength` | Text fields    | Minimum character length      |
+| `maxLength` | Text fields    | Maximum character length      |
+| `min`       | Number fields  | Minimum numeric value         |
+| `max`       | Number fields  | Maximum numeric value         |
+| `minDate`   | Date fields    | Earliest allowed date         |
+| `maxDate`   | Date fields    | Latest allowed date           |
+| `minItems`  | Array fields   | Minimum selected items        |
+| `maxItems`  | Array fields   | Maximum selected items        |
+| `required`  | All fields     | Field is mandatory            |
+| `custom`    | All fields     | Custom validation function    |
+
+
+## Advanced Validation
+### Conditional Validation
+
+Show/hide fields based on other field values, and if the field is not visible, the validation engine automatically does not check that field:
+```tsx
+{
+  fieldId: "spouseName",
+  type: "text",
+  visibility: {
+    dependsOn: "maritalStatus",
+    condition: "equals",
+    value: "married"
+  },
+  required: true
+}
+```
+
+### Custom Validation Strategies
+Register custom validation strategies:
+
+```tsx
+import { validationEngine } from "react-forminate";
+
+class UniqueUsernameStrategy {
+  validate(value, rule) {
+    return api.checkUsernameAvailability(value)
+      .then(isAvailable => ({
+        isValid: isAvailable,
+        message: "Username already taken"
+      }));
+  }
+}
+
+validationEngine.registerStrategy("uniqueUsername", new UniqueUsernameStrategy());
+```
+
+## Error Handling
+### Accessing Errors
+Errors are available through the `useForm` hook:
+
+```tsx
+const { errors } = useForm();
+```
+
+### Displaying Errors
+Errors are automatically displayed below each field, but you can customize:
+
+```tsx
+import { DynamicForm, useForm } from "react-forminate";
+import formData from "./formData.json"
+
+const CustomErrorDisplay = () => {
+  const { errors } = useForm();
+  
+  return (
+    <>
+        <div className="form-errors">
+            {Object.entries(errors).map(([fieldId, message]) => (
+                <div key={fieldId} className="error-message">
+                {message}
+                </div>
+            ))}
+        </div>
+        <DynamicForm formData={formData}/>
+    </>
+  );
+};
+```
+
+### Manual Validation
+Trigger validation manually:
+
+```tsx
+const handleSubmit = (e) => {
+  e.preventDefault();
+  const isValid = validateForm();
+  if (isValid) {
+    // Submit form
+  }
+};
+```
+
+## Complete Example
+```tsx
+import { DynamicForm } from "react-forminate";
+
+const UserRegistrationForm = {
+  formId: "userRegistration",
+  options: {
+    validateFieldsOnBlur: true
+  },
+  fields: [
+    {
+      fieldId: "email",
+      type: "email",
+      label: "Email",
+      required: true,
+      validation: [
+        {
+          pattern: "^\\S+@\\S+\\.\\S+$",
+          message: "Enter a valid email address"
+        }
+      ]
+    },
+    {
+      fieldId: "password",
+      type: "password",
+      label: "Password",
+      required: true,
+      validation: [
+        {
+          minLength: 8,
+          message: "Password must be at least 8 characters"
+        },
+        {
+          pattern: "^(?=.*[A-Z])(?=.*[0-9]).*$",
+          message: "Must contain at least one number and uppercase letter"
+        }
+      ]
+    },
+    {
+      fieldId: "age",
+      type: "number",
+      label: "Age",
+      required: true,
+      validation: [
+        {
+          min: 18,
+          message: "You must be 18 or older"
+        },
+        {
+          max: 120,
+          message: "Enter a realistic age"
+        }
+      ]
+    },
+    {
+      fieldId: "subscribe",
+      type: "checkbox",
+      label: "Subscribe to newsletter",
+      validation: [
+        {
+          custom: (value, { values }) => {
+            // Only require if email is provided
+            return !values.email || value === true;
+          },
+          message: "Subscription required for email users"
+        }
+      ]
+    }
+  ]
+};
+
+const RegistrationPage = () => (
+  <DynamicForm 
+    formId={UserRegistrationForm.formId}
+    formData={UserRegistrationForm}
+    onSubmit={(values, isValid) => {
+      if (isValid) {
+        console.log("Submitting:", values);
+      }
+    }}
+  />
+);
+```
