@@ -1,54 +1,190 @@
 ---
 sidebar_position: 4
-draft: true
 ---
 
-# Dynamic Options from API
+# Dynamic Options (API calls)
 
-## 📦 GridViewField (type: "gridview")
+React-Forminate provides powerful dynamic options loading for select fields (with future support for checkboxes and other field types). This feature allows you to fetch options from APIs automatically, with support for dependencies between fields, pagination, and response transformation.
 
-The `GridViewField` is a powerful visual selector in `react-forminate` that displays items in a responsive grid layout. It supports dynamic API fetching, customizable pagination, image rendering, and user-friendly interaction.
+## Basic Usage
 
----
+### Simple API Fetch
 
-### ✨ Features
-
-- Displays items in a clean, card-like grid
-- API-driven with advanced pagination
-- Supports image, label, price, and custom fields
-- Dynamic dependencies (dependsOn, placeholders in endpoints)
-- Full customization: styles, classes, and event handlers
-- Built-in loading state and pagination controls
-
-### 📥 Usage
-
-To use GridViewField, define a field in your form schema with type: `"gridview"`.
-
-**Example Field Schema:**
-
-```ts
+```tsx
 {
-  fieldId: "products",
-  label: "Products",
-  type: "gridview",
+  fieldId: "countries",
+  type: "select",
   dynamicOptions: {
-    endpoint: "https://dummyjson.com/products",
-    resultPath: "products",
-    transformResponse: (res) =>
-      res.map((item: any) => ({
-        label: item.title,
-        value: item.id,
-        image: item.thumbnail,
-        price: item.price,
-      })),
-    fetchOnInit: true,
-    pagination: {
-      limit: 4,
-      pageMode: "skip",
-      skipKey: "skip",
-      limitKey: "limit",
-      startPage: 1,
-    },
+    endpoint: "https://api.example.com/countries",
+    fetchOnInit: true // Load options when form mounts
   }
 }
+```
+
+### With Response Transformation
+```tsx
+{
+  fieldId: "users",
+  type: "select",
+  dynamicOptions: {
+    endpoint: "https://api.example.com/users",
+    transformResponse: (res) => 
+      res.map(user => ({ label: user.name, value: user.id })),
+    fetchOnInit: true
+  }
+}
+```
+
+## Dynamic Options Configuration
+### Core Properties
+| Property           | Type                  | Description                                                             | Default     |
+|--------------------|-----------------------|-------------------------------------------------------------------------|-------------|
+| `endpoint`         | `string`              | API endpoint URL (supports template variables like `{{fieldId}}`)       | **required**|
+| `method`           | `string`              | HTTP method                                                             | `"GET"`     |
+| `dependsOn`        | `string \| string[]`  | Field IDs this field depends on                                         | `undefined` |
+| `params`           | `object`              | Query parameters (values can reference other fields)                    | `undefined` |
+| `headers`          | `object`              | Request headers                                                         | `undefined` |
+| `transformResponse`| `function`            | Transforms API response to option format                                | `undefined` |
+| `resultPath`       | `string`              | Path to extract data from nested response                               | `undefined` |
+| `fetchOnInit`      | `boolean`             | Fetch options when component mounts                                     | `false`     |
+| `pagination`       | `object`              | Pagination configuration                                                | `undefined` |
+
+
+### Dependent Fields
+Create chained selects where options depend on another field's value:
+```tsx
+{
+  fieldId: "state",
+  type: "select",
+  dynamicOptions: {
+    dependsOn: "country", // Watches country field
+    endpoint: "https://api.example.com/states",
+    params: {
+      country: "country" // Uses value from country field
+    }
+  }
+}
+```
+
+### Pagination
+For large datasets, enable pagination:
+```tsx
+{
+  fieldId: "products",
+  type: "select",
+  dynamicOptions: {
+    endpoint: "https://api.example.com/products",
+    pagination: {
+      limit: 10,
+      pageMode: "page", // or "skip"
+      pageKey: "page", // query param name
+      limitKey: "limit",
+      startPage: 1
+    }
+  }
+}
+```
+
+## Advanced Features
+### Response Transformation
+Convert API responses to the expected format:
+
+```tsx
+transformResponse: (res) => {
+  return res.data.items.map(item => ({
+    label: `${item.firstName} ${item.lastName}`,
+    value: item.id,
+    metadata: { 
+      department: item.dept 
+    }
+  }));
+}
+```
+
+### Nested Data Extraction
+Extract data from complex responses:
+```tsx
+{
+  dynamicOptions: {
+    endpoint: "https://api.example.com/data",
+    resultPath: "results.items" // Extracts res.results.items
+  }
+}
+```
+
+### Template Variables
+Use field values in URLs:
+```tsx
+{
+  fieldId: "userDetails",
+  type: "select",
+  dynamicOptions: {
+    endpoint: "https://api.example.com/users/{{userId}}/details",
+    dependsOn: "userId"
+  }
+}
+```
+
+## Complete Example
+```tsx
+import { DynamicForm } from "react-forminate";
+
+const ProductForm = {
+  formId: "productForm",
+  fields: [
+    {
+      fieldId: "category",
+      type: "select",
+      label: "Product Category",
+      dynamicOptions: {
+        endpoint: "https://api.example.com/categories",
+        fetchOnInit: true,
+        transformResponse: (res) => 
+          res.map(cat => ({ label: cat.name, value: cat.id }))
+      }
+    },
+    {
+      fieldId: "product",
+      type: "select",
+      label: "Product",
+      dynamicOptions: {
+        dependsOn: "category",
+        endpoint: "https://api.example.com/products",
+        params: {
+          categoryId: "category" // Uses value from category field
+        },
+        pagination: {
+          limit: 20,
+          pageMode: "page",
+          maxPage: 5
+        },
+        transformResponse: (res) => 
+          res.map(prod => ({ 
+            label: prod.title, 
+            value: prod.id,
+            price: prod.price 
+          }))
+      }
+    },
+    {
+      fieldId: "variant",
+      type: "select",
+      label: "Variant",
+      dynamicOptions: {
+        dependsOn: ["category", "product"], // Multiple dependencies
+        endpoint: "https://api.example.com/products/{{product}}/variants",
+        transformResponse: (res) => 
+          res.variants.map(v => ({ label: v.name, value: v.id }))
+      }
+    }
+  ]
+};
+
+const ProductSelector = () => (
+  <DynamicForm 
+    formId={ProductForm.formId}
+    formData={ProductForm}
+    onSubmit={(values) => console.log(values)}
+  />
+);
 ```
