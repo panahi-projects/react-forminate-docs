@@ -1,0 +1,198 @@
+---
+sidebar_position: 5
+---
+
+# Functional Props
+
+React-Forminate provides a powerful way to make form fields dynamic through functional props. These props can accept either static values or functions that compute values based on form state and context.
+
+## Functional Props Overview
+Several field properties can be either static values or dynamic functions:
+
+- label
+- required
+- requiredMessage
+- visibility
+- disabled
+
+### Value Types
+Each prop can accept:
+
+1. **Static Value**: Direct assignment of the expected type
+```tsx
+label: "First Name"
+```
+
+2. **Function**: Direct function that returns the value
+```tsx
+label: ({ values }) => values.showLabels ? "First Name" : ""
+```
+
+3. **ComputedValue Object**: Recommended approach for complex cases
+```tsx
+label: {
+  fn: ({ values }) => `${values.title}'s Name`,
+  dependsOn: ["title"],
+  defaultValue: "Name"
+}
+```
+
+## ComputedValue Structure
+The recommended way to use functional props is through the `ComputedValue` type:
+
+```ts
+type ComputedValue<T> = {
+  fn: (context: FieldPropContext) => T;
+  dependsOn?: string[];
+  defaultValue?: T;
+  isAsync?: boolean;
+};
+```
+
+### FieldPropContext
+The function receives a context object with:
+```tsx
+{
+  fieldId: string,       // Current field ID
+  values: object,        // All form values
+  fieldSchema: object,   // Current field schema  
+  formSchema: object     // Complete form schema
+}
+```
+
+## Usage Examples
+### Dynamic Label
+```tsx
+{
+  fieldId: "greeting",
+  label: {
+    fn: ({ values }) => 
+      `Hello ${values.name || 'there'}`,
+    dependsOn: ["name"],
+    defaultValue: "Hello"
+  },
+  type: "text"
+}
+```
+
+### Conditional Required
+```tsx
+{
+  fieldId: "spouseName",
+  required: {
+    fn: ({ values }) => values.maritalStatus === "married",
+    dependsOn: ["maritalStatus"]
+  },
+  type: "text"
+}
+```
+
+### Dynamic Visibility
+```tsx
+{
+  fieldId: "studentDetails",
+  type: "group",
+  visibility: {
+    fn: ({ values }) => values.userType === "student",
+    dependsOn: ["userType"]
+  },
+  fields: [...]
+}
+```
+
+### Async Disabled State
+```tsx
+{
+  fieldId: "premiumFeature",
+  disabled: {
+    fn: async ({ values }) => {
+      const status = await checkSubscription(values.userId);
+      return !status.isPremium;
+    },
+    dependsOn: ["userId"],
+    isAsync: true,
+    defaultValue: true
+  },
+  type: "checkbox"
+}
+```
+
+## Complete Example
+```tsx
+const UserProfileForm = {
+  formId: "userProfile",
+  fields: [
+    {
+      fieldId: "userType",
+      type: "select",
+      label: "Account Type",
+      options: ["student", "professional", "retired"],
+      required: true
+    },
+    {
+      fieldId: "firstName",
+      type: "text",
+      label: {
+        fn: ({ values }) => 
+          values.userType === "professional" 
+            ? "Legal First Name" 
+            : "First Name",
+        dependsOn: ["userType"]
+      },
+      required: true
+    },
+    {
+      fieldId: "employmentInfo",
+      type: "group",
+      label: "Employment Details",
+      visibility: {
+        fn: ({ values }) => values.userType === "professional",
+        dependsOn: ["userType"]
+      },
+      fields: [
+        {
+          fieldId: "company",
+          type: "text",
+          label: "Company Name",
+          required: {
+            fn: ({ values }) => values.userType === "professional",
+            dependsOn: ["userType"]
+          }
+        },
+        {
+          fieldId: "workEmail",
+          type: "email",
+          label: "Work Email",
+          disabled: {
+            fn: ({ values }) => !values.company,
+            dependsOn: ["company"]
+          }
+        }
+      ]
+    },
+    {
+      fieldId: "studentId",
+      type: "text",
+      label: "Student ID",
+      requiredMessage: {
+        fn: ({ values }) => 
+          `Student ID is required for ${values.schoolName || 'your school'}`,
+        dependsOn: ["schoolName"]
+      },
+      visibility: {
+        fn: ({ values }) => values.userType === "student",
+        dependsOn: ["userType"]
+      }
+    },
+    {
+      fieldId: "submit",
+      type: "button",
+      label: {
+        fn: ({ values }) => 
+          `Submit as ${values.userType || 'user'}`,
+        dependsOn: ["userType"]
+      }
+    }
+  ]
+};
+```
