@@ -6,6 +6,8 @@
   background-color: #1f2937;
   padding: 0.5rem;
   color: #d1d5db;
+  border: none;
+  cursor: pointer;
 }
 
 .button:hover {

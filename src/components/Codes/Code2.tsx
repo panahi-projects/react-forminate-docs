@@ -1,5 +1,4 @@
-import { DynamicForm } from "react-forminate";
-import type { FormDataCollectionType } from "react-forminate";
+import { DynamicForm, type FormDataCollectionType } from "react-forminate";
 import { CodePreview } from "../CodePlayground";
 
 const formSchema: FormDataCollectionType = {
