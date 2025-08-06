@@ -215,3 +215,14 @@ body {
 .page-home .text-primary {
   color: var(--ifm-color-primary);
 }
+
+input,
+select,
+textarea {
+  color: #bcbcbc !important;
+  background-color: #1a1a1a !important;
+  border: 1px solid #2d2d2d !important;
+}
+.field-validation-error {
+  border: 1px solid #d70000 !important;
+}

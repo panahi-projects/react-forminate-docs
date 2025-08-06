@@ -5,8 +5,8 @@ import type * as Preset from "@docusaurus/preset-classic";
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: "React-Forminate",
-  tagline: "Dinosaurs are cool",
+  title: "React-Forminate | Modern React Form Library",
+  tagline: "The simplest way to build forms in React with built-in validation",
   favicon: "img/favicon.ico",
 
   // Where your site will be served from
@@ -62,11 +62,23 @@ const config: Config = {
       } satisfies Preset.Options,
     ],
   ],
-  plugins: [
-    "@docusaurus/theme-live-codeblock",
-    require.resolve("./plugins/rawLoaderPlugin"),
-  ],
+  plugins: [require.resolve("./plugins/rawLoaderPlugin")],
   themeConfig: {
+    metadata: [
+      {
+        name: "keywords",
+        content:
+          "react forms, form validation, react hooks, form library, react-forminate",
+      },
+      {
+        name: "description",
+        content:
+          "The simplest way to build forms in React with built-in validation",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:locale", content: "en_US" },
+    ],
+    ogImage: "img/React-Forminate-Logo-800x800-bg-transparent.webp", // 1200x630px recommended
     colorMode: {
       defaultMode: "dark",
       disableSwitch: true, // This hides the theme toggle button

@@ -1,0 +1,119 @@
+.container {
+  margin: 0.5rem 0;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  border: 1px solid #171717;
+}
+
+.titleContainer {
+  border-bottom: 1px solid #262626;
+  background-color: #272727;
+  padding: 0.2rem 0.5rem;
+}
+
+.title {
+  font-family: monospace;
+  font-size: 0.875rem;
+  color: #9ca3af;
+}
+
+.focusedTitle {
+  color: #f97316;
+  padding-left: 0.5rem;
+  font-weight: 600;
+}
+
+.tabContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #262626;
+}
+
+.tabButtons {
+  display: flex;
+}
+
+.tabButton {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  outline: none;
+  border: none;
+}
+
+.activeTab {
+  color: #85e81c;
+  background-color: #262626;
+}
+
+.inactiveTab {
+  background-color: transparent;
+}
+
+.inactiveTab:hover {
+  color: white;
+}
+
+.lineCount {
+  color: #f97316;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+}
+
+.previewContainer {
+  background-color: #202020;
+  padding: 1rem;
+}
+
+.codeHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #404040;
+  background-color: #262626;
+  padding: 0.25rem 1rem;
+}
+
+.codeHeaderText {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.wrapButton {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.wrapButton:hover {
+  color: white;
+}
+
+.codeContainer {
+  overflow-y: auto;
+  background-color: #262626;
+}
+
+.pre {
+  background-color: #0a0a0a;
+  padding: 1rem;
+  font-size: 0.875rem;
+}
+
+.wrap {
+  white-space: pre-wrap;
+}
+
+.noWrap {
+  white-space: pre;
+}
+
+.lineNumber {
+  display: inline-block;
+  width: 2rem;
+  color: #6b7280;
+  user-select: none;
+}

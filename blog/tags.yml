@@ -17,3 +17,113 @@ hola:
   label: Hola
   permalink: /hola
   description: Hola tag description
+
+reactjs:
+  label: React.js
+  permalink: /reactjs
+  description: Everything about React.js, including hooks, forms, and performance optimization.
+
+javascript:
+  label: JavaScript
+  permalink: /javascript
+  description: Modern JavaScript techniques and ecosystem developments.
+
+typescript:
+  label: TypeScript
+  permalink: /typescript
+  description: Type-safe JavaScript development patterns and best practices.
+
+frontend:
+  label: Front-End
+  permalink: /frontend
+  description: Modern frontend development with React, TypeScript, and UI/UX best practices.
+
+webdev:
+  label: Web Development
+  permalink: /webdev
+  description: Full-stack and frontend web development trends.
+
+reactforms:
+  label: React Forms
+  permalink: /reactforms
+  description: Form management solutions in React, including validation and state handling.
+
+formvalidation:
+  label: Form Validation
+  permalink: /formvalidation
+  description: Techniques and libraries for robust form validation.
+
+formik:
+  label: Formik
+  permalink: /formik
+  description: The popular React form library and its ecosystem.
+
+reacthookform:
+  label: React Hook Form
+  permalink: /reacthookform
+  description: Performant React forms with hooks-based architecture.
+
+reactforminate:
+  label: React-Forminate
+  permalink: /reactforminate
+  description: The modern, low-boilerplate form solution for React.
+
+zod:
+  label: Zod
+  permalink: /zod
+  description: TypeScript-first schema validation for forms and APIs.
+
+yup:
+  label: Yup
+  permalink: /yup
+  description: JavaScript object schema validation.
+
+dx:
+  label: Developer Experience
+  permalink: /dx
+  description: Tools and patterns for improving developer workflow.
+
+codequality:
+  label: Code Quality
+  permalink: /codequality
+  description: Writing maintainable, efficient, and clean code.
+
+bestpractices:
+  label: Best Practices
+  permalink: /bestpractices
+  description: Industry-proven development methodologies.
+
+perfoptimization:
+  label: Performance Optimization
+  permalink: /perfoptimization
+  description: Techniques for faster, smoother web applications.
+
+ui:
+  label: User Interface
+  permalink: /ui
+  description: UI design patterns and implementation strategies.
+
+ux:
+  label: UX Design
+  permalink: /ux
+  description: User experience principles for developers.
+
+componentlibraries:
+  label: Component Libraries
+  permalink: /componentlibraries
+  description: Reusable UI components and design systems.
+
+statemanagement:
+  label: State Management
+  permalink: /statemanagement
+  description: Managing application state in frontend frameworks.
+
+opensource:
+  label: Open Source
+  permalink: /opensource
+  description: Open-source projects and contribution guides.
+
+softwarearchitecture:
+  label: Software Architecture
+  permalink: /softwarearchitecture
+  description: Scalable frontend architecture patterns.

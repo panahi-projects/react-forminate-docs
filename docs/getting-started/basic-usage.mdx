@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 ---
+import { Code2 } from "@site/src/components/Codes"
 
 # Basic Usage
 
@@ -12,45 +13,7 @@ Getting started with **React Forminate** is straightforward. All you need is a s
 
 Here’s a minimal example to help you hit the ground running:
 
-```tsx
-import { DynamicForm } from "react-forminate";
-
-const formData = {
-  formId: "SimpleForm",
-  title: "Simple Form Example",
-  fields: [
-    {
-      fieldId: "name",
-      label: "Name",
-      type: "text",
-      required: true,
-      placeholder: "Enter your name",
-    },
-    {
-      fieldId: "email",
-      label: "Email",
-      type: "text",
-      required: true,
-      placeholder: "Enter your email",
-    },
-    {
-      fieldId: "dob",
-      label: "Date of Birth",
-      type: "date",
-    },
-  ],
-};
-
-const App = () => {
-  const handleSubmit = (values: any, isValid: boolean) => {
-    console.log("Form Data:", values, "Is Valid:", isValid);
-  };
-
-  return <DynamicForm formData={formData} onSubmit={handleSubmit} />;
-};
-
-export default App;
-```
+<Code2 />
 
 ### 💡 How It Works
 

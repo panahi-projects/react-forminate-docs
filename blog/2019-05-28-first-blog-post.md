@@ -3,9 +3,10 @@ slug: first-blog-post
 title: First Blog Post
 authors: [panahsa]
 tags: [hola, docusaurus]
+draft: true
 ---
 
-Lorem ipsum dolor sit amet...
+Hellooooo Worldddddddd
 
 <!-- truncate -->
 

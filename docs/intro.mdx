@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 ---
+import { Code1 } from "@site/src/components/Codes"
 
 <div align="center">
         <a href="#" title="React-Forminate">
@@ -12,29 +13,7 @@ sidebar_position: 1
 
 The missing link between **configuration** and **complex forms** in React
 
-```tsx
-import { DynamicForm } from "react-forminate";
-
-function FirstFormPreview() {
-  return (
-    <DynamicForm
-      formData={{
-        formId: "firstForm",
-        fields: [
-          {
-            fieldId: "demo",
-            type: "text",
-            label: "Try typing here",
-            description: "This live demo reacts like a real form",
-          },
-        ],
-      }}
-    />
-  );
-}
-
-export default FirstFormPreview;
-```
+<Code1 />
 
 ### Why This Exists
 Most form libraries force you to choose:
