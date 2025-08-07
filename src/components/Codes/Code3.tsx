@@ -46,7 +46,8 @@ const App = () => {
     console.log("Form Data:", values, "Is Valid:", isValid);
   };
   return <DynamicForm formData={formSchema} onSubmit={handleSubmit} />;
-};`;
+};
+`;
 
 export const Code3 = () => {
   return (

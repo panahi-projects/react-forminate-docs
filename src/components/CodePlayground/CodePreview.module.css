@@ -129,7 +129,6 @@
 }
 
 .highlightedCode {
-  /* background: rgba(255, 255, 255, 0.1); */
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
@@ -156,14 +155,14 @@
 
 .codeContainer {
   position: relative;
-  overflow: hidden;
+  overflow: auto;
   background: #1e1e1e;
   border-radius: 0 0 8px 8px;
 }
 
 .codeContent {
   max-height: 100%;
-  overflow: auto;
+  overflow: visible;
 }
 
 .collapsedStart,
@@ -195,8 +194,8 @@
 }
 
 .expandButton {
-  position: absolute;
-  bottom: 15px;
+  position: sticky;
+  bottom: 50px;
   left: 50%;
   transform: translateX(-50%);
   padding: 8px 16px;
@@ -225,7 +224,7 @@
 
 .copyButton {
   position: absolute;
-  top: -20px;
+  top: 0px;
   right: 5px;
   z-index: 10;
 }

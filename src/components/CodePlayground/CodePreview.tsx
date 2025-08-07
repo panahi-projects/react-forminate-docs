@@ -33,38 +33,38 @@ export function CodePreview({
     code.includes("<!-- truncate-start -->") &&
     code.includes("<!-- truncate-end -->");
 
-  // Split code into parts if truncation markers exist
-  let beforeTruncate = "";
-  let truncateContent = "";
-  let afterTruncate = "";
-  let displayCode = code;
+  // Remove the truncation markers from the final displayed code
+  const cleanCode = code
+    .replace(/<!-- truncate-start -->/g, "")
+    .replace(/<!-- truncate-end -->/g, "");
 
-  if (hasTruncateMarkers && !isExpanded) {
+  // Get display code based on expanded state
+  const getDisplayCode = () => {
+    if (!hasTruncateMarkers || isExpanded) {
+      return cleanCode;
+    }
+
     const startIndex = code.indexOf("<!-- truncate-start -->");
     const endIndex =
       code.indexOf("<!-- truncate-end -->") + "<!-- truncate-end -->".length;
 
-    beforeTruncate = code.substring(0, startIndex);
-    truncateContent = code.substring(
+    const beforeTruncate = code.substring(0, startIndex);
+    const truncateContent = code.substring(
       startIndex + "<!-- truncate-start -->".length,
       endIndex - "<!-- truncate-end -->".length
     );
-    afterTruncate = code.substring(endIndex);
+    const afterTruncate = code.substring(endIndex);
 
-    // Create a shortened version of the code with fade effects
-    displayCode = `
+    return `
 ${beforeTruncate.split("\n").slice(0, 2).join("\n")}
 // ... [collapsed start code] ...
 ${truncateContent}
 // ... [collapsed end code] ...
 ${afterTruncate.split("\n").slice(-2).join("\n")}
 `;
-  }
+  };
 
-  // Remove the truncation markers from the final displayed code
-  const cleanCode = displayCode
-    .replace(/<!-- truncate-start -->/g, "")
-    .replace(/<!-- truncate-end -->/g, "");
+  const displayCode = getDisplayCode();
 
   useEffect(() => {
     setIsClient(true);
@@ -169,7 +169,7 @@ ${afterTruncate.split("\n").slice(-2).join("\n")}
             <div className={styles.codeContainer} style={{ maxHeight }}>
               <div className={styles.codeContent}>
                 <Highlight
-                  code={cleanCode}
+                  code={displayCode}
                   language="tsx"
                   theme={themes.vsDark}
                 >
@@ -202,9 +202,8 @@ ${afterTruncate.split("\n").slice(-2).join("\n")}
                           ) {
                             lineProps.className += ` ${styles.collapsedEnd}`;
                           } else if (
-                            truncateContent.includes(lineText.trim()) ||
-                            lineText.trim() ===
-                              truncateContent.split("\n")[0].trim()
+                            code.includes(lineText.trim()) &&
+                            lineText.trim() !== ""
                           ) {
                             lineProps.className += ` ${styles.highlightedCode}`;
                           }
@@ -225,36 +224,36 @@ ${afterTruncate.split("\n").slice(-2).join("\n")}
               {hasTruncateMarkers && !isExpanded && (
                 <div className={styles.gradientOverlay} />
               )}
-              {hasTruncateMarkers && (
-                <button
-                  onClick={() => setIsExpanded(!isExpanded)}
-                  className={styles.expandButton}
-                >
-                  {isExpanded ? "Collapse Code" : "Expand Code"}
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    className={styles.expandIcon}
-                  >
-                    <path
-                      d={isExpanded ? "M18 15l-6-6-6 6" : "M6 9l6 6 6-6"}
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-              )}
-              <div className={styles.copyButton}>
-                <CopyButton content={code} />
-              </div>
+            </div>
+            <div className={styles.copyButton}>
+              <CopyButton content={code} />
             </div>
           </div>
         )}
       </div>
+      {hasTruncateMarkers && activeTab === "code" && (
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className={styles.expandButton}
+        >
+          {isExpanded ? "Collapse Code" : "Expand Code"}
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            className={styles.expandIcon}
+          >
+            <path
+              d={isExpanded ? "M18 15l-6-6-6 6" : "M6 9l6 6 6-6"}
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+      )}
     </div>
   );
 }
