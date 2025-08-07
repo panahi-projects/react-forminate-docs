@@ -3,6 +3,7 @@
   overflow: hidden;
   border-radius: 0.5rem;
   border: 1px solid #171717;
+  position: relative;
 }
 
 .titleContainer {
@@ -182,7 +183,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 60px;
+  height: 150px;
   background: linear-gradient(
     to bottom,
     rgba(30, 30, 30, 0) 0%,

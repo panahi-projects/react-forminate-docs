@@ -221,9 +221,6 @@ ${afterTruncate.split("\n").slice(-2).join("\n")}
                   )}
                 </Highlight>
               </div>
-              {hasTruncateMarkers && !isExpanded && (
-                <div className={styles.gradientOverlay} />
-              )}
             </div>
             <div className={styles.copyButton}>
               <CopyButton content={code} />
@@ -231,6 +228,9 @@ ${afterTruncate.split("\n").slice(-2).join("\n")}
           </div>
         )}
       </div>
+      {hasTruncateMarkers && !isExpanded && activeTab === "code" && (
+        <div className={styles.gradientOverlay} />
+      )}
       {hasTruncateMarkers && activeTab === "code" && (
         <button
           onClick={() => setIsExpanded(!isExpanded)}

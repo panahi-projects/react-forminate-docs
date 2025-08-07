@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 ---
-import { Code3 } from "@site/src/components/Codes"
+import { Code3, Code4, Code5 } from "@site/src/components/Codes"
 
 # Form Validation
 
@@ -35,34 +35,12 @@ const formData = {
 
 Validate against regular expressions:
 
-```tsx
-{
-  fieldId: "username",
-  type: "text",
-  validation: [
-    {
-      pattern: "^[a-zA-Z0-9_]{4,20}$",
-      message: "4-20 chars: letters, numbers, or underscores only."
-    }
-  ]
-}
-```
+<Code4 />
 
 ### Length Validation
 For text fields:
 
-```ts
-validation: [
-  {
-    minLength: 3,
-    message: "Must be at least 3 characters"
-  },
-  {
-    maxLength: 50,
-    message: "Cannot exceed 50 characters"
-  }
-]
-```
+<Code5 />
 
 ### Numeric Validation
 For number fields:
