@@ -29,7 +29,7 @@
     "prismjs": "^1.30.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-forminate": "^1.1.0-beta.7",
+    "react-forminate": "^1.1.0-beta.8",
     "react-live": "^4.1.8",
     "styled-components": "^6.1.17"
   },

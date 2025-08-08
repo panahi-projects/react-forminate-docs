@@ -226,3 +226,7 @@ textarea {
 .field-validation-error {
   border: 1px solid #d70000 !important;
 }
+
+form label > span {
+  color: #dadada !important;
+}

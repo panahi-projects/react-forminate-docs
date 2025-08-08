@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 ---
-import { Code3, Code4, Code5, Code6, Code7, Code8 } from "@site/src/components/Codes"
+import { Code3, Code4, Code5, Code6, Code7, Code8, Code9, Code10 } from "@site/src/components/Codes"
 
 # Form Validation
 
@@ -103,7 +103,8 @@ validation: [
 ### Custom Validation
 Implement complex validation logic:
 
-```tsx
+<Code9 />
+{/* ```tsx
 validation: [
   {
     custom: (value) => {
@@ -113,7 +114,7 @@ validation: [
     message: "This value is not allowed"
   }
 ]
-```
+``` */}
 
 ## Validation Strategies
 **`React-Forminate`** uses a strategy pattern for validation. Here are all built-in strategies:
@@ -137,18 +138,7 @@ validation: [
 ### Conditional Validation
 
 Show/hide fields based on other field values, and if the field is not visible, the validation engine automatically does not check that field:
-```tsx
-{
-  fieldId: "spouseName",
-  type: "text",
-  visibility: {
-    dependsOn: "maritalStatus",
-    condition: "equals",
-    value: "married"
-  },
-  required: true
-}
-```
+<Code10 />
 
 ### Custom Validation Strategies
 Register custom validation strategies:
