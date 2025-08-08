@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 ---
-import { Code3, Code4, Code5 } from "@site/src/components/Codes"
+import { Code3, Code4, Code5, Code6, Code7, Code8 } from "@site/src/components/Codes"
 
 # Form Validation
 
@@ -45,19 +45,7 @@ For text fields:
 ### Numeric Validation
 For number fields:
 
-```tsx
-validation: [
-  {
-    min: 18,
-    max: 100,
-    message: "Must be between 18 to 100"
-  },
-  {
-    pattern: "^[0-9]+$",
-    message: "Only numbers allowed"
-  }
-]
-```
+<Code6 />
 
 **OR**
 
@@ -71,36 +59,25 @@ validation: [
     max: 100,
     message: "Cannot exceed 100"
   },
-  {
-    pattern: "^[0-9]+$",
-    message: "Only numbers allowed"
-  }
 ]
 ```
 
 ### Date Validation
 For date fields:
 
-```tsx
-validation: [
-  {
-    minDate: "2000-01-01",
-    maxDate: "2023-12-31",
-    message: "Must be after January 1, 2000 and before 2024"
-  }
-]
-```
+<Code7 />
+
 **OR**
 
 ```tsx
 validation: [
   {
-    minDate: "2000-01-01",
-    message: "Must be after January 1, 2000"
+    minDate: "2025-01-01",
+    message: "Must be after January 1, 2025"
   },
   {
-    maxDate: "2023-12-31",
-    message: "Must be before 2024"
+    maxDate: "2026-12-31",
+    message: "Must be before 2026"
   }
 ]
 ```
@@ -108,7 +85,9 @@ validation: [
 ### Array Validation
 For checkbox groups and multi-selects:
 
-```tsx
+<Code8 />
+
+{/* ```tsx
 validation: [
   {
     minItems: 1,
@@ -119,7 +98,7 @@ validation: [
     message: "Select no more than three options"
   }
 ]
-```
+``` */}
 
 ### Custom Validation
 Implement complex validation logic:

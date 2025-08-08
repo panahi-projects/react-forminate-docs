@@ -3,3 +3,6 @@ export { Code2 } from "./Code2";
 export { Code3 } from "./Code3";
 export { Code4 } from "./Code4";
 export { Code5 } from "./Code5";
+export { Code6 } from "./Code6";
+export { Code7 } from "./Code7";
+export { Code8 } from "./Code8";
