@@ -1,6 +1,7 @@
 import React from "react";
 import { DynamicForm, type FormDataCollectionType } from "react-forminate";
 import { CodePreview } from "../CodePlayground";
+import { CodeProps } from "@site/types";
 
 const formSchema: FormDataCollectionType = {
   formId: "validationForm",
@@ -49,13 +50,20 @@ const App = () => {
 };
 `;
 
-export const Code3 = () => {
+export const Code3 = ({
+  description = "",
+  features = [],
+  keywords = [],
+}: CodeProps) => {
   return (
     <CodePreview
       code={Code}
       component={<App />}
       title="Required Fields Form"
       defaultTab="code"
+      description={description}
+      features={features}
+      keywords={keywords}
     />
   );
 };

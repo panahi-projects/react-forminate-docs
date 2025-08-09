@@ -1,9 +1,10 @@
 // Updated CodePreview component with gradient overlay and improved button styling
 import { Highlight, themes } from "prism-react-renderer";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ConsoleViewer from "./ConsoleDrawer";
 import CopyButton from "./CopyButton";
 import styles from "./CodePreview.module.css";
+import ErrorBoundary from "@docusaurus/ErrorBoundary";
 
 interface CodePreviewProps {
   code: string;
@@ -12,8 +13,19 @@ interface CodePreviewProps {
   focusedTitle?: string;
   maxHeight?: string;
   defaultTab?: "code" | "preview";
+  description?: string;
+  keywords?: string[];
+  language?: string; // Explicitly specify language
+  features?: string[];
 }
-
+/**
+ * A component for displaying interactive code examples with preview functionality
+ * @param {string} code - The raw code to display
+ * @param {ReactNode} component - The live component preview
+ * @param {string} [language='typescript'] - The programming language
+ * @param {string} [title] - The title of the code example
+ * ... other params
+ */
 export function CodePreview({
   code,
   component,
@@ -21,6 +33,10 @@ export function CodePreview({
   focusedTitle,
   maxHeight = "32rem",
   defaultTab = "preview",
+  description,
+  keywords,
+  language,
+  features,
 }: CodePreviewProps) {
   const [activeTab, setActiveTab] = useState<"code" | "preview">(defaultTab);
   const [isClient, setIsClient] = useState(false);
@@ -34,9 +50,13 @@ export function CodePreview({
     code.includes("<!-- truncate-end -->");
 
   // Remove the truncation markers from the final displayed code
-  const cleanCode = code
-    .replace(/<!-- truncate-start -->/g, "")
-    .replace(/<!-- truncate-end -->/g, "");
+  const cleanCode = useMemo(
+    () =>
+      code
+        .replace(/<!-- truncate-start -->/g, "")
+        .replace(/<!-- truncate-end -->/g, ""),
+    [code]
+  );
 
   // Get display code based on expanded state
   const getDisplayCode = () => {
@@ -72,10 +92,15 @@ ${afterTruncate.split("\n").slice(-2).join("\n")}
   }, [code]);
 
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      itemScope
+      itemType="https://schema.org/Code"
+      aria-labelledby={title ? "code-title" : undefined}
+    >
       {title && (
         <div className={styles.titleContainer}>
-          <h3 className={styles.title}>
+          <h3 className={styles.title} id="code-title" itemProp="name">
             {title}
             {focusedTitle && (
               <span className={styles.focusedTitle}>{focusedTitle}</span>
@@ -83,6 +108,19 @@ ${afterTruncate.split("\n").slice(-2).join("\n")}
           </h3>
         </div>
       )}
+
+      {description && <meta itemProp="description" content={description} />}
+
+      {keywords && <meta itemProp="keywords" content={keywords.join(", ")} />}
+
+      {/* Add hidden SEO content */}
+      <div className={styles.visuallyHidden}>
+        <p>
+          This code example demonstrates {description || title} in
+          React-Forminate.
+        </p>
+        {features && <p>Key features shown: {features.join(", ")}</p>}
+      </div>
 
       <div className={styles.tabContainer}>
         <div className={styles.tabButtons}>
@@ -108,18 +146,53 @@ ${afterTruncate.split("\n").slice(-2).join("\n")}
         </div>
       </div>
 
+      {/* Hidden SEO-optimized raw code */}
+      <div
+        style={{ display: "none" }}
+        aria-hidden="true"
+        itemProp="codeSample"
+        itemScope
+        itemType="https://schema.org/SoftwareSourceCode"
+      >
+        <meta itemProp="name" content={title || "Code Example"} />
+        <meta
+          itemProp="programmingLanguage"
+          content={language || "TypeScript"}
+        />
+        <meta
+          itemProp="codeRepository"
+          content="https://github.com/panahi-projects/react-forminate"
+        />
+        <meta itemProp="license" content="MIT" />
+        <meta itemProp="version" content="1.0.0" />
+        {description && <meta itemProp="description" content={description} />}
+        <pre
+          dangerouslySetInnerHTML={{ __html: cleanCode.replace(/\r\n/g, "\n") }}
+        />
+      </div>
+
       <div className="relative">
         {activeTab === "preview" ? (
           <div>
             <div className={styles.previewContainer}>
-              {isClient ? component : <div>Loading preview...</div>}
+              {isClient ? (
+                <ErrorBoundary
+                  fallback={() => <div>Component failed to render</div>}
+                >
+                  {component}
+                </ErrorBoundary>
+              ) : (
+                <div>Loading preview...</div>
+              )}
             </div>
             <ConsoleViewer />
           </div>
         ) : (
           <div className={styles.codeWrapper}>
             <div className={styles.codeHeader}>
-              <div className={styles.codeHeaderText}>TSX</div>
+              <div className={styles.codeHeaderText}>
+                {language || "Typescript"}
+              </div>
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => setWrapCode(!wrapCode)}
@@ -168,58 +241,74 @@ ${afterTruncate.split("\n").slice(-2).join("\n")}
 
             <div className={styles.codeContainer} style={{ maxHeight }}>
               <div className={styles.codeContent}>
-                <Highlight
-                  code={displayCode}
-                  language="tsx"
-                  theme={themes.vsDark}
-                >
-                  {({
-                    className,
-                    style,
-                    tokens,
-                    getLineProps,
-                    getTokenProps,
-                  }) => (
-                    <pre
-                      className={`${className} ${styles.pre} ${
-                        wrapCode ? styles.wrap : styles.noWrap
-                      } ${
-                        hasTruncateMarkers && !isExpanded
-                          ? styles.truncated
-                          : ""
-                      }`}
-                      style={{ ...style }}
+                <pre itemScope>
+                  <meta itemProp="programmingLanguage" content="TypeScript" />
+                  <meta
+                    itemProp="codeRepository"
+                    content="https://github.com/panahi-projects/react-forminate"
+                  />
+                  <code>
+                    <Highlight
+                      code={displayCode}
+                      language={language || "tsx"}
+                      theme={themes.vsDark}
                     >
-                      {tokens.map((line, i) => {
-                        const lineProps = getLineProps({ line });
-                        // Add special classes for truncated sections
-                        if (hasTruncateMarkers && !isExpanded) {
-                          const lineText = line.map((t) => t.content).join("");
-                          if (lineText.includes("[collapsed start code]")) {
-                            lineProps.className += ` ${styles.collapsedStart}`;
-                          } else if (
-                            lineText.includes("[collapsed end code]")
-                          ) {
-                            lineProps.className += ` ${styles.collapsedEnd}`;
-                          } else if (
-                            code.includes(lineText.trim()) &&
-                            lineText.trim() !== ""
-                          ) {
-                            lineProps.className += ` ${styles.highlightedCode}`;
-                          }
-                        }
-                        return (
-                          <div key={i} {...lineProps}>
-                            <span className={styles.lineNumber}>{i + 1}</span>
-                            {line.map((token, key) => (
-                              <span key={key} {...getTokenProps({ token })} />
-                            ))}
-                          </div>
-                        );
-                      })}
-                    </pre>
-                  )}
-                </Highlight>
+                      {({
+                        className,
+                        style,
+                        tokens,
+                        getLineProps,
+                        getTokenProps,
+                      }) => (
+                        <pre
+                          className={`${className} ${styles.pre} ${
+                            wrapCode ? styles.wrap : styles.noWrap
+                          } ${
+                            hasTruncateMarkers && !isExpanded
+                              ? styles.truncated
+                              : ""
+                          }`}
+                          style={{ ...style }}
+                        >
+                          {tokens.map((line, i) => {
+                            const lineProps = getLineProps({ line });
+                            // Add special classes for truncated sections
+                            if (hasTruncateMarkers && !isExpanded) {
+                              const lineText = line
+                                .map((t) => t.content)
+                                .join("");
+                              if (lineText.includes("[collapsed start code]")) {
+                                lineProps.className += ` ${styles.collapsedStart}`;
+                              } else if (
+                                lineText.includes("[collapsed end code]")
+                              ) {
+                                lineProps.className += ` ${styles.collapsedEnd}`;
+                              } else if (
+                                code.includes(lineText.trim()) &&
+                                lineText.trim() !== ""
+                              ) {
+                                lineProps.className += ` ${styles.highlightedCode}`;
+                              }
+                            }
+                            return (
+                              <div key={i} {...lineProps}>
+                                <span className={styles.lineNumber}>
+                                  {i + 1}
+                                </span>
+                                {line.map((token, key) => (
+                                  <span
+                                    key={key}
+                                    {...getTokenProps({ token })}
+                                  />
+                                ))}
+                              </div>
+                            );
+                          })}
+                        </pre>
+                      )}
+                    </Highlight>
+                  </code>
+                </pre>
               </div>
             </div>
             <div className={styles.copyButton}>

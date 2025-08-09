@@ -5,6 +5,7 @@ import {
   type FormDataCollectionType,
 } from "react-forminate";
 import { CodePreview } from "../CodePlayground";
+import { CodeProps } from "@site/types";
 
 //Define a validation custom strategy
 class IbanValidationStrategy {
@@ -109,13 +110,20 @@ const App = () => {
 };
 `;
 
-export const Code11 = () => {
+export const Code11 = ({
+  description = "",
+  features = [],
+  keywords = [],
+}: CodeProps) => {
   return (
     <CodePreview
       code={Code}
       component={<App />}
       title="Validation Form Custom Strategies"
       defaultTab="code"
+      description={description}
+      features={features}
+      keywords={keywords}
     />
   );
 };

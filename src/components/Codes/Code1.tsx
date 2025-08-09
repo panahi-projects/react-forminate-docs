@@ -1,3 +1,4 @@
+import { CodeProps } from "@site/types";
 import { CodePreview } from "../CodePlayground";
 import { DynamicForm } from "react-forminate";
 
@@ -46,13 +47,20 @@ export const FirstFormPreview = () => {
   );
 };`;
 
-export const Code1 = () => {
+export const Code1 = ({
+  description = "",
+  features = [],
+  keywords = [],
+}: CodeProps) => {
   return (
     <CodePreview
       code={Code}
       component={<FirstFormPreview />}
       title="First form preview"
       defaultTab="code"
+      description={description}
+      features={features}
+      keywords={keywords}
     />
   );
 };

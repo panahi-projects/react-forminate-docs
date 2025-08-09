@@ -1,5 +1,6 @@
 import { DynamicForm, type FormDataCollectionType } from "react-forminate";
 import { CodePreview } from "../CodePlayground";
+import { CodeProps } from "@site/types";
 
 const formSchema: FormDataCollectionType = {
   formId: "simpleForm",
@@ -71,13 +72,20 @@ export const App = () => {
 };
 `;
 
-export const Code2 = () => {
+export const Code2 = ({
+  description = "",
+  features = [],
+  keywords = [],
+}: CodeProps) => {
   return (
     <CodePreview
       code={Code}
       component={<App />}
       title="Sample Form"
       defaultTab="code"
+      description={description}
+      features={features}
+      keywords={keywords}
     />
   );
 };

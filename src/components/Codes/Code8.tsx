@@ -1,6 +1,7 @@
 import React from "react";
 import { DynamicForm, type FormDataCollectionType } from "react-forminate";
 import { CodePreview } from "../CodePlayground";
+import { CodeProps } from "@site/types";
 
 const formSchema: FormDataCollectionType = {
   formId: "validationForm_checkbox",
@@ -111,13 +112,20 @@ const App = () => {
 };
 `;
 
-export const Code8 = () => {
+export const Code8 = ({
+  description = "",
+  features = [],
+  keywords = [],
+}: CodeProps) => {
   return (
     <CodePreview
       code={Code}
       component={<App />}
       title="Array Field Validation"
       defaultTab="code"
+      description={description}
+      features={features}
+      keywords={keywords}
     />
   );
 };

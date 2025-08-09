@@ -13,7 +13,25 @@ import { Code3, Code4, Code5, Code6, Code7, Code8, Code9, Code10, Code11 } from 
 
 Mark a field as required and customize its error message:
 
-<Code3 />
+<Code3 
+      description="Demonstrates required field validation in React-Forminate with custom error messages for form fields."
+      features={[
+        "Required field validation",
+        "Custom error messages",
+        "Form submission handling",
+        "Type-safe form schema",
+        "Console logging for debugging"
+      ]}
+      keywords={[
+        "React form validation",
+        "required fields",
+        "custom error messages",
+        "form validation demo",
+        "React-Forminate validation",
+        "form error handling",
+        "DynamicForm validation"
+      ]}
+/>
 
 ### Validation Triggers
 Control when validation occurs:
@@ -35,17 +53,72 @@ const formData = {
 
 Validate against regular expressions:
 
-<Code4 />
+<Code4 
+      description="Demonstrates regex pattern validation in React-Forminate with username format enforcement (5-20 alphanumeric chars)."
+      features={[
+        "Regex pattern validation",
+        "Custom validation messages",
+        "Pre-filled invalid default value",
+        "Real-time validation feedback",
+        "Form submission handling"
+      ]}
+      keywords={[
+        "React form regex validation",
+        "pattern matching validation",
+        "username validation",
+        "form input patterns",
+        "React-Forminate regex",
+        "form validation rules",
+        "input format enforcement"
+      ]}/>
 
 ### Length Validation
 For text fields:
 
-<Code5 />
+<Code5 
+      description="Demonstrates min/max length validation for textarea fields in React-Forminate with character count enforcement (10-200 chars)."
+      features={[
+        "Textarea length validation",
+        "Min/max character enforcement",
+        "Custom validation messages",
+        "Placeholder guidance",
+        "Required field validation",
+        "Form submission handling"
+      ]}
+      keywords={[
+        "React form length validation",
+        "textarea character limit",
+        "min/max length validation",
+        "form input length restrictions",
+        "React-Forminate textarea", 
+        "biography field validation",
+        "form character counting"
+      ]}
+/>
 
 ### Numeric Validation
 For number fields:
 
-<Code6 />
+<Code6 
+      description="Demonstrates numeric range validation (18-100) for age input fields in React-Forminate with min/max value enforcement."
+      features={[
+        "Numeric range validation",
+        "Min/max value enforcement",
+        "Age input validation",
+        "Custom validation messages",
+        "Required field handling",
+        "Form submission logging"
+      ]}
+      keywords={[
+        "React number validation",
+        "age input validation",
+        "min/max numeric validation",
+        "form number range",
+        "React-Forminate numeric",
+        "form input validation",
+        "number field restrictions"
+      ]}
+/>
 
 **OR**
 
@@ -65,7 +138,26 @@ validation: [
 ### Date Validation
 For date fields:
 
-<Code7 />
+<Code7 
+      description="Demonstrates date range validation in React-Forminate with min/max date enforcement (January 1, 2025 - December 31, 2026) for arrival date selection."
+      features={[
+        "Date range validation",
+        "Min/max date enforcement",
+        "Arrival date picker",
+        "Custom validation messages",
+        "Required field handling",
+        "Form submission logging"
+      ]}
+      keywords={[
+        "React date validation",
+        "date picker validation",
+        "min/max date restrictions",
+        "form date range",
+        "React-Forminate date",
+        "arrival date validation",
+        "date input restrictions"
+      ]}
+/>
 
 **OR**
 
@@ -85,7 +177,26 @@ validation: [
 ### Array Validation
 For checkbox groups and multi-selects:
 
-<Code8 />
+<Code8 
+      description="Demonstrates checkbox group validation in React-Forminate with minimum (1) and maximum (3) selection requirements for language options."
+      features={[
+        "Checkbox group validation",
+        "Minimum selection requirement (1)",
+        "Maximum selection limit (3)",
+        "Multi-language options",
+        "Custom validation messages",
+        "Required field handling"
+      ]}
+      keywords={[
+        "React checkbox validation",
+        "multi-select validation",
+        "checkbox group limits",
+        "form selection requirements",
+        "React-Forminate checkboxes",
+        "language selector validation",
+        "min/max item selection"
+      ]}
+/>
 
 {/* ```tsx
 validation: [
@@ -103,7 +214,26 @@ validation: [
 ### Custom Validation
 Implement complex validation logic:
 
-<Code9 />
+<Code9 
+      description="Demonstrates custom validation logic in React-Forminate with uppercase enforcement for currency code inputs, including a valid default value example."
+      features={[
+        "Custom validation function",
+        "Uppercase enforcement",
+        "Currency code validation",
+        "Default value demonstration",
+        "Real-time validation feedback",
+        "Form submission handling"
+      ]}
+      keywords={[
+        "React custom validation",
+        "form validation function",
+        "uppercase input validation",
+        "currency code validation",
+        "React-Forminate custom rules",
+        "dynamic form validation",
+        "custom form logic"
+      ]}
+/>
 {/* ```tsx
 validation: [
   {
@@ -138,12 +268,50 @@ validation: [
 ### Conditional Validation
 
 Show/hide fields based on other field values, and if the field is not visible, the validation engine automatically does not check that field:
-<Code10 />
+<Code10 
+      description="Demonstrates conditional field visibility in React-Forminate, showing spouse name field only when 'married' is selected, with dynamic required validation."
+      features={[
+        "Conditional field visibility",
+        "Radio button dependencies",
+        "Dynamic required validation",
+        "Form field relationships",
+        "Real-time form adaptation",
+        "Clean state management"
+      ]}
+      keywords={[
+        "React conditional forms",
+        "dynamic form fields",
+        "form field dependencies",
+        "React-Forminate visibility",
+        "conditional validation",
+        "form logic",
+        "dependent fields"
+      ]}
+/>
 
 ### Custom Validation Strategies
 Register custom validation strategies to be able to use them in all forms globally and doesn't need to define custom validation per forms:
 
-<Code11 />
+<Code11 
+      description="Demonstrates custom IBAN validation strategy in React-Forminate, showing how to create and register reusable validation logic for international bank account numbers."
+      features={[
+        "Custom validation strategy",
+        "IBAN format validation",
+        "Global strategy registration",
+        "Regex pattern validation",
+        "Reusable validation logic",
+        "Form integration example"
+      ]}
+      keywords={[
+        "React custom validation",
+        "IBAN validation",
+        "form validation strategies",
+        "React-Forminate plugins",
+        "bank account validation",
+        "regex validation",
+        "global form rules"
+      ]}
+/>
 
 {/* ```tsx
 import { validationEngine } from "react-forminate";
