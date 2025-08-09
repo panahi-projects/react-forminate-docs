@@ -3,16 +3,23 @@ import { CodePreview } from "../CodePlayground";
 import {
   DynamicForm,
   FormRegistryProvider,
-  useFormErrors,
+  useFormActions,
+  useFormValues,
   type FormDataCollectionType,
 } from "react-forminate";
 
 const SampleForm = () => {
-  const errors = useFormErrors("validationForm_errors");
+  const values = useFormValues("validationForm_manual_validate");
+  const { validateForm } = useFormActions("validationForm_manual_validate");
 
   const formSchema: FormDataCollectionType = {
-    formId: "validationForm_errors",
-    title: "Validation Form Errors",
+    formId: "validationForm_manual_validate",
+    title: "Form Manual Validation",
+    options: {
+      submit: {
+        visibility: false,
+      },
+    },
     fields: [
       {
         fieldId: "firstName",
@@ -40,19 +47,31 @@ const SampleForm = () => {
       },
     ],
   };
-  const handleSubmit = (values: any, isValid: boolean) => {
-    console.log("Form Data:", values, "Is Valid:", isValid);
+  const handleSubmit = async () => {
+    const isFormValid = await validateForm(formSchema);
+    if (isFormValid) {
+      console.log("Form Is Valid");
+      console.log("Form values:", values);
+    } else {
+      console.log("Form Is Not Valid");
+    }
   };
   return (
     <div>
-      {errors &&
-        Object.entries(errors).map(([fieldId, message]) => (
-          <div key={fieldId}>
-            <span>{fieldId}: </span>
-            <span>{message}</span>
-          </div>
-        ))}
-      <DynamicForm formData={formSchema} onSubmit={handleSubmit} />
+      <DynamicForm formData={formSchema} />
+      <button
+        onClick={handleSubmit}
+        style={{
+          backgroundColor: "#008556",
+          color: "#fff",
+          padding: "6px 12px",
+          margin: "4px auto",
+          border: "none",
+          outline: "none",
+        }}
+      >
+        Submit Form
+      </button>
     </div>
   );
 };
@@ -68,17 +87,24 @@ const App = () => {
 const Code = `import {
   DynamicForm,
   FormRegistryProvider,
-  useFormErrors,
+  useFormActions,
+  useFormValues,
   type FormDataCollectionType,
 } from "react-forminate";
 
 const SampleForm = () => {
   <!-- truncate-start -->
-  const errors = useFormErrors("validationForm_errors"); //The hook takes the form ID
+  const values = useFormValues("validationForm_manual_validate");
+  const { validateForm } = useFormActions("validationForm_manual_validate");
   <!-- truncate-end -->
   const formSchema: FormDataCollectionType = {
-    formId: "validationForm_errors",
-    title: "Validation Form Errors",
+    formId: "validationForm_manual_validate",
+    title: "Form Manual Validation",
+    options: {
+      submit: {
+        visibility: false,
+      },
+    },
     fields: [
       {
         fieldId: "firstName",
@@ -106,19 +132,31 @@ const SampleForm = () => {
       },
     ],
   };
-  const handleSubmit = (values: any, isValid: boolean) => {
-    console.log("Form Data:", values, "Is Valid:", isValid);
+  const handleSubmit = async () => {
+    const isFormValid = await validateForm(formSchema);
+    if (isFormValid) {
+      console.log("Form Is Valid");
+      console.log("Form values:", values);
+    } else {
+      console.log("Form Is Not Valid");
+    }
   };
   return (
     <div>
-      {errors &&
-        Object.entries(errors).map(([fieldId, message]) => (
-          <div key={fieldId}>
-            <span>{fieldId}: </span>
-            <span>{message}</span>
-          </div>
-        ))}
-      <DynamicForm formData={formSchema} onSubmit={handleSubmit} />
+      <DynamicForm formData={formSchema} />
+      <button
+        onClick={handleSubmit}
+        style={{
+          backgroundColor: "#008556",
+          color: "#fff",
+          padding: "6px 12px",
+          margin: "4px auto",
+          border: "none",
+          outline: "none",
+        }}
+      >
+        Submit Form
+      </button>
     </div>
   );
 };
@@ -132,7 +170,7 @@ const App = () => {
 };
 `;
 
-export const Code12 = ({
+export const Code13 = ({
   description = "",
   features = [],
   keywords = [],
@@ -141,7 +179,7 @@ export const Code12 = ({
     <CodePreview
       code={Code}
       component={<App />}
-      title="Validation Form Errors"
+      title="Manually Trigger Form Validation"
       defaultTab="code"
       description={description}
       features={features}
@@ -150,4 +188,4 @@ export const Code12 = ({
   );
 };
 
-export default Code12;
+export default Code13;

@@ -10,3 +10,4 @@ export { Code9 } from "./Code9";
 export { Code10 } from "./Code10";
 export { Code11 } from "./Code11";
 export { Code12 } from "./Code12";
+export { Code13 } from "./Code13";

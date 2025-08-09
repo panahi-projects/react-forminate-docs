@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 ---
-import { Code3, Code4, Code5, Code6, Code7, Code8, Code9, Code10, Code11, Code12 } from "@site/src/components/Codes"
+import { Code3, Code4, Code5, Code6, Code7, Code8, Code9, Code10, Code11, Code12, Code13 } from "@site/src/components/Codes"
 
 # Form Validation
 
@@ -331,51 +331,71 @@ validationEngine.registerStrategy("uniqueUsername", new UniqueUsernameStrategy()
 
 ## Error Handling
 ### Accessing Errors
-Errors are available through the `useForm` hook:
+Errors are available through the `useFormErrors` hook:
 
 ```tsx
 const formErrors  = useFormErrors("formId"); //Instead of the formId you must put your form's Id
 ```
 
 ### Displaying Errors
+
 Errors are automatically displayed below each field, but you can customize:
 
-<Code12 />
-{/* 
-```tsx
-import { DynamicForm, useForm } from "react-forminate";
-import formData from "./formData.json"
+By wrapping the app by using of the provider `<FormRegistryProvider>{children}</FormRegistryProvider>` you can access to the various numbers of custom hooks that the **React-Forminate** provides you, and by using of the `useFormErrors()` you can get the form's validation errors.
 
-const CustomErrorDisplay = () => {
-  const { errors } = useForm();
-  
-  return (
-    <>
-        <div className="form-errors">
-            {Object.entries(errors).map(([fieldId, message]) => (
-                <div key={fieldId} className="error-message">
-                {message}
-                </div>
-            ))}
-        </div>
-        <DynamicForm formData={formData}/>
-    </>
-  );
-};
-``` */}
+You can see the usage of the provider and the relevant hook in the below example:
 
-### Manual Validation
-Trigger validation manually:
+<Code12 
+      description="Demonstrates custom error handling in React-Forminate using FormRegistryProvider and useFormErrors hook, with manual error display for form validation messages."
+      features={[
+        "Custom error display",
+        "FormRegistryProvider usage",
+        "useFormErrors hook",
+        "Manual error rendering",
+        "Multi-field validation",
+        "Email format validation",
+        "Required field handling"
+      ]}
+      keywords={[
+        "React form errors",
+        "custom error display",
+        "FormRegistryProvider",
+        "useFormErrors hook",
+        "form validation messages",
+        "React-Forminate error handling",
+        "form error customization"
+      ]}
+/>
 
-```tsx
-const handleSubmit = (e) => {
-  e.preventDefault();
-  const isValid = validateForm();
-  if (isValid) {
-    // Submit form
-  }
-};
-```
+### Manual Form Validation Control
+
+React-Forminate provides powerful hooks for granular form control, allowing you to trigger validation precisely when needed. This is particularly useful for custom submission flows or when you need to validate without immediate user interaction.
+
+Key Features Demonstrated:
+
+    1. Manual Validation Trigger - Validate the entire form programmatically
+    2. Form State Access - Retrieve current form values and validation status
+    3. Custom Submission Handling - Implement your own submission logic
+
+Implementation Example:
+
+<Code13 />
+
+When to Use Manual Validation:
+
+    - Custom submission workflows (e.g., multi-step forms)
+    - Conditional validation (validate only when certain criteria are met)
+    - Asynchronous validation (after API checks or complex calculations)
+    - UI/UX requirements (delayed validation feedback)
+
+Benefits:
+
+    - Full control over validation timing
+    - Access to validation results before submission
+    - Ability to mix manual and automatic validation
+    - Clean separation of validation and submission logic
+
+The example shows how to combine `useFormValues` and `useFormActions` to create a flexible validation flow while maintaining access to all form state.
 
 ## Complete Example
 ```tsx
