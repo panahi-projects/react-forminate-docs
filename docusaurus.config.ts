@@ -68,15 +68,18 @@ const config: Config = {
       {
         name: "keywords",
         content:
-          "react forms, form validation, react hooks, form library, react-forminate",
+          "react forms, form validation, react hooks, form library, react-forminate, form components, dynamic forms",
       },
       {
         name: "description",
         content:
-          "The simplest way to build forms in React with built-in validation",
+          "React-Forminate is a comprehensive React form library with built-in validation, dynamic fields, and customizable components for building complex forms with ease.",
       },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "en_US" },
+      { property: "og:image:alt", content: "React-Forminate Logo" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:creator", content: "@PanahiProjects" },
     ],
     ogImage: "img/React-Forminate-Logo-800x800-bg-transparent.webp", // 1200x630px recommended
     colorMode: {

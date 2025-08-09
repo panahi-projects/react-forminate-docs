@@ -60,7 +60,6 @@ const Code = `import {
   ValidationResponseType,
   type FormDataCollectionType,
 } from "react-forminate";
-import { CodePreview } from "../CodePlayground";
 
 //Define a validation custom strategy
 class IbanValidationStrategy {

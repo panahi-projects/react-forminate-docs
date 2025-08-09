@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 ---
-import { Code3, Code4, Code5, Code6, Code7, Code8, Code9, Code10, Code11 } from "@site/src/components/Codes"
+import { Code3, Code4, Code5, Code6, Code7, Code8, Code9, Code10, Code11, Code12 } from "@site/src/components/Codes"
 
 # Form Validation
 
@@ -334,12 +334,14 @@ validationEngine.registerStrategy("uniqueUsername", new UniqueUsernameStrategy()
 Errors are available through the `useForm` hook:
 
 ```tsx
-const { errors } = useForm();
+const formErrors  = useFormErrors("formId"); //Instead of the formId you must put your form's Id
 ```
 
 ### Displaying Errors
 Errors are automatically displayed below each field, but you can customize:
 
+<Code12 />
+{/* 
 ```tsx
 import { DynamicForm, useForm } from "react-forminate";
 import formData from "./formData.json"
@@ -360,7 +362,7 @@ const CustomErrorDisplay = () => {
     </>
   );
 };
-```
+``` */}
 
 ### Manual Validation
 Trigger validation manually:
