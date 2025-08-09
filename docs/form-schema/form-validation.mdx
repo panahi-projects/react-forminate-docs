@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 ---
-import { Code3, Code4, Code5, Code6, Code7, Code8, Code9, Code10 } from "@site/src/components/Codes"
+import { Code3, Code4, Code5, Code6, Code7, Code8, Code9, Code10, Code11 } from "@site/src/components/Codes"
 
 # Form Validation
 
@@ -141,9 +141,11 @@ Show/hide fields based on other field values, and if the field is not visible, t
 <Code10 />
 
 ### Custom Validation Strategies
-Register custom validation strategies:
+Register custom validation strategies to be able to use them in all forms globally and doesn't need to define custom validation per forms:
 
-```tsx
+<Code11 />
+
+{/* ```tsx
 import { validationEngine } from "react-forminate";
 
 class UniqueUsernameStrategy {
@@ -157,7 +159,7 @@ class UniqueUsernameStrategy {
 }
 
 validationEngine.registerStrategy("uniqueUsername", new UniqueUsernameStrategy());
-```
+``` */}
 
 ## Error Handling
 ### Accessing Errors

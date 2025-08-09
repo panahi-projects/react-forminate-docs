@@ -72,7 +72,7 @@ export const Code9 = () => {
     <CodePreview
       code={Code}
       component={<App />}
-      title="Validation Form"
+      title="Custom Validation Form"
       defaultTab="code"
     />
   );

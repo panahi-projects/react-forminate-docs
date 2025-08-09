@@ -54,7 +54,7 @@ export const Code3 = () => {
     <CodePreview
       code={Code}
       component={<App />}
-      title="Validation Form"
+      title="Required Fields Form"
       defaultTab="code"
     />
   );

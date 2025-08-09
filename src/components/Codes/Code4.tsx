@@ -64,7 +64,7 @@ export const Code4 = () => {
     <CodePreview
       code={Code}
       component={<App />}
-      title="Validation Form"
+      title="Pattern Matching Form"
       defaultTab="code"
     />
   );

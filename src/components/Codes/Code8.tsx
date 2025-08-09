@@ -116,7 +116,7 @@ export const Code8 = () => {
     <CodePreview
       code={Code}
       component={<App />}
-      title="Validation Form"
+      title="Array Field Validation"
       defaultTab="code"
     />
   );

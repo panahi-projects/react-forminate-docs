@@ -68,7 +68,7 @@ export const Code6 = () => {
     <CodePreview
       code={Code}
       component={<App />}
-      title="Validation Form"
+      title="Numeric Validation Form"
       defaultTab="code"
     />
   );
