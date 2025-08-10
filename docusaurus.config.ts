@@ -168,6 +168,13 @@ const config: Config = {
     },
     minify: false,
   } satisfies Preset.ThemeConfig,
+
+  scripts: [
+    {
+      src: "https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4",
+      async: true,
+    },
+  ],
 };
 
 export default config;
