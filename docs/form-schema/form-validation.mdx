@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
 ---
-import { Code3, Code4, Code5, Code6, Code7, Code8, Code9, Code10, Code11, Code12, Code13 } from "@site/src/components/Codes"
+import { Code3, Code4, Code5, Code6, Code7, Code8, Code9, Code10, Code11, Code12, Code13, Code14 } from "@site/src/components/Codes"
 
 # Form Validation
 
@@ -379,7 +379,26 @@ Key Features Demonstrated:
 
 Implementation Example:
 
-<Code13 />
+<Code13 
+      description="Demonstrates manual form validation triggering in React-Forminate using useFormActions and useFormValues hooks, with custom submit button and validation state handling."
+      features={[
+        "Manual validation triggering",
+        "useFormActions hook",
+        "useFormValues hook",
+        "Custom submit button",
+        "Programmatic validation",
+        "Form state access",
+        "Async validation handling"
+      ]}
+      keywords={[
+        "React manual form validation",
+        "trigger validation programmatically",
+        "useFormActions hook",
+        "useFormValues hook",
+        "custom form submission",
+        "React-Forminate validation control",
+        "form state management"
+      ]} />
 
 When to Use Manual Validation:
 
@@ -398,85 +417,24 @@ Benefits:
 The example shows how to combine `useFormValues` and `useFormActions` to create a flexible validation flow while maintaining access to all form state.
 
 ## Complete Example
-```tsx
-import { DynamicForm } from "react-forminate";
 
-const UserRegistrationForm = {
-  formId: "userRegistration",
-  options: {
-    validateFieldsOnBlur: true
-  },
-  fields: [
-    {
-      fieldId: "email",
-      type: "email",
-      label: "Email",
-      required: true,
-      validation: [
-        {
-          pattern: "^\\S+@\\S+\\.\\S+$",
-          message: "Enter a valid email address"
-        }
-      ]
-    },
-    {
-      fieldId: "password",
-      type: "password",
-      label: "Password",
-      required: true,
-      validation: [
-        {
-          minLength: 8,
-          message: "Password must be at least 8 characters"
-        },
-        {
-          pattern: "^(?=.*[A-Z])(?=.*[0-9]).*$",
-          message: "Must contain at least one number and uppercase letter"
-        }
-      ]
-    },
-    {
-      fieldId: "age",
-      type: "number",
-      label: "Age",
-      required: true,
-      validation: [
-        {
-          min: 18,
-          message: "You must be 18 or older"
-        },
-        {
-          max: 120,
-          message: "Enter a realistic age"
-        }
-      ]
-    },
-    {
-      fieldId: "subscribe",
-      type: "checkbox",
-      label: "Subscribe to newsletter",
-      validation: [
-        {
-          custom: (value, { values }) => {
-            // Only require if email is provided
-            return !values.email || value === true;
-          },
-          message: "Subscription required for email users"
-        }
-      ]
-    }
-  ]
-};
-
-const RegistrationPage = () => (
-  <DynamicForm 
-    formId={UserRegistrationForm.formId}
-    formData={UserRegistrationForm}
-    onSubmit={(values, isValid) => {
-      if (isValid) {
-        console.log("Submitting:", values);
-      }
-    }}
-  />
-);
-```
+<Code14 
+      description="Complete user registration form example with email validation, password field, age verification, and newsletter subscription using React-Forminate's validation system."
+      features={[
+        "Email format validation",
+        "Password field with validation",
+        "Age verification (18-120)",
+        "Newsletter subscription toggle",
+        "Blur-based validation",
+        "Multi-field form handling",
+        "Form submission logging"
+      ]}
+      keywords={[
+        "React registration form",
+        "user signup form",
+        "form validation example",
+        "email validation",
+        "age verification form",
+        "React-Forminate demo",
+        "form submission handling"
+      ]}/>
