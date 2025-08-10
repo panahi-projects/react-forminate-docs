@@ -221,7 +221,7 @@ const SignupForm = () => {
   }) => (
     <label
       htmlFor={htmlFor}
-      className="block text-sm font-medium text-gray-700"
+      className="block text-sm font-medium text-gray-100"
     >
       {children} <span className="text-red-500">*</span>
     </label>

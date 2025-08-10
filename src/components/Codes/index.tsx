@@ -14,3 +14,4 @@ export { Code13 } from "./Code13";
 export { Code14 } from "./Code14";
 export { Code15 } from "./Code15";
 export { Code16 } from "./Code16";
+export { Code17 } from "./Code17";

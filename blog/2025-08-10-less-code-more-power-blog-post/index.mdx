@@ -3,9 +3,8 @@ slug: less-code-more-power-why-react-forminate
 title: Less Code, More Power - Why React-Forminate is Changing the Form Game
 authors: [panahsa]
 tags: [frontend, reactforminate, reactjs, typescript, reactforms, formik, reacthookform]
-draft: true
 ---
-import { Code15, Code16 } from "@site/src/components/Codes"
+import { Code15, Code16, Code17 } from "@site/src/components/Codes"
 
 ![Compare React-forminate, Formik, React-Hook-Form](./Compare-Formik-RHF-ReactForminate.webp)
 
@@ -22,6 +21,15 @@ Let's compare three popular approaches:
 
 ## Implementation Comparison
 
+**Code Comparison**: Implementing the Same Signup Form
+
+In the following examples, we'll implement identical signup forms using three popular React form libraries:
+
+  1.React Hook Form <br />
+  2.Formik<br />
+  3.React-Forminate<br />
+
+The side-by-side comparison reveals striking differences in implementation complexity. Most notably, React-Forminate achieves the same functionality with approximately 50% fewer lines of code than its counterparts, demonstrating its superior developer efficiency while maintaining full feature parity.
 ### 1. React-Hook-Form + Zod
 
 ```bash
@@ -29,7 +37,23 @@ npm i react-hook-form @hookform/resolvers zod
 ```
 [Click to see: react-hook-form on NPM](https://www.npmjs.com/package/react-hook-form)
 
-<Code16 />
+<Code16 
+    description="React-Hook-Form signup form with Zod validation and Tailwind styling. Shows form registration, error handling, and password validation with schema."
+    keywords={[
+      "react-hook-form", 
+      "zod-validation",
+      "signup-form",
+      "react-forms",
+      "tailwindcss"
+    ]}
+    features={[
+      "Zod schema validation",
+      "Password strength rules",
+      "Cross-field validation",
+      "Error message handling",
+      "Tailwind CSS styling"
+    ]}
+/>
 {/* ```tsx
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -201,7 +225,25 @@ npm i formik yup
 
 [Click to see: Formik on NPM](https://www.npmjs.com/package/formik)
 
-```typescript
+<Code17 
+  description="Formik signup form with Yup validation and Tailwind CSS. Shows form state management, field validation, and error handling."
+  keywords={[
+    "formik", 
+    "yup-validation",
+    "signup-form",
+    "react-forms",
+    "tailwindcss"
+  ]}
+  features={[
+    "Yup schema validation",
+    "Form state management",
+    "Password validation",
+    "Error handling",
+    "Tailwind CSS styling"
+  ]}
+/>
+
+{/* ```typescript
 import { useFormik } from "formik";
 import { ReactNode } from "react";
 import * as Yup from "yup";
@@ -362,7 +404,7 @@ const ReactFormik = () => {
 };
 
 export default ReactFormik;
-```
+``` */}
 
 ### 3. React-Forminate
 
@@ -372,7 +414,23 @@ npm i react-forminate
 
 [Click to see: React-Forminate on NPM](https://www.npmjs.com/package/react-forminate)
 
-<Code15 />
+<Code15 
+    description="React-Forminate signup form example with validation, password matching, and Tailwind CSS styling. Demonstrates clean form declaration with minimal code." 
+    keywords={[
+      "react-forminate", 
+      "form-validation",
+      "signup-form",
+      "react-forms",
+      "tailwindcss"
+    ]}
+    features={[
+      "Declarative form setup",
+      "Built-in validation",
+      "Password matching",
+      "Tailwind CSS styling",
+      "Minimal boilerplate"
+    ]}  
+    />
 
 {/* ```typescript
 import { DynamicForm, FormDataCollectionType } from "react-forminate";
