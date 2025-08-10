@@ -166,9 +166,7 @@ ${afterTruncate.split("\n").slice(-2).join("\n")}
         <meta itemProp="license" content="MIT" />
         <meta itemProp="version" content="1.0.0" />
         {description && <meta itemProp="description" content={description} />}
-        <pre
-          dangerouslySetInnerHTML={{ __html: cleanCode.replace(/\r\n/g, "\n") }}
-        />
+        <pre>{cleanCode.replace(/\r\n/g, "\n")}</pre>
       </div>
 
       <div className="relative">

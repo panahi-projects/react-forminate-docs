@@ -166,6 +166,7 @@ const config: Config = {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
     },
+    minify: false,
   } satisfies Preset.ThemeConfig,
 };
 
